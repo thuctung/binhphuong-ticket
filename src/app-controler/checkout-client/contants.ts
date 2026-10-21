@@ -1,0 +1,36 @@
+import { ProductSubmitType, TicketResultQRType } from "@/types/ticket";
+import z from "zod";
+
+export const todayISO = () => {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d.toISOString().slice(0, 10);
+};
+
+export const checkoutSchema = z.object({
+  email: z.string().trim().email("Email không hợp lệ"),
+  phone: z
+    .string()
+    .trim()
+    .min(8, "Số điện thoại không hợp lệ")
+    .max(15, "Số điện thoại không hợp lệ")
+    .regex(/^[0-9+ ]+$/, "SĐT chỉ nên gồm số"),
+  note: z.string().max(500).optional().or(z.literal("")),
+});
+
+export const getTicketFOCAndCutomer = (tickets: TicketResultQRType[]) => {
+  const focTickets: TicketResultQRType[] = [];
+  const customerTickets: TicketResultQRType[] = [];
+  tickets.forEach((item: TicketResultQRType) => {
+    if (item.unitPrice) {
+      customerTickets.push(item);
+    } else {
+      focTickets.push(item);
+    }
+  });
+
+  return {
+    focTickets,
+    customerTickets,
+  };
+};

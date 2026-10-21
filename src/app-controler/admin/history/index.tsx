@@ -1,0 +1,184 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+import { formatVND } from "@/lib/money";
+import { exportExcel, getAllAffilate, getTicketSaleAdmin } from "./api";
+import { AdminSearchReport, SearchTableType } from "@/types";
+import { SearchReport } from "./components/searchReport";
+import { SiteType } from "@/types/ticket";
+import { intForm } from "./constant";
+import { CustomTable, TableColumn } from "@/components/ui/customs/table";
+import { AdminReportResponseType, ListAffDropdownType } from "./type";
+import { BASIC_DATE_FORMAT, dayjsEx, FULL_DATE_FORMAT } from "@/helpers/dateTime";
+import { get } from "lodash";
+import { statusClass, StatusData } from "@/app-controler/affi/stats/contants";
+import { CUSTOMER } from "@/commons/constant";
+import { getSiteByStatus } from "@/components/GetTicketForm/api";
+
+export default function AdminHistoryPageControler() {
+  const [totalPages, setTotalPage] = useState(0);
+  const [listSite, setListSite] = useState<SiteType[]>([]);
+
+  const [listAff, setListAff] = useState<ListAffDropdownType[]>([]);
+
+  const [reportList, setReportList] = useState<AdminReportResponseType[]>([]);
+
+  const [params, setParams] = useState<SearchTableType<AdminSearchReport>>({
+    searchValue: { ...intForm },
+    currentPage: 1,
+  });
+
+  const handleChangeForm = (key: string, value: string) => {
+    setParams((pre) => ({
+      currentPage: 1,
+      searchValue: { ...pre.searchValue, [key]: value },
+    }));
+  };
+
+  const fetchAffilate = async () => {
+    const listAff = await getAllAffilate();
+    setListAff(listAff);
+  };
+
+  const fetchSites = async () => {
+    const sites = await getSiteByStatus(true);
+    setListSite(sites);
+  };
+
+  const fetchTicketSale = async () => {
+    const data = await getTicketSaleAdmin(params);
+    if (data) {
+      const { totalPages, listOrder } = data;
+      setTotalPage(totalPages);
+      setReportList(listOrder);
+    }
+  };
+
+  const handleExportExcel = async () => {
+    const getFullName = listAff.find((item) => item.value === params.searchValue.email)?.label;
+    exportExcel({
+      ...params.searchValue,
+      full_name: getFullName,
+    });
+  };
+
+  const columnAdminReport: TableColumn<AdminReportResponseType>[] = [
+    {
+      key: "user_email",
+      title: "Email",
+    },
+    {
+      key: "product_name",
+      title: "Tên vé",
+    },
+
+    {
+      key: "product_name",
+      title: "Ngày rút",
+      render: (row) => dayjsEx(row.created_at).format(FULL_DATE_FORMAT),
+    },
+    {
+      key: "quantity",
+      title: "Số vé",
+      align: "center",
+    },
+    {
+      key: "price",
+      title: "Số tiền",
+      render: (row) => formatVND(row.price),
+    },
+    {
+      key: "total_amount",
+      title: "Tổng tiền",
+      className: "font-semibold",
+      render: (row) => formatVND(row.total),
+    },
+    {
+      key: "order_code",
+      title: "Mã order",
+    },
+    {
+      key: "third_party_number",
+      title: "Third party code",
+    },
+    {
+      key: "payment_method",
+      title: "Người mua",
+      render: (row) =>
+        row.payment_method === CUSTOMER ? (
+          <span className="text-green-500">Khách lẻ</span>
+        ) : (
+          <span className="text-yellow-500">Đại lý</span>
+        ),
+    },
+    {
+      key: "status",
+      title: "Trạng thái",
+      render: (row) => (
+        <span className={statusClass[row.status]}>{get(StatusData, row.status)}</span>
+      ),
+    },
+    {
+      key: "description",
+      title: "Mô tả",
+    },
+    {
+      key: "phone",
+      title: "Số điện thoại",
+    },
+    {
+      key: "payment_code",
+      title: "Mã thanh toán(Khách lẻ)",
+    },
+
+    {
+      key: "reference_code",
+      title: "Mã tham chiếu",
+    },
+    {
+      key: "status_payment",
+      align: "center",
+      title: "Trạng thái thanh toán",
+      render: (row) => (
+        <span className={statusClass[row.status_payment]}>
+          {get(StatusData, row.status_payment)}
+        </span>
+      ),
+    },
+    {
+      key: "quantity",
+      title: "Ngày dùng",
+      render: (row) => dayjsEx(row.date_use).format(BASIC_DATE_FORMAT),
+    },
+  ];
+
+  useEffect(() => {
+    fetchTicketSale();
+  }, [params.currentPage]);
+
+  useEffect(() => {
+    fetchAffilate();
+    fetchSites();
+  }, []);
+
+  return (
+    <div className="space-y-6">
+      <SearchReport
+        onChangeForm={handleChangeForm}
+        searchValue={params.searchValue}
+        onSearch={fetchTicketSale}
+        listAff={listAff}
+        listSite={listSite}
+      />
+
+      <CustomTable
+        currentPage={params.currentPage}
+        columns={columnAdminReport}
+        data={reportList}
+        totalPages={totalPages}
+        onChangePage={(value) => setParams((pre) => ({ ...pre, currentPage: value }))}
+      />
+    </div>
+  );
+}

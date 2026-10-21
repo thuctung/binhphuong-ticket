@@ -1,0 +1,201 @@
+"use client";
+
+import { CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+
+import { formatVND } from "@/lib/money";
+import { useProfileStore } from "@/stores/useProfileStore";
+import { CommonType, ProfileType } from "@/types";
+import {
+  TicketSubmitAgentType,
+  ParamCreateTicketAgentType,
+  SubmitSelectTicket,
+  ProductSubmitType,
+  ResTicketFormatType,
+} from "@/types/ticket";
+import {
+  createOrderTicket,
+  createTemplateTicketThanTaiMountain,
+  getStatusProfile,
+  getTicketFromSunGroup,
+} from "./api";
+import { useCommonStore } from "@/stores/useCommonStore";
+import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
+import dayjs from "dayjs";
+import { downloadTicketPDF, generateThirdPartyCode } from "@/helpers/ticket";
+import { toast } from "react-toastify";
+import { ACC_STATUS, SITE_CODES } from "@/commons/constant";
+import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
+import GetTicketForm from "@/components/GetTicketForm";
+import {
+  CreateOrderSunGroupPayload,
+  PayloadUdateOrderBalanceType,
+  SendTicketInSystemMailType,
+} from "./type";
+import { KEY_MODIFY_DATA } from "../stats/contants";
+
+export default function GetTicketPageControler() {
+  const profile: ProfileType = useProfileStore((state: any) => state.profile);
+  const { setToastMessage }: CommonType | any = useCommonStore.getState();
+  const { setProfile }: CommonType | any = useProfileStore.getState();
+
+  const updateBalaceProfile = (totalMoney: number) => {
+    const currentBalance = profile.balance - totalMoney;
+    setProfile({
+      ...profile,
+      balance: currentBalance,
+    });
+    return currentBalance;
+  };
+
+  const handleValidBeforeByTicket = async (values: SubmitSelectTicket) => {
+    let result = true;
+    const { totalMoney, products } = values;
+    if (totalMoney > profile.balance) {
+      setToastMessage("Số dư không đủ!!");
+      result = false;
+    } else if (profile && products.length) {
+      const status = await getStatusProfile(profile.user_id);
+      if (status !== ACC_STATUS.APPROVED) {
+        result = false;
+        setToastMessage("Bạn đã bị khóa tài khoản, vui lòng liên hệ quản trị viên để được hỗ trợ");
+      }
+    } else {
+      result = false;
+    }
+    return result;
+  };
+
+  const handleByTicketSunWorld = async (
+    order_id: string,
+    thirdPartyNumber: string,
+    values: SubmitSelectTicket
+  ) => {
+    const { products, totalMoney, date_use, haveFOC, callback } = values;
+    const payloadGetTicket: CreateOrderSunGroupPayload = {
+      thirdPartyNumber,
+      products,
+      order_id,
+      date_use,
+      email: profile.email || "",
+      fullname: profile.full_name || "",
+      phone: profile.phone || "",
+      haveFOC,
+    };
+    if (order_id) {
+      const data: ResTicketFormatType | undefined = await getTicketFromSunGroup(payloadGetTicket);
+      if (data) {
+        const { customerTickets, focTickets } = data;
+        await downloadTicketPDF(customerTickets, haveFOC ? focTickets : []);
+        updateBalaceProfile(totalMoney);
+        toast.success(`Rút vé thành công`);
+        if (callback) callback(true);
+      } else {
+        if (callback) callback(false);
+      }
+    } else {
+      if (callback) callback(false);
+    }
+  };
+
+  const handleBuyTicketInSystem = async (
+    order_id: string,
+    products: ProductSubmitType[],
+    thirdPartyNumber: string,
+    dateUse: string,
+    totalMoney: number,
+    callback?: Function
+  ) => {
+    if (profile.email && profile.phone) {
+      const updateBalance: PayloadUdateOrderBalanceType = {
+        balance: updateBalaceProfile(totalMoney),
+        user_id: profile.user_id,
+        order_id,
+        description: "",
+        status: KEY_MODIFY_DATA.SUCCESS,
+        orderCode: thirdPartyNumber,
+        amount: totalMoney,
+      };
+      const payload: SendTicketInSystemMailType = {
+        orderCode: thirdPartyNumber,
+        dateUse,
+        email: profile.email,
+        phone: profile.phone,
+        fullName: profile.full_name || "",
+        listTicket: products.map((item) => ({ name: item.productsName, quantity: item.quantity })),
+        payloadUpdateBalance: updateBalance,
+      };
+      const data = await createTemplateTicketThanTaiMountain(payload);
+      if (data) {
+        toast.success("Đặt vé thành công");
+        if (callback) callback(true);
+      } else {
+        if (callback) callback(false);
+      }
+    }
+  };
+
+  const handleBuyTicketAff = async (values: SubmitSelectTicket) => {
+    const validByTicket = await handleValidBeforeByTicket(values);
+
+    if (validByTicket) {
+      const { products, totalMoney, date_use, siteCode, in_system, callback } = values;
+      const items: TicketSubmitAgentType[] = products.map((item) => ({
+        quantity: item.quantity,
+        price: Number(item.unitPrice),
+        product_code: item.productCode,
+        product_name: item.productsName,
+        date_use: date_use,
+      }));
+
+      const thirdPartyNumber = generateThirdPartyCode(in_system);
+      const params: ParamCreateTicketAgentType = {
+        items,
+        user_id: profile.user_id || "",
+        date_use: dayjs(date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT),
+        email: profile.email || "",
+        total_amount: totalMoney,
+        side_code: siteCode,
+        thirdPartyNumber,
+      };
+
+      const order_id = await createOrderTicket(params);
+      handleByTicketSunWorld(order_id, thirdPartyNumber, values);
+      // if (in_system) {
+      //   if (siteCode === SITE_CODES.NUITHANTAI) {
+      //     handleBuyTicketInSystem(
+      //       order_id,
+      //       products,
+      //       thirdPartyNumber,
+      //       date_use,
+      //       totalMoney,
+      //       callback
+      //     );
+      //   } else {
+      //     setToastMessage("Chưa mở bán ở địa điểm này!");
+      //   }
+      // } else {
+      //   handleByTicketSunWorld(order_id, thirdPartyNumber, values);
+      // }
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <CardContent className="space-y-6">
+        {profile.role !== "admin" && (
+          <>
+            <div className="flex items-center justify-end">
+              <div className="text-sm text-muted-foreground mr-2">Số dư: </div>
+              <div className="text-lg font-semibold">
+                {profile.balance ? formatVND(profile.balance) : 0}
+              </div>
+            </div>
+            <Separator />
+          </>
+        )}
+      </CardContent>
+      <GetTicketForm onBuyTicket={handleBuyTicketAff} formType={BOOKING_FORM_TYPE.AFFILATE} />
+    </div>
+  );
+}

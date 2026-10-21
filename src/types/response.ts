@@ -1,0 +1,98 @@
+import { ProfileType } from "./profile";
+
+export type AdminAffiResponseType = {
+  currentPage: number;
+  profiles: ProfileType[];
+  total: number;
+  totalPages: number;
+};
+
+export type TopupHistoryResponseType = {
+  amount: number;
+  payment_code: string;
+  status: string;
+  created_at: string;
+  real_amount?: number;
+};
+
+export type QRBankResponseType = {
+  qr: string;
+  code: string;
+  amount: number;
+  orderId?: string;
+};
+
+export interface TopupMgtResponseType extends ProfileType, TopupHistoryResponseType {
+  created_at: string;
+  topup_id: string;
+}
+
+export interface TractionResponseType {
+  amount: number;
+  created_at: string;
+  description: string;
+  type: string;
+}
+
+export interface TicketSalteResponseType {
+  created_at: string;
+  location_name: string;
+  quantity: number;
+  total: number;
+  ticket_name: string;
+}
+
+export type OrderHistoryType = {
+  created_at: string;
+  id: string;
+  order_code: string;
+  total_amount: number;
+  status: string;
+  site_code: string;
+  date_use: string;
+};
+
+export type OrderDetailType = {
+  date_use: string;
+  id: string;
+  product_name: string;
+  price: number;
+  quantity: number;
+  order_code: string;
+  status: string;
+};
+
+export type CountTicketSaleResponse = {
+  quantity: number;
+  total: number;
+};
+
+export type CountReportResponse = {
+  quantity: number;
+  total_amount: number;
+};
+
+export type AgentType = {
+  id: string;
+  code: string;
+  name: string;
+};
+
+export type AdminReportResponseType = {
+  created_at: string;
+  date_use: string;
+  payment_method: string;
+  user_email: string;
+  order_id: string;
+  order_item_id: string;
+  phone: string;
+  product_name: string;
+  price: number;
+  quantity: number;
+  total_amount: number;
+  total: string;
+  user_id: string;
+  third_party_number: number;
+  status: string;
+  site_codeL: string;
+};
