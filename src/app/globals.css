@@ -197,10 +197,6 @@ body {
   border-top: 2px dashed rgb(16 34 47 / 0.18);
 }
 
-:focus-visible {
-  outline: 3px solid var(--color-sun);
-  outline-offset: 2px;
-}
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;

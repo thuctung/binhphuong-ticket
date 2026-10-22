@@ -101,15 +101,10 @@ export default function PriceMgtController() {
 
   return (
     <main className="mx-auto max-w-6xl space-y-4 px-4 py-8">
-      <header>
-        <h1 className="text-2xl font-semibold text-slate-900">Quản lý vé Sunworld</h1>
-        <p className="text-sm text-slate-500">{filtered.length} vé</p>
-      </header>
+      <DefaultPriceCard sites={sites} defaults={defaults} onSave={saveDefault} />
 
       <SearchBar sites={sites} onSearch={setFilters} />
-      <DefaultPriceCard sites={sites} defaults={defaults} onSave={saveDefault} />
       <TicketTable tickets={filtered} defaults={defaults} onEdit={setEditing} />
-
       <AgentPriceModal
         ticket={editing}
         defaultPrice={editing ? defaults[editing.site_name] : undefined}

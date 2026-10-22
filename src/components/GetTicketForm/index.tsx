@@ -92,6 +92,8 @@ export default function GetTicketForm({
 
   const fetchPriceAgentLevel = async (sideCode: string, level: string) => {
     const data = await getPriceBuyAgentLevel(sideCode, level);
+    console.log("data", data);
+
     const price = get(data, "price", 0) || 0;
     setAgentPrice(price);
   };

@@ -6,3 +6,8 @@ export type ProductUpdatePriceType = {
   publicPrice: number;
   unitPrice: number;
 };
+
+export type SearchProductType = {
+  name: string;
+  site_code: string;
+};

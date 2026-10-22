@@ -91,7 +91,11 @@ export const UPDATE_PRODUCT = "/api/auth/admin/ticket-price/update-product";
 
 export const DELETE_PRODUCT = "/api/auth/admin/ticket-price/delete-product";
 
-export const UPDATE_PRODUCT_PRICES = "/api/auth/admin/sync-product/update-price";
+export const UPDATE_PRODUCT_PRICES = "/api/auth/admin/products/sync-product/update-price";
+
+export const UPDATE_AGENT_PRICE_AND_TYPE = "/api/auth/admin/products/update-price-agent";
+
+export const GET_PRODUCT_FILTER = "/api/auth/admin/products/get-list-filter";
 
 // Sun API
 export const LOGIN_SUN_SYSTEM = "/api/auth/affiliate/get-ticket/login-sun-system";

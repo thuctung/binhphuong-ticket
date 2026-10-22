@@ -36,14 +36,14 @@ export function CustomTable<T>({
         </div>
       ) : null}
 
-      <div className={`bg-white rounded-xl shadow-sm border border-gray-100 overflow-auto`}>
-        <table className="w-full text-left border-collapse">
-          <thead className="bg-gray-50/50 border-b border-gray-100 whitespace-nowrap">
-            <tr className="text-gray-500 text-sm uppercase tracking-wider border-b border-gray-50">
+      <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+        <table className="w-full min-w-[760px] text-left text-sm">
+          <thead className="border-b border-slate-200 bg-slate-50 text-slate-600 whitespace-nowrap">
+            <tr>
               {columns.map((col, index) => (
                 <th
                   key={index}
-                  className={`py-4 px-4 font-semibold ${col.className ?? ""}`}
+                  className={`px-4 py-3 font-medium ${col.className ?? ""}`}
                   style={{
                     width: col.width,
                     textAlign: col.align ?? "left",
@@ -55,17 +55,14 @@ export function CustomTable<T>({
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-gray-50 whitespace-nowrap">
+          <tbody className="divide-y divide-slate-100 whitespace-nowrap">
             {data.length ? (
               data.map((row, rowIndex) => (
-                <tr
-                  key={rowIndex}
-                  className="text-gray-700 text-sm hover:bg-gray-50 transition-colors hover:bg-blue-50/50"
-                >
+                <tr key={rowIndex} className="hover:bg-slate-50">
                   {columns.map((col, index) => (
                     <td
                       key={index}
-                      className={`py-4 px-4  ${col.className ?? ""}`}
+                      className={`py-4 px-3  text-slate-700 ${col.className ?? ""}`}
                       style={{ textAlign: col.align ?? "left" }}
                     >
                       {col.render ? col.render(row, rowIndex) : (row as any)[col.key]}
@@ -75,11 +72,8 @@ export function CustomTable<T>({
               ))
             ) : (
               <tr>
-                <td colSpan={columns.length} className="p-12 text-center text-gray-400">
-                  <div className="flex flex-col items-center gap-2">
-                    <Search size={32} className="opacity-20" />
-                    <p>Chưa có dữ liệu</p>
-                  </div>
+                <td colSpan={7} className="px-4 py-10 text-center text-slate-500">
+                  Không tìm thấy vé nào. Thử đổi từ khóa hoặc xóa bộ lọc.
                 </td>
               </tr>
             )}

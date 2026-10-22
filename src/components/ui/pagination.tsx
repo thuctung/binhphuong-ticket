@@ -43,7 +43,7 @@ export default function Pagination({ page, totalPages, onChangePage }: Props) {
     }
   };
   return (
-    <nav className="flex items-center gap-2 bg-white p-2 rounded-2xl shadow-sm border border-gray-100">
+    <nav className="flex items-center gap-2 bg-white p-2 rounded-2xl border border-gray-100">
       <button
         className="p-2 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-400"
         onClick={() => handleChangePage(page - 1)}
@@ -60,7 +60,7 @@ export default function Pagination({ page, totalPages, onChangePage }: Props) {
           disabled={p === "..."}
           onClick={() => handleChangePage(Number(p))}
           className={`
-            w-10 h-10 rounded-xl  font-bold shadow-md shadow-blue-200
+            w-10 h-10 rounded-xl  font-bold 
             ${p === page ? "bg-blue-500 text-white" : ""}
             ${p === "..." ? "cursor-default border-none" : ""}
           `}

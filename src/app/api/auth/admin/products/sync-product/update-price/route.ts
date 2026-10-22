@@ -5,7 +5,6 @@ import { DB_TABLE_NAME } from "@/commons/constant";
 
 export async function POST(request: Request) {
   const { listProducts } = await request.json();
-  console.log("listProducts", listProducts);
   const { data, error } = await supabaseAdmin.rpc(DB_TABLE_NAME.FUNC_SYNC_PRODUCT_PRICE, {
     items: listProducts,
   });

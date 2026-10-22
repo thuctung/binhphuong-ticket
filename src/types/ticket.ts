@@ -7,6 +7,8 @@ export interface SiteType {
   in_system: boolean;
   pre_price: number;
   exp?: string;
+  price_agent_default?: number;
+  percent_customer_default?: number;
 }
 
 export type TicketType = {

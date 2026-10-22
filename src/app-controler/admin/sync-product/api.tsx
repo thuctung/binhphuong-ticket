@@ -1,13 +1,13 @@
 import api from "@/axios";
 import {
+  GET_PRODUCT_FILTER,
   GET_PRODUCT_IN_SYSTEM,
-  SUN_GET_BALANCE,
   SUN_GET_PRODOCT_LIST,
   UPDATE_PRODUCT_PRICES,
 } from "@/commons/apiURL";
 import { useCommonStore } from "@/stores/useCommonStore";
-import { CommonType } from "@/types";
-import { ProductUpdatePriceType } from "./type";
+import { CommonType, SearchTableType } from "@/types";
+import { ProductUpdatePriceType, SearchProductType } from "./type";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 
@@ -41,6 +41,22 @@ export const updateProductPrices = async (listProducts: ProductUpdatePriceType[]
       setToastMessage(data.errors?.[0]);
     }
     return true;
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const getProductByFilter = async (params: SearchTableType<SearchProductType>) => {
+  try {
+    setGlobalLoading(true);
+    const { data } = await api.post(GET_PRODUCT_FILTER, params);
+
+    if (data.errors?.[0]) {
+      setToastMessage(data.errors?.[0]);
+    }
+    return data;
   } catch (error) {
     setToastMessage("Có lỗi xảy ra");
   } finally {

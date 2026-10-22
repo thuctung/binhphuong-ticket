@@ -6,16 +6,16 @@ import { DiffRow, DiffType } from "./sync";
 const BADGE: Record<DiffType, { label: string; badge: string; row: string }> = {
   new: {
     label: "Thêm mới",
-    badge: "bg-emerald-50 text-emerald-700 ring-emerald-600/20",
-    row: "bg-emerald-50/40",
+    badge: "bg-green-50 text-green-700 ring-green-600/20",
+    row: "bg-green-50/40",
   },
   changed: {
     label: "Cập nhật giá",
-    badge: "bg-amber-50 text-amber-700 ring-amber-600/20",
-    row: "bg-amber-50/40",
+    badge: "bg-yeelow-50 text-yeelow-700 ring-yeelow-600/20",
+    row: "bg-yeelow-50/40",
   },
-  unchanged: { label: "Không đổi", badge: "bg-slate-50 text-slate-600 ring-slate-500/20", row: "" },
-  only_a: { label: "Chỉ có ở A", badge: "bg-sky-50 text-sky-700 ring-sky-600/20", row: "" },
+  unchanged: { label: "Không đổi", badge: "bg-blue-50 text-blue-600 ring-blue-500/20", row: "" },
+  only_a: { label: "Vé cũ", badge: "bg-sky-50 text-sky-700 ring-sky-600/20", row: "" },
 };
 
 export default function SyncDiffTable({ rows }: { rows: DiffRow[] }) {
