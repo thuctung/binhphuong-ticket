@@ -25,10 +25,12 @@ export default function CustomerForm({
   total,
   siteName,
   selectedLines,
-  agentPrice,
+  currentSite,
+  mapAgentPrice,
   formType,
   loading,
   exportGuideTicket,
+  agentPriceDefault,
   setExportGuideTicket,
   setQty,
   setFieldFormData,
@@ -120,7 +122,8 @@ export default function CustomerForm({
                     ticket={ticket}
                     quantities={quantities[ticket.code]}
                     formType={formType}
-                    agentPrice={agentPrice}
+                    mapAgentPrice={mapAgentPrice}
+                    agentPriceDefault={agentPriceDefault}
                     setQty={setQty}
                   />
                 ))}
@@ -135,7 +138,8 @@ export default function CustomerForm({
               onRemove={(code) => setQty(code, 0)}
               totalTickets={totalTickets}
               formType={formType}
-              agentPrice={agentPrice}
+              mapAgentPrice={mapAgentPrice}
+              agentPriceDefault={agentPriceDefault}
               total={total}
               onBuyTicket={onBuyTicket}
               loading={loading}

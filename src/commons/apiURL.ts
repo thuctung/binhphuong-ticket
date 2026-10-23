@@ -97,6 +97,10 @@ export const UPDATE_AGENT_PRICE_AND_TYPE = "/api/auth/admin/products/update-pric
 
 export const GET_PRODUCT_FILTER = "/api/auth/admin/products/get-list-filter";
 
+export const GET_PRICE_AGENT_DEFAULT = "/api/auth/admin/products/get-agent-price-default";
+
+export const UPDATE_PRICE_AGENT_DEFAULT = "/api/auth/admin/products/update-agent-price-default";
+
 // Sun API
 export const LOGIN_SUN_SYSTEM = "/api/auth/affiliate/get-ticket/login-sun-system";
 

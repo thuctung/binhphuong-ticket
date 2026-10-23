@@ -22,10 +22,12 @@ export type TicketByLocationType = {
   code: string;
 };
 
-type AgentPriceType = {
+export type AgentPriceType = {
   agent_code: string;
   price: number;
-  ticket_variant_code: string;
+  product_code: string;
+  site_code: string;
+  type: string;
 };
 
 export type ProductType = {

@@ -11,7 +11,7 @@ export default function DefaultPriceCard({ site }: Props) {
   return (
     <div className="flex flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4 sm:flex-row sm:items-end">
       <label className="flex flex-1 flex-col gap-1 text-sm font-medium text-slate-700">
-        Mặc định giá đại lý(đ)
+        Mặc định Đại lý cộng thêm (đ)
         <input
           disabled
           min={0}
@@ -22,7 +22,7 @@ export default function DefaultPriceCard({ site }: Props) {
       </label>
 
       <label className="flex flex-1 flex-col gap-1 text-sm font-medium text-slate-700">
-        Mặc định phần trăm khách lẻ(%)
+        Mặc định Giảm cho khách lẻ(%)
         <input
           disabled
           value={`${site?.percent_customer_default || 0}%`}

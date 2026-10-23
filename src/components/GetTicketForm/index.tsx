@@ -2,12 +2,14 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
+  getListAgentPriceDefaultBySite,
   getPriceBuyAgentLevel,
   getProductBySiteSun,
   getProductionInSystem,
   getSiteByFormType,
 } from "./api";
 import {
+  AgentPriceType,
   ProductSubmitType,
   ResultListProductType,
   SiteType,
@@ -16,14 +18,20 @@ import {
 
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
-import { getPriceAgentAndMultiple, BOOKING_FORM_TYPE, toDate } from "./constants";
+import {
+  getPriceAgentAndMultiple,
+  BOOKING_FORM_TYPE,
+  toDate,
+  mapAgentPriceByProductCode,
+} from "./constants";
 import { useProfileStore } from "@/stores/useProfileStore";
-import { ProfileType } from "@/types";
+import { CommonType, ProfileType } from "@/types";
 import { get } from "lodash";
 import { CUSTOMER } from "@/commons/constant";
 import { useSearchParams } from "next/navigation";
 import CustomerForm from "./Customer";
 import AffilateBooking from "./Affilate";
+import { useCommonStore } from "@/stores/useCommonStore";
 
 const initFormValues = {
   email: "",
@@ -44,6 +52,7 @@ export default function GetTicketForm({
 }: GetTicketFormProps) {
   const searchParams = useSearchParams();
   const productURL = searchParams.get("product");
+  const { setGlobalLoading }: CommonType | any = useCommonStore.getState();
 
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -56,7 +65,9 @@ export default function GetTicketForm({
 
   const [listProduct, setListProductSun] = useState<ResultListProductType[]>([]);
 
-  const [agentPrice, setAgentPrice] = useState(0);
+  const [agentPriceDefault, setAgentPriceDefault] = useState(0);
+
+  const [mapAgentPrice, setMapAgentPrice] = useState<Map<string, AgentPriceType>>(new Map());
 
   const [formData, setFormData] = useState<any>(initFormValues);
 
@@ -74,7 +85,7 @@ export default function GetTicketForm({
   const totalTickets = selectedLines.reduce((sum, t) => sum + (quantities[t.code] ?? 0), 0);
 
   const total = selectedLines.reduce((sum, t) => {
-    let price = getPriceAgentAndMultiple(t, formType, agentPrice);
+    let price = getPriceAgentAndMultiple(t, formType, mapAgentPrice, agentPriceDefault);
 
     return sum + price * (quantities[t.code] ?? 0);
   }, 0);
@@ -90,12 +101,19 @@ export default function GetTicketForm({
     setFormData((p: any) => ({ ...p, [key]: val }));
   };
 
-  const fetchPriceAgentLevel = async (sideCode: string, level: string) => {
-    const data = await getPriceBuyAgentLevel(sideCode, level);
-    console.log("data", data);
+  const fetchPriceAgentLevelAndProducts = async (sideCode: string, level: string) => {
+    setGlobalLoading(true);
 
-    const price = get(data, "price", 0) || 0;
-    setAgentPrice(price);
+    const [priceDefault, agentPrice, product]: any = await Promise.all([
+      getListAgentPriceDefaultBySite(sideCode, level),
+      getPriceBuyAgentLevel(sideCode, level),
+      fetchProductBySite(siteCode),
+    ]);
+    const mapAgentPrice = mapAgentPriceByProductCode(agentPrice);
+    console.log("priceDefault", priceDefault);
+    setMapAgentPrice(mapAgentPrice);
+    setAgentPriceDefault(priceDefault);
+    setGlobalLoading(false);
   };
 
   const getSiteActive = async () => {
@@ -134,8 +152,7 @@ export default function GetTicketForm({
   const handleBuyTicket = () => {
     setLoading(true);
     const products: ProductSubmitType[] = selectedLines.map((item) => {
-      const priceSell = getPriceAgentAndMultiple(item, formType, agentPrice);
-
+      const priceSell = getPriceAgentAndMultiple(item, formType, mapAgentPrice, agentPriceDefault);
       return {
         productCode: item.code,
         siteCode: siteCode,
@@ -175,16 +192,10 @@ export default function GetTicketForm({
       } else if (BOOKING_FORM_TYPE.CUSTOMER) {
         level = CUSTOMER;
       }
-      if (level) fetchPriceAgentLevel(siteCode, level);
+      if (level) fetchPriceAgentLevelAndProducts(siteCode, level);
       setQuantities({});
     }
-  }, [siteCode, profile.agent_level, formType]);
-
-  useEffect(() => {
-    if (siteCode) {
-      fetchProductBySite(siteCode);
-    }
-  }, [siteCode, formData.date_use]);
+  }, [siteCode, profile.agent_level, formType, formData.date_use]);
 
   useEffect(() => {
     if (productURL && listSite.length) {
@@ -197,7 +208,6 @@ export default function GetTicketForm({
   }, []);
 
   const commonProps = {
-    agentPrice,
     formType,
     siteCode,
     listSite,
@@ -210,6 +220,8 @@ export default function GetTicketForm({
     selectedLines,
     exportGuideTicket,
     loading,
+    mapAgentPrice,
+    agentPriceDefault,
     setExportGuideTicket,
     handleBuyTicket,
     setFieldFormData,

@@ -19,6 +19,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [openForgotPass, setOpenForgotpass] = useState(false);
+  const { setErrorMessage }: any = useProfileStore.getState();
 
   const { profile, errorMessage, isLogin }: ProfileStoteType = useProfileStore(
     (state: any) => state
@@ -48,6 +49,9 @@ export default function Login() {
   const closeDialog = (value: boolean) => {
     setOpenForgotpass(value);
   };
+  useEffect(() => {
+    setErrorMessage("");
+  }, []);
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center bg-[#fafafa] px-4 py-10 text-neutral-900 antialiased [background-image:radial-gradient(#d4d4d4_1px,transparent_1px)] [background-size:20px_20px]">

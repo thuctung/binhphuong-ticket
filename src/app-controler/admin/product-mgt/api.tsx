@@ -1,15 +1,22 @@
 import api from "@/axios";
 import {
   GET_PRICE_AGENT,
+  GET_PRICE_AGENT_DEFAULT,
   GET_PRODUCT_FILTER,
   GET_PRODUCT_IN_SYSTEM,
   SUN_GET_PRODOCT_LIST,
   UPDATE_AGENT_PRICE_AND_TYPE,
+  UPDATE_PRICE_AGENT_DEFAULT,
   UPDATE_PRODUCT_PRICES,
 } from "@/commons/apiURL";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType, SearchTableType } from "@/types";
-import { AgentPriceAndTypeSubmit, ProductUpdatePriceType, SearchProductType } from "./type";
+import {
+  AgentPriceAndTypeSubmit,
+  AgentPriceDefaultSubmit,
+  ProductUpdatePriceType,
+  SearchProductType,
+} from "./type";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
 
@@ -87,6 +94,36 @@ export const getListAgentPrice = async (site_code: string, product_code: string)
   try {
     setGlobalLoading(true);
     const { data }: any = await api.post(GET_PRICE_AGENT, { site_code, product_code });
+    if (data.errors?.[0]) {
+      setToastMessage(data.errors?.[0]);
+    }
+    return data;
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const getListAgentPriceDefault = async (site_code: string) => {
+  try {
+    setGlobalLoading(true);
+    const { data }: any = await api.post(GET_PRICE_AGENT_DEFAULT, { site_code });
+    if (data.errors?.[0]) {
+      setToastMessage(data.errors?.[0]);
+    }
+    return data;
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const saveAgentPriceDefault = async (listAgentPriceDefault: AgentPriceDefaultSubmit[]) => {
+  try {
+    setGlobalLoading(true);
+    const { data }: any = await api.post(UPDATE_PRICE_AGENT_DEFAULT, listAgentPriceDefault);
     if (data.errors?.[0]) {
       setToastMessage(data.errors?.[0]);
     }

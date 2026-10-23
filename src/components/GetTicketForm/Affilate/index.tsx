@@ -19,9 +19,11 @@ export default function AffilateBooking({
   total,
   siteName,
   exportGuideTicket,
-  agentPrice,
+  mapAgentPrice,
   formType,
+  currentSite,
   loading,
+  agentPriceDefault,
   setExportGuideTicket,
   setFieldFormData,
   setSiteCode,
@@ -80,8 +82,9 @@ export default function AffilateBooking({
                         ticket={product}
                         quantities={quantities[product.code]}
                         formType={formType}
-                        agentPrice={agentPrice}
+                        mapAgentPrice={mapAgentPrice}
                         setQty={setQty}
+                        agentPriceDefault={agentPriceDefault}
                       />
                     </div>
                   ))}
@@ -100,7 +103,8 @@ export default function AffilateBooking({
             onRemove={(code) => setQty(code, 0)}
             totalTickets={totalTickets}
             formType={formType}
-            agentPrice={agentPrice}
+            agentPriceDefault={agentPriceDefault}
+            mapAgentPrice={mapAgentPrice}
             total={total}
             onBuyTicket={handleBuyTicket}
             loading={loading}

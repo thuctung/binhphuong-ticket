@@ -125,6 +125,7 @@ export const DB_TABLE_NAME = {
   STORAGE_EMAIL_VOUCHERS: "email-vouchers",
   EMAIL_QUEUE: "email_queue",
   TICKETS: "tickets",
+  AGENT_PRICE_DEFAULT: "dafault_agent_price",
 };
 
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";

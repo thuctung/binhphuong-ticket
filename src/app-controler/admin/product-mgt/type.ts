@@ -19,3 +19,9 @@ export type AgentPriceAndTypeSubmit = {
   price: number;
   type: string;
 };
+
+export type AgentPriceDefaultSubmit = {
+  site_code: string;
+  agent_code: string;
+  price: number;
+};

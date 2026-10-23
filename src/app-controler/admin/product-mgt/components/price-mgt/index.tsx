@@ -1,77 +1,29 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import SearchBar from "./components/SearchBar";
-import DefaultPriceCard from "./components/DefaultPriceCard";
-import AgentPriceModal from "./components/AgentPriceModal";
-import type { SearchFilters, Ticket } from "./types";
+import { toast } from "react-toastify";
+
 import { ProductBanaType, SiteType } from "@/types/ticket";
 import { AgentType, SearchTableType } from "@/types";
-import { AgentPriceAndTypeSubmit, SearchProductType } from "@/app-controler/admin/product-mgt/type";
-import { getListAgentPrice, getProductByFilter } from "@/app-controler/admin/product-mgt/api";
-import { toast } from "react-toastify";
+import {
+  AgentPriceAndTypeSubmit,
+  AgentPriceDefaultSubmit,
+  SearchProductType,
+} from "@/app-controler/admin/product-mgt/type";
+import {
+  getListAgentPrice,
+  getListAgentPriceDefault,
+  getProductByFilter,
+} from "@/app-controler/admin/product-mgt/api";
 import { getSideItem } from "@/app-controler/admin/product-mgt/contants";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { formatVND } from "@/lib/money";
 import { Button } from "@/components/ui/button";
 import { getListAgent } from "@/app-controler/admin/agent-mgt/api";
-import { AgentPriceType } from "@/app-controler/admin/agent-price/type";
 
-// ---- Dữ liệu mẫu: thay bằng dữ liệu từ Supabase ----
-const MOCK_TICKETS: Ticket[] = [
-  {
-    id: 1,
-    site_name: "Bà Nà Hills",
-    code: "BN-AD",
-    name: "Vé cáp treo người lớn",
-    public_price: 900000,
-    unit_price: 780000,
-    agent_price: 820000,
-    in_system: true,
-  },
-  {
-    id: 2,
-    site_name: "Bà Nà Hills",
-    code: "BN-TE",
-    name: "Vé cáp treo trẻ em",
-    public_price: 750000,
-    unit_price: 640000,
-    agent_price: null,
-    in_system: true,
-  },
-  {
-    id: 3,
-    site_name: "Bà Nà Hills",
-    code: "BN-OLD",
-    name: "Vé combo buffet (cũ)",
-    public_price: 1200000,
-    unit_price: 1050000,
-    agent_price: null,
-    in_system: false,
-  },
-  {
-    id: 4,
-    site_name: "Fansipan Legend",
-    code: "FS-AD",
-    name: "Vé cáp treo + tàu hỏa",
-    public_price: 800000,
-    unit_price: 690000,
-    agent_price: null,
-    in_system: true,
-  },
-  {
-    id: 5,
-    site_name: "Hạ Long Park",
-    code: "HL-AD",
-    name: "Vé tổng hợp người lớn",
-    public_price: 600000,
-    unit_price: 500000,
-    agent_price: 540000,
-    in_system: true,
-  },
-];
-const MOCK_DEFAULTS: Record<string, number> = { "Bà Nà Hills": 850000 };
-// ----------------------------------------------------
+import SearchBar from "./components/SearchBar";
+import AgentPriceModal from "./components/AgentPriceModal";
+import DefaultPriceModal from "./components/DefaultPriceSite";
 
 type PriceManagementProps = {
   listSite: SiteType[];
@@ -91,6 +43,8 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
   const [listAgent, setListAgent] = useState<AgentType[]>([]);
 
   const [listPrice, setListPrice] = useState<AgentPriceAndTypeSubmit[]>([]);
+
+  const [listPriceDefault, setListPriceDefault] = useState<AgentPriceDefaultSubmit[]>([]);
 
   const [itemAgentPrice, setItemAgentPrice] = useState<ProductBanaType | null>(null);
 
@@ -128,7 +82,7 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
     });
   };
 
-  const handleOpenAgentForm = async (row: ProductBanaType) => {
+  const handleGetListAgent = async () => {
     let agents = listAgent;
     if (agents.length === 0) {
       const { data } = await getListAgent({
@@ -137,12 +91,25 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
       });
       agents = data;
     }
-    const { data: priceList } = await getListAgentPrice(row.site_code, row.code);
-    if (priceList.length) {
-      setListPrice(priceList);
-    }
     setListAgent(agents);
+  };
+
+  const handleOpenAgentForm = async (row: ProductBanaType) => {
+    const { data: priceList } = await getListAgentPrice(row.site_code, row.code);
+    await handleGetListAgent();
+    setListPrice(priceList);
     setItemAgentPrice(row);
+  };
+
+  const [openDefaultDialog, setOpenDefaultDialog] = useState(false);
+
+  const handleOpenDefaultPrice = async () => {
+    if (currentSite?.code) {
+      await handleGetListAgent();
+      const { data } = await getListAgentPriceDefault(currentSite.code);
+      setListPriceDefault(data);
+      setOpenDefaultDialog(true);
+    }
   };
 
   const columnProduct: TableColumn<ProductBanaType>[] = [
@@ -188,12 +155,6 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
     },
   ];
 
-  const [defaults, setDefaults] = useState<Record<string, number>>(MOCK_DEFAULTS);
-  const [filters, setFilters] = useState<SearchFilters>({ site: "", product: "" });
-  const [editing, setEditing] = useState<Ticket | null>(null);
-
-  const saveAgentPrice = async (id: number, price: number | null) => {};
-
   return (
     <main className="space-y-4">
       <SearchBar
@@ -203,7 +164,14 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
         onChangeSearch={updateSearchValue}
       />
 
-      {currentSite ? <DefaultPriceCard site={currentSite} /> : null}
+      {currentSite ? (
+        <button
+          onClick={handleOpenDefaultPrice}
+          className="h-10 rounded-md bg-teal-700 px-5 text-sm font-medium text-white hover:bg-teal-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2"
+        >
+          Sửa giá mặc định đại lý
+        </button>
+      ) : null}
 
       <CustomTable
         columns={columnProduct}
@@ -219,9 +187,17 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
           listAgent={listAgent}
           prices={listPrice}
           product={itemAgentPrice}
-          defaultPrice={editing ? defaults[editing.site_name] : undefined}
           onClose={() => setItemAgentPrice(null)}
-          onSave={saveAgentPrice}
+        />
+      ) : null}
+
+      {openDefaultDialog ? (
+        <DefaultPriceModal
+          listSite={listSite}
+          listAgent={listAgent}
+          prices={listPriceDefault}
+          onClose={() => setOpenDefaultDialog(false)}
+          siteCode={currentSite?.code}
         />
       ) : null}
     </main>

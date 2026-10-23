@@ -4,7 +4,7 @@ import { BOOKING_FORM_TYPE, getPriceAgentAndMultiple } from "../constants";
 import { useState } from "react";
 import { useIsMobile } from "@/helpers/useResize";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { ProductBanaType } from "@/types/ticket";
+import { AgentPriceType, ProductBanaType, SiteType } from "@/types/ticket";
 
 type OrderSummaryProps = {
   selectedLines: any;
@@ -12,7 +12,8 @@ type OrderSummaryProps = {
   dateUse: string;
   totalTickets: number;
   formType: string;
-  agentPrice: number;
+  mapAgentPrice: Map<string, AgentPriceType>;
+  agentPriceDefault: number;
   total: number;
   quantities: any;
   loading: boolean;
@@ -31,10 +32,11 @@ export default function OrderAffSummary({
   total,
   formType,
   totalTickets,
-  agentPrice,
+  mapAgentPrice,
   loading,
   setExportGuideTicket,
   exportGuideTicket,
+  agentPriceDefault,
   onBuyTicket,
   setQty,
 }: OrderSummaryProps) {
@@ -123,7 +125,7 @@ export default function OrderAffSummary({
                     <div className="flex">
                       <span className="font-semibold text-[#2d8020]">
                         {formatVND(
-                          getPriceAgentAndMultiple(t, formType, agentPrice) *
+                          getPriceAgentAndMultiple(t, formType, mapAgentPrice, agentPriceDefault) *
                             (quantities[t.code] ?? 0)
                         )}
                       </span>

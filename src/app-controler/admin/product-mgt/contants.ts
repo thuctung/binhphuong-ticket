@@ -21,23 +21,54 @@ export const getSideItem = (siteCode: string, siteList: SiteType[]): SiteType | 
 };
 
 export const DISCOUNT_TYPE_PRICE = {
-  FIX_VALUE: "FIX_VALUE",
-  PERCENT: "PERCENT",
+  ADD_PRICE: "ADD_PRICE",
+  SUBT_PRICE: "SUBT_PRICE",
+  ADD_PERCENT: "ADD_PERCENT",
+  SUBT_PERCENT: "SUBT_PERCENT",
 };
 
 export const LIST_OPTION_DISCOUNT = [
-  { code: DISCOUNT_TYPE_PRICE.FIX_VALUE, name: "Theo giá" },
-  { code: DISCOUNT_TYPE_PRICE.PERCENT, name: "Theo phần trăm" },
+  { code: DISCOUNT_TYPE_PRICE.ADD_PRICE, name: "Công theo giá" },
+  { code: DISCOUNT_TYPE_PRICE.SUBT_PRICE, name: "Giảm theo giá" },
+  { code: DISCOUNT_TYPE_PRICE.ADD_PERCENT, name: "Tăng theo phần trăm" },
+  { code: DISCOUNT_TYPE_PRICE.SUBT_PERCENT, name: "Giảm theo phần trăm" },
 ];
 
+const getTextByAgentCode = (agentCode: string) => {
+  if (agentCode === "customer" || agentCode === "register") {
+    return " vào giá công bố";
+  }
+  return " vào giá gốc";
+};
+
 export const getNoteTextDiscount = (agentCode: string, value: number, typeDiscount: string) => {
-  if (typeDiscount === DISCOUNT_TYPE_PRICE.FIX_VALUE) {
-    if (agentCode === "customer" || agentCode === "register") {
-      return `Thêm ${formatVND(value)} vào giá công bố`;
+  const prexText = getTextByAgentCode(agentCode);
+  let subText = "";
+  switch (typeDiscount) {
+    case DISCOUNT_TYPE_PRICE.ADD_PRICE: {
+      subText = formatVND(value);
+      break;
     }
-    return `Thêm ${formatVND(value)} vào giá gốc`;
-  } else if (agentCode === "customer" || agentCode === "register") {
+    case DISCOUNT_TYPE_PRICE.SUBT_PRICE: {
+      subText = `- ${formatVND(value)}`;
+      break;
+    }
+    case DISCOUNT_TYPE_PRICE.ADD_PERCENT: {
+      subText = `${value}%`;
+      break;
+    }
+    case DISCOUNT_TYPE_PRICE.SUBT_PERCENT: {
+      subText = `- ${value}%`;
+      break;
+    }
+  }
+
+  return `${subText} ${prexText}`;
+};
+
+export const getNoteTextDiscountDefault = (agentCode: string, value: number) => {
+  if (agentCode === "customer" || agentCode === "register") {
     return `Giảm ${value}% vào giá công bố`;
   }
-  return `Giảm ${value}% vào  giá gốc`;
+  return `Thêm ${formatVND(value)} vào  giá gốc`;
 };
