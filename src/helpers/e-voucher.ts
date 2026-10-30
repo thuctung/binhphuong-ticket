@@ -7,7 +7,7 @@ const MARGIN = 6;
 
 const NOTES = [
   "Quý khách vui lòng bảo mật vé.Vé đã mua không thể hoàn hủy và chỉ có giá trị sử dụng 1 lần.",
-  "Mẫu e-voucher phải giữ nguyên định dạng của Minh Tuấn. Mọi thay đổi và chỉnh sửa đều không được chấp nhận để sử dụng dịch vụ.",
+  "Mẫu e-voucher phải giữ nguyên định dạng của Moon Price. Mọi thay đổi và chỉnh sửa đều không được chấp nhận để sử dụng dịch vụ.",
   "Vui lòng đến quầy vé Công viên và trình vé điện tử đã mua để đổi vé vào cửa.",
 ];
 
@@ -27,7 +27,7 @@ export const generateBookingVoucher = async (data: SendTicketInSystemMailType) =
   pdf.setLineWidth(1);
   pdf.roundedRect(8, 8, PAGE_W - 16, PAGE_H - 16, 10, 10);
 
-  const minhtuanLogo = getImage("/logo.png");
+  const moonPrice = getImage("/logo.png");
   const thanTaiLogo = getImage("/nuithantai/logo.webp");
 
   const fontBase64 = await getFontBase64();
@@ -42,7 +42,7 @@ export const generateBookingVoucher = async (data: SendTicketInSystemMailType) =
 
   let y = MARGIN + 15;
   pdf.addImage(thanTaiLogo, "WEBP", 18, y, 70, 22);
-  pdf.addImage(minhtuanLogo, "PNG", PAGE_W - 50, y, 32, 24);
+  pdf.addImage(moonPrice, "PNG", PAGE_W - 50, y, 32, 24);
 
   y += 30;
 
@@ -182,7 +182,7 @@ export const generateBookingVoucher = async (data: SendTicketInSystemMailType) =
   pdf.setTextColor(0, 0, 0);
   pdf.setFont("Roboto", "normal");
   pdf.setFontSize(12);
-  pdf.text("Minh Tuấn", PAGE_W / 2 - 28, PAGE_H - 22, { align: "center" });
+  pdf.text("Moon Price", PAGE_W / 2 - 28, PAGE_H - 22, { align: "center" });
 
   pdf.setFont("Roboto", "normal");
   pdf.setFontSize(9);

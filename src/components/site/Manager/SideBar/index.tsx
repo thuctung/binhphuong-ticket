@@ -31,8 +31,8 @@ export default function SideBarManager({
 
       <aside
         className={[
-          "fixed md:sticky top-10 left-0 h-screen z-40 flex flex-col gap-5 bg-[#247719b5] text-[white] ",
-          "bg-paper border-r border-line px-3.5 py-5  top-[40px]",
+          "fixed md:sticky top-10 left-0 h-screen z-40 flex flex-col gap-5 bg-[#247719] text-[white] ",
+          "border-r border-line px-3.5 py-5  top-[40px]",
           "transition-[width,transform, top] duration-300 ease-in-out overflow-x-hidden",
           collapsed ? "md:w-[76px]" : "md:w-[264px]",
           "w-[264px]",

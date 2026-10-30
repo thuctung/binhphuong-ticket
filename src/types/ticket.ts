@@ -30,6 +30,11 @@ export type AgentPriceType = {
   type: string;
 };
 
+export type CategorySubmitType = {
+  code: string;
+  name: string;
+};
+
 export type ProductType = {
   id: string;
   ticket_type_code: string;
@@ -156,18 +161,18 @@ export type ResultListProductType = { personType: string; ticket: ProductBanaTyp
 export interface ProductBanaType {
   closeTime: string;
   code: string;
-  id: number;
+  id?: number;
   name: string;
   personType: string;
-  pricePolicy: PricePolicyType;
+  pricePolicy?: PricePolicyType;
   restaurantName?: string;
   publicPrice: number;
   unitPrice: number;
-  performances: PerformancesType[];
+  performances?: PerformancesType[];
   multiple: number;
-  site: SiteType;
+  site?: SiteType;
   site_code: string;
-  openTime: string;
+  openTime?: string;
   description?: string;
   order?: number;
 }

@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { AdminSearchReport, SearchTableType } from "@/types";
-import { DB_TABLE_NAME, END_DATE_GMT7, LIMIT_TABLE, START_DATE_GMT7 } from "@/commons/constant";
-import { SearchProductType } from "@/app-controler/admin/sync-product/type";
+import { SearchTableType } from "@/types";
+import { DB_TABLE_NAME, LIMIT_TABLE } from "@/commons/constant";
+import { SearchProductType } from "@/app-controler/admin/product-mgt/type";
 
 export async function POST(request: Request) {
   const body: SearchTableType<SearchProductType> = await request.json();

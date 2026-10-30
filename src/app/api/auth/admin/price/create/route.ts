@@ -2,10 +2,9 @@ import { NextResponse } from "next/server";
 
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { DB_TABLE_NAME } from "@/commons/constant";
-import { AgentPriceSubmitType } from "@/app-controler/admin/agent-price/type";
 
 export async function POST(request: Request) {
-  const { site_code, agent_code, price }: AgentPriceSubmitType = await request.json();
+  const { site_code, agent_code, price }: any = await request.json();
 
   const { data: existed, error: checkError } = await supabaseAdmin
     .from(DB_TABLE_NAME.AGENT_PRICE)

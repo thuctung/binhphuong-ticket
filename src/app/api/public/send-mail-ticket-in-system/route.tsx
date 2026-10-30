@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   const { email, listTicket, phone, dateUse, orderCode, paymentCode, siteName, fullName } = body;
   const adminMail = env.SEND_MAIL_ADMIN;
   await resendMail.emails.send({
-    from: "Minh Tuấn Travel System<noreply@htmtravel.com>",
+    from: "Moon Price System<noreply@htmtravel.com>",
     to: [email, adminMail],
     subject: `Đặt vé ${siteName} Ngày: ${dateUse}`,
     html: `
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
             <p style="margin-top: 24px;">
                  Vui lòng xuất trình thông tin khi sử dụng dịch vụ. </p> <p> Nếu cần hỗ trợ, vui lòng liên hệ bộ phận chăm sóc khách hàng: ${PHONE_ADMIN}. 
             </p>
-            <p> Trân trọng,<br /> Minh Tuấn </p>
+            <p> Trân trọng,<br /> Moon Price </p>
        </div>
     `,
   });

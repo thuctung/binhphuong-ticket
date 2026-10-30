@@ -31,7 +31,7 @@ export const CREATE_EDIT_AGENT = "/api/auth/admin/agents/create";
 
 export const DELETE_AGENT = "/api/auth/admin/agents/delete";
 
-export const GET_PRICE_AGENT = "/api/auth/admin/price/get-price";
+export const GET_AGENT_PRICE = "/api/auth/admin/products/get-agent-price";
 
 export const CREATE_AGENT_PRICE = "/api/auth/admin/price/create";
 
@@ -83,11 +83,9 @@ export const UPDATE_SITE = "/api/auth/admin/sites/update-site";
 
 export const GET_PROD = "/api/auth/admin/sites/update-site";
 
-export const GET_PRODUCT_CATEGORY = "/api/auth/admin/ticket-price/get-category";
-
 export const GET_PRODUCT_PARAMS = "/api/auth/admin/ticket-price/get-products";
 
-export const UPDATE_PRODUCT = "/api/auth/admin/ticket-price/update-product";
+export const UPDATE_PRODUCT = "/api/auth/admin/products/update-product";
 
 export const DELETE_PRODUCT = "/api/auth/admin/ticket-price/delete-product";
 
@@ -100,6 +98,8 @@ export const GET_PRODUCT_FILTER = "/api/auth/admin/products/get-list-filter";
 export const GET_PRICE_AGENT_DEFAULT = "/api/auth/admin/products/get-agent-price-default";
 
 export const UPDATE_PRICE_AGENT_DEFAULT = "/api/auth/admin/products/update-agent-price-default";
+
+export const GET_CATEGORY = "/api/auth/admin/category/get-list";
 
 // Sun API
 export const LOGIN_SUN_SYSTEM = "/api/auth/affiliate/get-ticket/login-sun-system";

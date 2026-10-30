@@ -85,7 +85,7 @@ export const downloadTicketPDF = async (
     const img = new Image();
     img.onload = () => resolve(img);
     img.onerror = reject;
-    img.src = "/logo1.png";
+    img.src = "/moonlogo.png";
   });
   const logo = LogoBySite[finalList[0].siteCode as keyof typeof LogoBySite] ?? LogoBySite.HLS;
 
@@ -294,7 +294,7 @@ export const downloadTicketPDF = async (
     pdf.setTextColor(0, 0, 0);
     pdf.setFont("Roboto", "normal");
     pdf.setFontSize(12);
-    pdf.text("Minh Tuấn Travel", PAGE_W / 2 - 28, PAGE_H - 22, { align: "center" });
+    pdf.text("Moon Price", PAGE_W / 2 - 28, PAGE_H - 22, { align: "center" });
 
     pdf.setFont("Roboto", "normal");
     pdf.setFontSize(9);
@@ -361,7 +361,7 @@ export const generateThirdPartyCode = (in_system: boolean): string => {
   }).join("");
 
   if (in_system) {
-    return `${year2Digit}minhtuan${code}`;
+    return `${year2Digit}moonprice${code}`;
   }
   return code;
 };

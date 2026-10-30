@@ -27,7 +27,7 @@ export async function POST(req: Request) {
       toMail.push(email);
     }
     await resendMail.emails.send({
-      from: "Minh Tuấn Travel System<noreply@htmtravel.com>",
+      from: "Moon Price System<noreply@htmtravel.com>",
       to: toMail,
       subject: `Đặt vé Núi Thần Tài ${orderCode}, Ngày ${dateUse}`,
       html: `
@@ -93,7 +93,7 @@ export async function POST(req: Request) {
             <p style="margin-top: 24px;">
                   Vé điện tử được đính kèm trong email này. Vui lòng xuất trình mã khi sử dụng dịch vụ. </p> <p> Nếu cần hỗ trợ, vui lòng liên hệ bộ phận chăm sóc khách hàng: ${PHONE_ADMIN}.
             </p>
-            <p> Trân trọng,<br /> Minh Tuấn </p>
+            <p> Trân trọng,<br /> Moon Price </p>
        </div>
     `,
       attachments: [

@@ -4,26 +4,14 @@ import { useState } from "react";
 
 import { AgentType } from "@/types";
 import {
-  DISCOUNT_TYPE_PRICE,
-  getNoteTextDiscount,
   getNoteTextDiscountDefault,
   getSideItem,
-  LIST_OPTION_DISCOUNT,
 } from "@/app-controler/admin/product-mgt/contants";
-import { formatVND } from "@/lib/money";
-import { ProductBanaType, SiteType } from "@/types/ticket";
-import {
-  AgentPriceAndTypeSubmit,
-  AgentPriceDefaultSubmit,
-} from "@/app-controler/admin/product-mgt/type";
-import {
-  saveAgentPriceDefault,
-  updateAgentPriceAndType,
-} from "@/app-controler/admin/product-mgt/api";
+import { SiteType } from "@/types/ticket";
+import { AgentPriceDefaultSubmit } from "@/app-controler/admin/product-mgt/type";
+import { saveAgentPriceDefault } from "@/app-controler/admin/product-mgt/api";
 import { toast } from "react-toastify";
 import { get } from "lodash";
-
-type Row = { price: string };
 
 type Props = {
   listSite: SiteType[];

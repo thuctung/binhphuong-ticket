@@ -49,22 +49,37 @@ export const SIDEBAR_ADMIN: MenuMgtType[] = [
     lable: "Quản lý nạp tiền",
     icon: "M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z",
   },
+  { link: "/admin/stats", lable: "Thống kê", icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" },
+  {
+    link: "/admin/agents",
+    lable: "Quản lý cấp bậc",
+    icon: "M12 3a2 2 0 1 0 0 4a2 2 0 1 0 0 -4M12 7v3M6 10h12M6 10v3M18 10v3M6 16a2 2 0 1 0 0 4a2 2 0 1 0 0 -4M18 16a2 2 0 1 0 0 4a2 2 0 1 0 0 -4",
+  },
 
-  { link: "/admin/stats", lable: "Kiểm tra số dư", icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" },
+  // {
+  //   link: "/admin/ticket-status",
+  //   lable: "Trạng thái vé",
+  //   icon: "M7 7h.01M7 3h5a1.99 1.99 0 011.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z",
+  // },
+  // {
+  //   link: "/admin/booking-status",
+  //   lable: "Tra cứu booking",
+  //   icon: "M7 7h.01M7 3h5a1.99 1.99 0 011.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z",
+  // },
   {
     link: "/admin/history",
     lable: "Lịch sử rút vé",
     icon: "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5M12 7v5l4 2",
   },
   {
-    link: "/admin/ticket-status",
-    lable: "Trạng thái vé",
-    icon: "M7 7h.01M7 3h5a1.99 1.99 0 011.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z",
+    link: "/admin/site",
+    lable: "Quản lý công viên",
+    icon: "M12 2a1 1 0 011 1v2.05a5 5 0 013.95 3.95H19a1 1 0 110 2h-1v1a6 6 0 01-5 5.91V21a1 1 0 11-2 0v-3.09A6 6 0 016 11v-1H5a1 1 0 010-2h2.05A5 5 0 0111 5.05V3a1 1 0 011-1z",
   },
   {
-    link: "/admin/booking-status",
-    lable: "Tra cứu booking",
-    icon: "M7 7h.01M7 3h5a1.99 1.99 0 011.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z",
+    link: "/admin/product-mgt",
+    lable: "Thông tin giá vé",
+    icon: "M4 5a2 2 0 00-2 2v2a2 2 0 012 2 2 2 0 010 4v2a2 2 0 002 2h12a2 2 0 002-2v-2a2 2 0 010-4 2 2 0 012-2V7a2 2 0 00-2-2H4zm5 3a1 1 0 112 0v8a1 1 0 11-2 0V8z",
   },
 ];
 
@@ -92,6 +107,7 @@ export const SIDEBAR_AFF: MenuMgtType[] = [
 ];
 
 export const DB_TABLE_NAME = {
+  CATEGORY: "category",
   TOPUPS: "topups",
   PROFILES: "profiles",
   VIEW_PROFILE_TOPUP: "topups_with_profiles",

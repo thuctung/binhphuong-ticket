@@ -75,7 +75,7 @@ export default function AffilateBooking({
                 </h2>
 
                 {item.ticket
-                  .sort((a, b) => getOrder(a.id) - getOrder(b.id))
+                  .sort((a, b) => getOrder(a?.id || 1) - getOrder(b?.id || 1))
                   .map((product) => (
                     <div key={product.code} className="mt-5">
                       <TicketCard

@@ -7,7 +7,7 @@ const MARGIN = 6;
 
 const NOTES = [
   "Quý khách vui lòng bảo mật vé.Vé đã mua không thể hoàn hủy và chỉ có giá trị sử dụng 1 lần.",
-  "Mẫu e-voucher phải giữ nguyên định dạng của Minh Tuấn. Mọi thay đổi và chỉnh sửa đều không được chấp nhận để sử dụng dịch vụ.",
+  "Mẫu e-voucher phải giữ nguyên định dạng của Moon Price. Mọi thay đổi và chỉnh sửa đều không được chấp nhận để sử dụng dịch vụ.",
   "Vui lòng đến quầy vé Công viên và trình vé điện tử đã mua để đổi vé vào cửa.",
 ];
 
@@ -37,7 +37,7 @@ export const generateBookingVoucherClient = async (data: SendTicketInSystemMailT
   pdf.addFont("Roboto-Bold.ttf", "Roboto", "bold");
 
   // Load logos
-  const minhtuanLogo = await new Promise<HTMLImageElement>((resolve, reject) => {
+  const moonPriceLogo = await new Promise<HTMLImageElement>((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(img);
     img.onerror = reject;
@@ -60,7 +60,7 @@ export const generateBookingVoucherClient = async (data: SendTicketInSystemMailT
 
   let y = MARGIN + 15;
   pdf.addImage(thanTaiLogo, "WEBP", 18, y, 70, 22);
-  pdf.addImage(minhtuanLogo, "PNG", PAGE_W - 50, y, 32, 24);
+  pdf.addImage(moonPriceLogo, "PNG", PAGE_W - 50, y, 32, 24);
 
   y += 30;
 
@@ -200,7 +200,7 @@ export const generateBookingVoucherClient = async (data: SendTicketInSystemMailT
   pdf.setTextColor(0, 0, 0);
   pdf.setFont("Roboto", "normal");
   pdf.setFontSize(12);
-  pdf.text("Minh Tuấn", PAGE_W / 2 - 28, PAGE_H - 22, { align: "center" });
+  pdf.text("Moon Price", PAGE_W / 2 - 28, PAGE_H - 22, { align: "center" });
 
   pdf.setFont("Roboto", "normal");
   pdf.setFontSize(9);

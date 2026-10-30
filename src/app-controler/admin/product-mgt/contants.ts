@@ -28,7 +28,7 @@ export const DISCOUNT_TYPE_PRICE = {
 };
 
 export const LIST_OPTION_DISCOUNT = [
-  { code: DISCOUNT_TYPE_PRICE.ADD_PRICE, name: "Công theo giá" },
+  { code: DISCOUNT_TYPE_PRICE.ADD_PRICE, name: "Tăng theo giá" },
   { code: DISCOUNT_TYPE_PRICE.SUBT_PRICE, name: "Giảm theo giá" },
   { code: DISCOUNT_TYPE_PRICE.ADD_PERCENT, name: "Tăng theo phần trăm" },
   { code: DISCOUNT_TYPE_PRICE.SUBT_PERCENT, name: "Giảm theo phần trăm" },
@@ -71,4 +71,10 @@ export const getNoteTextDiscountDefault = (agentCode: string, value: number) => 
     return `Giảm ${value}% vào giá công bố`;
   }
   return `Thêm ${formatVND(value)} vào  giá gốc`;
+};
+
+export const PRODUCT_DIALOG = {
+  DEFAULT_PRICE: "DEFAULT_PRICE",
+  AGENT_PRICE: "AGENT_PRICE",
+  PRODUC_DETAIL: "PRODUC_DETAIL",
 };

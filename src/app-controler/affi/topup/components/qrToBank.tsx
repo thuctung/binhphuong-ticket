@@ -70,7 +70,7 @@ export default function BankTransferQR({
               value={BANK_INFO.bankNum}
               onCopy={() => copy(BANK_INFO.bankNum)}
             />
-            <Row label="Người nhận" value="CONG TY TNHH MTV Minh Tuan Travel" />
+            <Row label="Người nhận" value="Moon Price" />
             <Row label="Số tiền" value={formatVND(dataQR.amount)} />
             <Row label="Nội dung CK" value={dataQR.code} onCopy={() => copy(dataQR.code)} />
           </div>

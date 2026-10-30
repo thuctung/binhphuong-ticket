@@ -189,7 +189,6 @@ export default function AffiliateStatsControler() {
             searchValue={params.searchValue}
             siteList={siteList}
           />
-
           <Revenue
             total={countTicket.total}
             ticket={countTicket.quantity}

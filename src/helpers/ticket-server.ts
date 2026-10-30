@@ -41,7 +41,7 @@ export const downloadTicketPDFServer = async (
   pdf.addFont("Roboto-Bold.ttf", "Roboto", "bold");
 
   // Load logos
-  const minhTuanlogo = getImage("/logo1.png");
+  const moonPrice = getImage("/moonlogo.png");
 
   const logo = LogoBySite[finalList[0].siteCode as keyof typeof LogoBySite] ?? LogoBySite.HLS;
 
@@ -75,7 +75,7 @@ export const downloadTicketPDFServer = async (
 
     // ===== HEADER: 2 logo =====
     pdf.addImage(sunWorldLogo, "PNG", 18, y, 70, 35);
-    pdf.addImage(minhTuanlogo, "PNG", PAGE_W - 50, y + 5, 30, 22);
+    pdf.addImage(moonPrice, "PNG", PAGE_W - 50, y + 5, 30, 22);
 
     y += 34;
 
@@ -246,7 +246,7 @@ export const downloadTicketPDFServer = async (
     pdf.setTextColor(0, 0, 0);
     pdf.setFont("Roboto", "normal");
     pdf.setFontSize(12);
-    pdf.text("Minh Tuấn Travel", PAGE_W / 2 - 28, PAGE_H - 22, { align: "center" });
+    pdf.text("Moon Price", PAGE_W / 2 - 28, PAGE_H - 22, { align: "center" });
 
     pdf.setFont("Roboto", "normal");
     pdf.setFontSize(9);

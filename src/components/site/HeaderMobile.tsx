@@ -19,15 +19,15 @@ export function HeaderMobile({ pathname }: { pathname: string }) {
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <div className="flex items-center">
             <Image
-              src="/logo1.png"
-              alt="Minh Tuan Travel"
+              src="/moonlogo.png"
+              alt="Moon Price"
               width={48}
               height={48}
               className="object-contain mix-blend-multiply"
               sizes="(max-width: 768px) 100vw, 33vw"
               priority
             />
-            <span className="text-xl font-black text-red-500 leading-none">Minh Tuấn</span>
+            <span className="text-xl font-black text-red-500 leading-none">Moon Price</span>
           </div>
         </div>
 

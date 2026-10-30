@@ -72,7 +72,7 @@ export default function CustomerForm({
       result = tickets.filter((item) => item.personType === filter);
     }
     if (siteCode === SITE_CODES.BANAHILL) {
-      return result.sort((a, b) => getOrder(a.id) - getOrder(b.id));
+      return result.sort((a, b) => getOrder(a?.id || 1) - getOrder(b?.id || 1));
     }
     return result;
   }, [filter, tickets, siteCode]);

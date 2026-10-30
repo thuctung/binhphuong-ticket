@@ -7,12 +7,12 @@ const resendMail = new Resend(process.env.SEND_MAIL_KEY);
 export const sendMailTicketBaNa = async (payloadSendMailBaNa: SendMailBaNaType) => {
   const { mail, siteName, orderCode, fileAttch } = payloadSendMailBaNa;
   return await resendMail.emails.send({
-    from: "Minh Tuấn System<noreply@htmtravel.com>",
+    from: "Moon Price System<noreply@htmtravel.com>",
     to: mail,
     subject: `Đặt vé ${siteName} ${orderCode}`,
     html: `
           <p>
-            Cảm ơn bạn đã đặt vé tại <strong>Minh Tuấn Travel</strong>.
+            Cảm ơn bạn đã đặt vé tại <strong>Moon Price</strong>.
             Đơn hàng của bạn đã được ghi nhận thành công.
           </p>
 
@@ -22,7 +22,7 @@ export const sendMailTicketBaNa = async (payloadSendMailBaNa: SendMailBaNaType) 
          <p style="margin-top: 24px;">
                   Vé điện tử được đính kèm trong email này. Vui lòng xuất trình mã khi sử dụng dịch vụ. </p> <p> Nếu cần hỗ trợ, vui lòng liên hệ bộ phận chăm sóc khách hàng: ${PHONE_ADMIN}.
             </p>
-            <p> Trân trọng,<br /> Minh Tuấn Travel</p>
+            <p> Trân trọng,<br /> Moon Price</p>
     `,
     attachments: [
       {

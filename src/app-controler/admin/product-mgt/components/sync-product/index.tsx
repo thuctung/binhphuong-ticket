@@ -35,7 +35,7 @@ export default function ProductSyncTab({ listSite }: SynProductType) {
           code: product.code,
           name: product.name,
           personType: product.personType,
-          site_code: product.site.code || siteCode,
+          site_code: product?.site?.code || siteCode,
           publicPrice: product.newPublicPrice || 0,
           unitPrice: product.newUnitPrice || 0,
         });

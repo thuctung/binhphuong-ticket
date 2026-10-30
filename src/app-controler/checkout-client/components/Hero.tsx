@@ -12,7 +12,7 @@ export default function Hero() {
     <section className="relative h-[340px] w-full overflow-hidden sm:h-[380px]">
       <Image
         src="/cau-rong.png"
-        alt="Minh Tuấn"
+        alt="Moon Price"
         width={900}
         height={400}
         className="absolute inset-0 h-full w-full object-cover"

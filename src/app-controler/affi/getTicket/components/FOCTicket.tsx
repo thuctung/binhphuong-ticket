@@ -36,7 +36,7 @@ export default function FOCTicketCard({
         <div className="z-10 flex h-[42px] items-center rounded-lg  px-2.5 ">
           <Image
             src="/logo.png"
-            alt="Minh Tuấn"
+            alt="Moon Price"
             width={70}
             height={36}
             className="h-full w-auto object-contain"
@@ -144,7 +144,7 @@ export default function FOCTicketCard({
 
       {/* Footer */}
       <div className="bg-red-700 px-5 py-3.5 text-center text-white">
-        <span className="text-[15px] font-extrabold tracking-wider">Minh Tuấn</span>
+        <span className="text-[15px] font-extrabold tracking-wider">Moon Price</span>
         <span className="mx-2 opacity-70">·</span>
         <span className="text-xs">Hotline: {PHONE_ADMIN}</span>
       </div>

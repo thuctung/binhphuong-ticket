@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
 
-import { ProductBanaType, SiteType } from "@/types/ticket";
+import { CategorySubmitType, ProductBanaType, SiteType } from "@/types/ticket";
 import { AgentType, SearchTableType } from "@/types";
 import {
   AgentPriceAndTypeSubmit,
@@ -13,9 +13,10 @@ import {
 import {
   getListAgentPrice,
   getListAgentPriceDefault,
+  getListCategory,
   getProductByFilter,
 } from "@/app-controler/admin/product-mgt/api";
-import { getSideItem } from "@/app-controler/admin/product-mgt/contants";
+import { getSideItem, PRODUCT_DIALOG } from "@/app-controler/admin/product-mgt/contants";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { formatVND } from "@/lib/money";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,7 @@ import { getListAgent } from "@/app-controler/admin/agent-mgt/api";
 import SearchBar from "./components/SearchBar";
 import AgentPriceModal from "./components/AgentPriceModal";
 import DefaultPriceModal from "./components/DefaultPriceSite";
+import ProductForm from "./components/ProductForm";
 
 type PriceManagementProps = {
   listSite: SiteType[];
@@ -46,7 +48,11 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
 
   const [listPriceDefault, setListPriceDefault] = useState<AgentPriceDefaultSubmit[]>([]);
 
-  const [itemAgentPrice, setItemAgentPrice] = useState<ProductBanaType | null>(null);
+  const [productItem, setProductItem] = useState<ProductBanaType | null>(null);
+
+  const [listCategory, setListCategory] = useState<CategorySubmitType[]>([]);
+
+  const [dialogType, setDialogType] = useState<string>("");
 
   const currentSite = useMemo(
     () => getSideItem(params.searchValue.site_code, listSite),
@@ -82,6 +88,16 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
     });
   };
 
+  const fetchCategory = async () => {
+    if (listCategory.length) {
+      return;
+    }
+    const { data } = await getListCategory();
+    if (data) {
+      setListCategory(data);
+    }
+  };
+
   const handleGetListAgent = async () => {
     let agents = listAgent;
     if (agents.length === 0) {
@@ -98,18 +114,32 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
     const { data: priceList } = await getListAgentPrice(row.site_code, row.code);
     await handleGetListAgent();
     setListPrice(priceList);
-    setItemAgentPrice(row);
+    setProductItem(row);
+    setDialogType(PRODUCT_DIALOG.AGENT_PRICE);
   };
-
-  const [openDefaultDialog, setOpenDefaultDialog] = useState(false);
 
   const handleOpenDefaultPrice = async () => {
     if (currentSite?.code) {
       await handleGetListAgent();
       const { data } = await getListAgentPriceDefault(currentSite.code);
       setListPriceDefault(data);
-      setOpenDefaultDialog(true);
+      setDialogType(PRODUCT_DIALOG.DEFAULT_PRICE);
     }
+  };
+
+  const handleOpenProductForm = async () => {
+    await handleGetListAgent();
+    await fetchCategory();
+    setDialogType(PRODUCT_DIALOG.PRODUC_DETAIL);
+  };
+
+  const handleEditProduct = async (product: ProductBanaType) => {
+    await handleOpenProductForm();
+    setProductItem(product);
+  };
+
+  const handleCloseDailog = () => {
+    setDialogType("");
   };
 
   const columnProduct: TableColumn<ProductBanaType>[] = [
@@ -141,7 +171,11 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
       title: "",
       align: "center",
       render: (row) =>
-        getSideItem(row.site_code, listSite)?.in_system ? <Button size="sm">Sửa vé</Button> : null,
+        getSideItem(row.site_code, listSite)?.in_system ? (
+          <Button size="sm" onClick={() => handleEditProduct(row)}>
+            Sửa vé
+          </Button>
+        ) : null,
     },
     {
       key: "update_agent_price",
@@ -165,12 +199,23 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
       />
 
       {currentSite ? (
-        <button
-          onClick={handleOpenDefaultPrice}
-          className="h-10 rounded-md bg-teal-700 px-5 text-sm font-medium text-white hover:bg-teal-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2"
-        >
-          Sửa giá mặc định đại lý
-        </button>
+        <>
+          <button
+            onClick={handleOpenDefaultPrice}
+            className="h-10 rounded-md bg-teal-700 px-5 text-sm font-medium text-white hover:bg-teal-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2"
+          >
+            Sửa giá mặc định đại lý
+          </button>
+
+          {getSideItem(currentSite.code, listSite)?.in_system ? (
+            <button
+              onClick={handleOpenProductForm}
+              className="h-10 rounded-md bg-teal-700 px-5 text-sm font-medium text-white ml-3 hover:bg-teal-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2"
+            >
+              Thêm vé mới
+            </button>
+          ) : null}
+        </>
       ) : null}
 
       <CustomTable
@@ -181,23 +226,33 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
         totalPages={totalPages}
       />
 
-      {itemAgentPrice ? (
+      {dialogType === PRODUCT_DIALOG.AGENT_PRICE && productItem ? (
         <AgentPriceModal
           listSite={listSite}
           listAgent={listAgent}
           prices={listPrice}
-          product={itemAgentPrice}
-          onClose={() => setItemAgentPrice(null)}
+          product={productItem}
+          onClose={handleCloseDailog}
         />
       ) : null}
 
-      {openDefaultDialog ? (
+      {dialogType === PRODUCT_DIALOG.DEFAULT_PRICE ? (
         <DefaultPriceModal
           listSite={listSite}
           listAgent={listAgent}
           prices={listPriceDefault}
-          onClose={() => setOpenDefaultDialog(false)}
+          onClose={handleCloseDailog}
           siteCode={currentSite?.code}
+        />
+      ) : null}
+
+      {dialogType === PRODUCT_DIALOG.PRODUC_DETAIL ? (
+        <ProductForm
+          listSite={listSite}
+          listAgent={listAgent}
+          prices={listPrice}
+          product={productItem}
+          onClose={handleCloseDailog}
         />
       ) : null}
     </main>

@@ -20,36 +20,24 @@ export default function AgentForm() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-2">
         <div>
           <h2 className="font-display text-3xl font-extrabold sm:text-4xl">
-            Trở thành đại lý của Nguyệt Hoàng
+            Trở thành đại lý của <span className="text-amber-300">Moon Price</span>
           </h2>
           <p className="mt-4 max-w-md text-white/80">
-            Bán vé cho khách của bạn, nhận hoa hồng đến 12% mỗi đơn và đối soát
-            hàng tuần. Không phí đăng ký.
+            Bán vé cho khách của bạn, nhận hoa hồng đến 12% mỗi đơn và đối soát hàng tuần. Không phí
+            đăng ký.
           </p>
         </div>
 
         {done ? (
           <div className="rounded-2xl bg-white p-8 text-ink" role="status">
-            <p className="font-display text-2xl font-bold text-ocean">
-              Đã gửi đăng ký
-            </p>
-            <p className="mt-2">
-              Chúng tôi sẽ gọi cho bạn trong vòng 24 giờ làm việc.
-            </p>
+            <p className="font-display text-2xl font-bold text-ocean">Đã gửi đăng ký</p>
+            <p className="mt-2">Chúng tôi sẽ gọi cho bạn trong vòng 24 giờ làm việc.</p>
           </div>
         ) : (
-          <form
-            onSubmit={onSubmit}
-            className="grid gap-4 rounded-2xl bg-white p-6 text-ink"
-          >
+          <form onSubmit={onSubmit} className="grid gap-4 rounded-2xl bg-white p-6 text-ink">
             <label className="grid gap-1 text-sm font-medium">
               Họ và tên
-              <input
-                name="name"
-                required
-                className={field}
-                autoComplete="name"
-              />
+              <input name="name" required className={field} autoComplete="name" />
             </label>
             <label className="grid gap-1 text-sm font-medium">
               Số điện thoại
@@ -65,13 +53,7 @@ export default function AgentForm() {
             </label>
             <label className="grid gap-1 text-sm font-medium">
               Email
-              <input
-                name="email"
-                type="email"
-                required
-                className={field}
-                autoComplete="email"
-              />
+              <input name="email" type="email" required className={field} autoComplete="email" />
             </label>
             <label className="grid gap-1 text-sm font-medium">
               Tỉnh / thành phố

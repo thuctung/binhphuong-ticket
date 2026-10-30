@@ -90,12 +90,12 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-slate-100 bg-[#FFFAF0] backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-slate-100 bg-[#FFFF] backdrop-blur-md">
         <div className=" flex  items-center justify-between px-4 py-3 md:px-6">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative transition-transform group-hover:scale-105">
               <a href="#" className="font-display text-2xl font-extrabold text-ocean">
-                Nguyệt<span className="text-lagoon">Hoàng</span>
+                <Image alt="" src="/moonlogo.png" width={52} height={44} />
               </a>
             </div>
           </Link>

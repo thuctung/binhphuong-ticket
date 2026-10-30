@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { getSiteByStatus } from "@/components/GetTicketForm/api";
 import { SiteType } from "@/types/ticket";
 import PriceMgtController from "./components/price-mgt";
-import Tabs from "../sync-product/components/Tabs";
+
 import ProductSyncTab from "./components/sync-product";
+import Tabs from "./components/sync-product/components/Tabs";
 
 const TABS = [
   { key: "manage", label: "Thông tin vé" },

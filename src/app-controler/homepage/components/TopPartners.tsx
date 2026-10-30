@@ -13,7 +13,7 @@ export default function TopAgencySection() {
               </span>
 
               <p className="mt-6 text-lg leading-8 text-slate-600">
-                Với nhiều năm kinh nghiệm trong lĩnh vực du lịch và vé tham quan, Minh Tuấn đã đồng
+                Với nhiều năm kinh nghiệm trong lĩnh vực du lịch và vé tham quan, Moon Price đã đồng
                 hành cùng hàng nghìn du khách khám phá Bà Nà Hills. Chúng tôi cam kết cung cấp vé
                 chính hãng, hỗ trợ nhanh chóng và mang đến trải nghiệm đặt vé thuận tiện nhất.
               </p>

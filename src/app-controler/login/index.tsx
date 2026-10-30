@@ -59,8 +59,8 @@ export default function Login() {
       <section className="w-full max-w-[380px] rounded-2xl border border-neutral-200 bg-white px-6 pb-6 pt-7 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.05)]">
         <div className="flex flex-col items-center text-center my-4">
           <Image
-            src="/logo1.png"
-            alt="Minh Tuan Travel"
+            src="/moonlogo.png"
+            alt="Moon Price"
             width={48}
             height={48}
             className="object-contain mix-blend-multiply"
