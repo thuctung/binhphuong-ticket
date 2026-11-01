@@ -1,4 +1,5 @@
 import { ParamStatusTicketType } from "@/app-controler/affi/ticket-statatus/type";
+import { inputCls } from "@/components/ui/const-class";
 import { ResetButton } from "@/components/ui/customs/ressetButton";
 import { SearchButton } from "@/components/ui/customs/searchButton";
 import { SelectBox } from "@/components/ui/customs/selectBox";
@@ -29,7 +30,7 @@ export function SearchBookingStatus({ onSearch }: SearchTicketStatusProps) {
             value={orderCode}
             placeholder="Mã order"
             onChange={(e) => setOrderCode(e.target.value)}
-            className="w-full p-2.5 border h-[52px] rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+            className={inputCls}
           />
         </div>
       </div>

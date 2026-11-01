@@ -8,6 +8,7 @@ import { SiteType } from "@/types/ticket";
 
 import { useState } from "react";
 import { ParamStatusTicketType } from "../type";
+import { inputCls } from "@/components/ui/const-class";
 
 type SearchTicketStatusProps = {
   onSearch: (value: ParamStatusTicketType) => void;
@@ -34,7 +35,6 @@ export function SearchTicketStatus({ listSite, onSearch }: SearchTicketStatusPro
           <SelectBox
             value={value.siteCode}
             onChange={(value) => handleChangeForm("siteCode", value)}
-            className="h-13 "
             firstOption
           >
             {listSite.map((side) => (
@@ -47,10 +47,10 @@ export function SearchTicketStatus({ listSite, onSearch }: SearchTicketStatusPro
         <div className="space-y-2">
           <input
             type="text"
+            className={inputCls}
             value={value.orderCode}
             placeholder="Mã order"
             onChange={(e) => handleChangeForm("orderCode", e.target.value)}
-            className="w-full p-2.5 border h-[52px] rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
           />
         </div>
       </div>

@@ -59,6 +59,8 @@ export type ButtonProp = {
   onClick: MouseEventHandler;
   classMore?: string;
   title?: string;
+  disabled?: boolean;
+  className?: string;
 };
 
 export type SelectBoxProps = {

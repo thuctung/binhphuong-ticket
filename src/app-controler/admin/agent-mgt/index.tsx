@@ -9,6 +9,8 @@ import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { Button } from "@/components/ui/button";
 import { useCommonStore } from "@/stores/useCommonStore";
+import { inputCls } from "@/components/ui/const-class";
+import { ResetButton } from "@/components/ui/customs/ressetButton";
 
 export default function AgentMamagement() {
   const { setToastMessage, showConfirm }: CommonType | any = useCommonStore.getState();
@@ -94,12 +96,12 @@ export default function AgentMamagement() {
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-600">Tên đại lí</label>
             <div className="relative">
-              <Input
+              <input
                 type="text"
-                className=""
+                className={inputCls}
                 placeholder=""
                 value={agentItem.name}
-                onChange={(value: string) => onChangeAgent("name", value)}
+                onChange={(e) => onChangeAgent("name", e.target.value)}
               />
             </div>
           </div>
@@ -107,12 +109,12 @@ export default function AgentMamagement() {
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-600">Mã đại lí</label>
             <div className="relative">
-              <Input
+              <input
                 type="text"
-                className=""
+                className={inputCls}
                 placeholder=""
                 value={agentItem.code}
-                onChange={(value: string) => onChangeAgent("code", value)}
+                onChange={(e) => onChangeAgent("code", e.target.value)}
               />
             </div>
           </div>
@@ -120,7 +122,7 @@ export default function AgentMamagement() {
         <div className=" flex flex-wrap justify-end  pr-3">
           <div className="flex justify-end gap-3 mt-6">
             <ButtonCommon title={agentItem.id ? "Sửa" : "Thêm"} onClick={onSubmitAgent} />
-            <ButtonCommon title="Reset" onClick={onResetForm} />
+            <ResetButton onClick={onResetForm} />
           </div>
         </div>
       </div>

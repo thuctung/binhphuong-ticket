@@ -22,13 +22,13 @@ import { SearchTicketForm } from "./components/searchTicketForm";
 import { Revenue } from "./components/Revenue";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { formatVND } from "@/helpers/money";
-import { SITE_SUB_GROUP } from "@/commons/constant";
 import { get } from "lodash";
 import { statusClass, StatusData } from "./contants";
 import { Button } from "@/components/ui/button";
 import OrderDetailDialog from "./components/OrderDetail";
 import { getSiteByStatus } from "@/components/GetTicketForm/api";
 import { SiteType } from "@/types/ticket";
+import { getSideItem } from "@/app-controler/admin/product-mgt/contants";
 
 const df_From = dayjs(new Date()).add(-30, "day").format(BASIC_DATE_FORMAT);
 const df_To = dayjs(new Date()).format(BASIC_DATE_FORMAT);
@@ -116,7 +116,7 @@ export default function AffiliateStatsControler() {
       key: "site_code",
       title: "Địa điểm",
       align: "left",
-      render: (row) => get(SITE_SUB_GROUP, row.site_code),
+      render: (row) => getSideItem(row.site_code, siteList)?.name,
     },
     {
       key: "order_code",

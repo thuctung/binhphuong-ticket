@@ -1,7 +1,5 @@
+import AffiliateMgt from "@/app-controler/admin/affiliate-mgt";
 
-import { redirect } from "next/navigation";
-
-export default async  function AdminIndexPage() {
-
-    redirect("/admin/affiliates");
+export default async function AdminIndexPage() {
+  return <AffiliateMgt />;
 }

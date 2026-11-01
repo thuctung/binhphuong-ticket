@@ -10,6 +10,7 @@ import { StatusData } from "@/app-controler/affi/stats/contants";
 import DropdownSearch from "@/components/ui/dropdown-search";
 import { ListAffDropdownType } from "../type";
 import { SiteType } from "@/types/ticket";
+import { inputCls } from "@/components/ui/const-class";
 
 type SearchTicketFormProps = {
   onChangeForm: (key: string, value: string) => void;
@@ -64,7 +65,6 @@ export function SearchReport({
             <SelectBox
               value={searchValue.status || ""}
               onChange={(value) => onChangeForm("status", value)}
-              className=" h-12"
             >
               <option value="">Tất cả</option>
               {Object.keys(StatusData).map((key: string) => (
@@ -82,7 +82,6 @@ export function SearchReport({
             <SelectBox
               value={searchValue.siteCode || ""}
               onChange={(value) => onChangeForm("siteCode", value)}
-              className=" h-12"
             >
               <option value="">Tất cả</option>
               {listSite.map((item) => (
@@ -110,24 +109,24 @@ export function SearchReport({
             <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
               <User size={14} /> Email đại lý
             </label>
-            <Input
+            <input
+              className={inputCls}
               type="text"
               placeholder="email "
               value={searchValue.email || ""}
-              className="h-12"
-              onChange={(value: string) => onChangeForm("email", value)}
+              onChange={(e) => onChangeForm("email", e.target.value)}
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
               Third party code
             </label>
-            <Input
+            <input
+              className={inputCls}
               type="text"
               placeholder=""
               value={searchValue.third_party_number || ""}
-              className="h-12"
-              onChange={(value: string) => onChangeForm("third_party_number", value)}
+              onChange={(e) => onChangeForm("third_party_number", e.target.value)}
             />
           </div>
         </div>

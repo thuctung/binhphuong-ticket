@@ -175,6 +175,9 @@ export interface ProductBanaType {
   openTime?: string;
   description?: string;
   order?: number;
+  status?: boolean;
+  category?: string;
+  min_quantity?: number;
 }
 
 export type ProductSubmitType = {

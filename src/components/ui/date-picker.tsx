@@ -1,6 +1,7 @@
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
 import DatePicker from "react-datepicker";
+import { inputCls } from "./const-class";
 
 type DatePickerCustomProps = {
   value: string;
@@ -32,7 +33,7 @@ export default function DatePickerCustom({
         onChange={onChange}
         dateFormat="dd/MM/yyyy"
         wrapperClassName="w-full"
-        className={`w-full bg-white border border-gray-100  rounded-2xl p-3 px-4 outline-none focus:ring-2 focus:ring-blue-500/20 text-gray-700 font-medium ${className}`}
+        className={`w-full ${inputCls} ${className}`}
         placeholderText="DD/MM/YYYY"
         popperPlacement="top-start"
         popperModifiers={[

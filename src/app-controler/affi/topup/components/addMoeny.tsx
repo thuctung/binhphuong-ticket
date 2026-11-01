@@ -10,6 +10,8 @@ import { Separator } from "@/components/ui/separator";
 import { formatVND } from "@/helpers/money";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType } from "@/types";
+import { inputCls } from "@/components/ui/const-class";
+import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
 
 type AddMoenyProps = {
   onSubmitTopup: (amount: number) => void;
@@ -49,25 +51,25 @@ export default function AddMoeny({ curentBalance, onSubmitTopup }: AddMoenyProps
 
         <div className="space-y-2 ">
           <Label htmlFor="amount">Số tiền nạp</Label>
-          <Input
+          <input
             id="amount"
             type="number"
             inputMode="numeric"
             min={0}
             value={amount}
+            className={inputCls}
             onChange={(e) => setAmount(Number(e.target.value))}
           />
         </div>
 
-        <Button
+        <ButtonCommon
           disabled={!canTopup}
           onClick={() => {
             handleTopup();
           }}
+          title={` Nạp ${formatVND(amount)}`}
           className="float-right"
-        >
-          Nạp {formatVND(amount)}
-        </Button>
+        />
       </CardContent>
     </Card>
   );

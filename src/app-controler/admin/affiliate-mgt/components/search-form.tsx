@@ -8,6 +8,7 @@ import { ResetButton } from "@/components/ui/customs/ressetButton";
 import { SelectBox } from "@/components/ui/customs/selectBox";
 import { Input } from "@/components/ui/customs/input";
 import { Button } from "@/components/ui/button";
+import { inputCls } from "@/components/ui/const-class";
 
 type AffiliateSearch = {
   onSearch: (value: SearchAffiType) => void;
@@ -42,19 +43,20 @@ export function AffiliateSearch({ listStatus, onSearch }: any) {
     <div>
       <div className="mmb-4 pl-4 flex flex-wrap items-center gap-3">
         <div className="space-y-2">
-          <Input
+          <input
+            className={inputCls}
             type="string"
             placeholder="Username"
             value={filters.username}
-            onChange={(value) => handleChange("username", value)}
+            onChange={(e) => handleChange("username", e.target.value)}
           />
         </div>
         <div className="space-y-2">
-          <Input
-            type="string"
+          <input
+            className={inputCls}
             placeholder="Email"
             value={filters.email}
-            onChange={(value) => handleChange("email", value)}
+            onChange={(e) => handleChange("email", e.target.value)}
           />
         </div>
         <div className="space-y-2">

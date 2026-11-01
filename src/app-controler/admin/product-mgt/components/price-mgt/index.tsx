@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 
 import { CategorySubmitType, ProductBanaType, SiteType } from "@/types/ticket";
@@ -80,6 +80,13 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
     }
     fetchListProduct(params);
   };
+
+  useEffect(() => {
+    if (params.searchValue.site_code) {
+      fetchListProduct(params);
+    }
+  }, [params.searchValue.site_code]);
+
   const handleChangePage = (page: number) => {
     setParams((pre) => {
       const newValue = { ...pre, currentPage: page };
@@ -134,12 +141,16 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
   };
 
   const handleEditProduct = async (product: ProductBanaType) => {
-    await handleOpenProductForm();
     setProductItem(product);
+    handleOpenProductForm();
   };
 
-  const handleCloseDailog = () => {
+  const handleCloseDailog = (refresh?: boolean) => {
     setDialogType("");
+    setProductItem(null);
+    if (refresh) {
+      fetchListProduct(params);
+    }
   };
 
   const columnProduct: TableColumn<ProductBanaType>[] = [
@@ -252,6 +263,8 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
           listAgent={listAgent}
           prices={listPrice}
           product={productItem}
+          listCategory={listCategory}
+          siteCode={currentSite?.code}
           onClose={handleCloseDailog}
         />
       ) : null}

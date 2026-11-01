@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useMemo, useId } from "react";
 import { ChevronDown, Search, Check, X } from "lucide-react";
+import { inputCls } from "./const-class";
 
 export interface SelectOption {
   value: string;
@@ -123,7 +124,7 @@ export default function DropdownSearch({
   }
 
   return (
-    <div ref={containerRef} className={`relative w-full h-[48px] ${className}`}>
+    <div ref={containerRef} className={`relative w-full h-[40px]  ${className}`}>
       {/* Trigger */}
       <button
         type="button"
@@ -134,14 +135,9 @@ export default function DropdownSearch({
         onClick={() => !disabled && setOpen((o) => !o)}
         onKeyDown={handleKeyDown}
         className={`
-          flex w-full h-full items-center justify-between gap-2 rounded-lg border
-          bg-white px-3 py-2 text-left text-sm shadow-sm outline-none
+          flex w-full h-full items-center justify-between gap-2 rounded-md border border-slate-300 bg-whit
+         px-3 py-2 text-left text-sm  outline-none
           transition-colors
-          ${
-            disabled
-              ? "cursor-not-allowed border-gray-200 bg-gray-50 text-gray-400"
-              : "border-gray-300 text-gray-900 hover:border-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
-          }
         `}
       >
         <span className={`truncate ${!selectedOption ? "text-gray-400" : "text-gray-900"}`}>

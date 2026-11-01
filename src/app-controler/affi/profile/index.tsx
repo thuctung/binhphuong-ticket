@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { passwordSchema, profilSchema } from "./contants";
 import { changePassword, updateProfile } from "./api";
 import { useCommonStore } from "@/stores/useCommonStore";
+import { inputCls } from "@/components/ui/const-class";
+import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
 
 export default function AffProfilePageController() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -127,45 +129,38 @@ export default function AffProfilePageController() {
                 type="text"
                 value={formForfile?.full_name || ""}
                 onChange={(e) => onChangeValue("full_name", e.target.value)}
-                className="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                className={inputCls}
               />
             </div>
             <div className="space-y-1">
               <label className="text-sm font-medium text-gray-700">Số điện thoại</label>
               <div className="relative">
-                <Phone size={16} className="absolute left-3 top-3.5 text-gray-400" />
                 <input
                   type="tel"
                   placeholder="09xx xxx xxx"
                   value={formForfile?.phone || ""}
                   onChange={(e) => onChangeValue("phone", e.target.value)}
-                  className="w-full pl-10 p-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                  className={inputCls}
                 />
                 {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
               </div>
             </div>
           </div>
 
-          <div className="space-y-1">
+          <div className="">
             <label className="text-sm font-medium text-gray-700">Địa chỉ</label>
             <div className="relative">
-              <MapPin size={16} className="absolute left-3 top-3.5 text-gray-400" />
               <input
                 type="text"
                 placeholder="Nhập địa chỉ của bạn"
                 value={formForfile?.address || ""}
                 onChange={(e) => onChangeValue("address", e.target.value)}
-                className="w-full pl-10 p-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                className={inputCls}
               />
             </div>
           </div>
 
-          <button
-            onClick={handleUpdateProfile}
-            className="bg-blue-600 text-white px-6 py-2.5 rounded-xl font-medium hover:bg-blue-700 transition-colors"
-          >
-            Lưu thay đổi
-          </button>
+          <ButtonCommon onClick={handleUpdateProfile} title="Cập nhật thông tin" />
 
           {/* Section 2: Đổi mật khẩu */}
           <div className="flex items-center gap-2 mb-2 text-red-600 font-semibold">
@@ -180,7 +175,7 @@ export default function AffProfilePageController() {
                 type="password"
                 value={password.old}
                 onChange={(e) => onChangPass("old", e.target.value)}
-                className="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-red-500 outline-none"
+                className={inputCls}
               />
               {errors.old && <p className="text-sm text-destructive">{errors.old}</p>}
             </div>
@@ -191,28 +186,23 @@ export default function AffProfilePageController() {
                   type="password"
                   value={password.newPass}
                   onChange={(e) => onChangPass("newPass", e.target.value)}
-                  className="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-red-500 outline-none"
+                  className={inputCls}
                 />
                 {errors.newPass && <p className="text-sm text-destructive">{errors.newPass}</p>}
               </div>
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Xác nhận mật khẩu</label>
                 <input
+                  className={inputCls}
                   type="password"
                   value={password.confirm}
                   onChange={(e) => onChangPass("confirm", e.target.value)}
-                  className="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-red-500 outline-none"
                 />
+                {errors.confirm && <p className="text-sm text-destructive">{errors.confirm}</p>}
               </div>
             </div>
           </div>
-
-          <button
-            onClick={handleChangePassword}
-            className="bg-red-600 text-white px-6 py-2.5 rounded-xl font-medium hover:bg-red-700 transition-colors"
-          >
-            Cập nhật mật khẩu
-          </button>
+          <ButtonCommon onClick={handleChangePassword} title="Cập nhật mật khẩu" />
         </div>
       </div>
     </>

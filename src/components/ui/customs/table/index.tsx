@@ -73,7 +73,7 @@ export function CustomTable<T>({
             ) : (
               <tr>
                 <td colSpan={7} className="px-4 py-10 text-center text-slate-500">
-                  Không tìm thấy vé nào. Thử đổi từ khóa hoặc xóa bộ lọc.
+                  Không tìm thấy dữ liệu. Thử đổi từ khóa hoặc xóa bộ lọc.
                 </td>
               </tr>
             )}

@@ -85,7 +85,7 @@ export const GET_PROD = "/api/auth/admin/sites/update-site";
 
 export const GET_PRODUCT_PARAMS = "/api/auth/admin/ticket-price/get-products";
 
-export const UPDATE_PRODUCT = "/api/auth/admin/products/update-product";
+export const UPDATE_PRODUCT = "/api/auth/admin/products/update";
 
 export const DELETE_PRODUCT = "/api/auth/admin/ticket-price/delete-product";
 

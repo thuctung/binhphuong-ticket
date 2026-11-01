@@ -43,7 +43,7 @@ export default function SideBarManager({
         <div className="flex items-center justify-between px-2 pb-1">
           <button
             onClick={onToggleCollapse}
-            className="hidden md:flex h-8 w-8 shrink-0 items-center justify-center rounded-[9px] border border-line bg-paper text-ink-soft transition-colors hover:border-red-100 hover:bg-red-50 hover:text-red-600"
+            className="hidden md:flex h-8 w-8 shrink-0 items-center justify-center rounded-[9px] border border-line  text-ink-soft transition-colors hover:border-red-100 hover:bg-red-50 hover:text-red-600"
             aria-label="Thu gọn / mở rộng menu"
           >
             {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}

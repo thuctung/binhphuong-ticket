@@ -6,9 +6,6 @@ import { AllSaleType } from "../type";
 import { AGENT, CUSTOMER } from "@/commons/constant";
 import { isEmpty } from "lodash";
 
-// ---------------------------------------------------------------------------
-// Mock data — thay bằng số liệu thật (props hoặc fetch từ API)
-// ---------------------------------------------------------------------------
 const DATA = {
   agent: { tickets: 186, amount: 55_800_000 },
   customer: { tickets: 94, amount: 21_150_000 },

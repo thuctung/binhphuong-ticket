@@ -1,5 +1,6 @@
 import { formatVND } from "@/lib/money";
 import { SiteType } from "@/types/ticket";
+import { randomBytes } from "crypto";
 
 export const fieldStyle =
   "w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20";
@@ -77,4 +78,10 @@ export const PRODUCT_DIALOG = {
   DEFAULT_PRICE: "DEFAULT_PRICE",
   AGENT_PRICE: "AGENT_PRICE",
   PRODUC_DETAIL: "PRODUC_DETAIL",
+};
+
+export const generatProductCode = (siteCode: string) => {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const bytes = randomBytes(10);
+  return `${siteCode}-${Array.from(bytes, (byte) => chars[byte % chars.length]).join("")}`;
 };

@@ -3,29 +3,14 @@
 import Link from "next/link";
 import { useEffect } from "react";
 
-import { useLang } from "@/lib/useLang";
+import { ShoppingCart, User } from "lucide-react";
 
-import {
-  Compass,
-  Sparkles,
-  Ticket,
-  Award,
-  HelpCircle,
-  Store,
-  ChevronRight,
-  X,
-  Plane,
-  User,
-} from "lucide-react";
-
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { t } from "@/lib/i18n/t";
 
 import { useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType } from "@/types";
@@ -38,6 +23,7 @@ import Image from "next/image";
 import { sv_getCurrentProfile } from "@/app-controler/login/api";
 import { UserPopup } from "./PopupUser";
 import { HeaderMobile } from "./HeaderMobile";
+import { useCartStore } from "@/stores/useCartStore";
 
 export default function Header() {
   const router = useRouter();
@@ -45,6 +31,8 @@ export default function Header() {
 
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const supabase = createSupabaseBrowserClient();
+
+  const cartCount: number = useCartStore((state) => state.items.reduce((sum, i) => sum + i.qty, 0));
 
   const { logout }: any = useProfileStore.getState();
   const { setGlobalLoading, setToastMessage }: CommonType | any = useCommonStore.getState();
@@ -132,7 +120,18 @@ export default function Header() {
           <div className="flex items-center gap-2">
             {/* Language */}
             {/* <Languages /> */}
-
+            <Link
+              href="/cart"
+              aria-label="Giỏ hàng"
+              className="relative inline-flex h-9 w-9 items-center justify-center rounded-full text-[#1c5b41] transition-colors hover:bg-slate-100 hover:text-[#fe9614]"
+            >
+              <ShoppingCart className="h-5 w-5" />
+              {cartCount > 0 && (
+                <span className="absolute -right-0.5 -top-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[#fe9614] px-1 text-[10px] font-bold leading-none text-white">
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
+            </Link>
             {!profile.user_id ? (
               <Link href="/login">
                 <User />
