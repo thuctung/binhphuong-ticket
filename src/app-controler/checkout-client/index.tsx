@@ -306,11 +306,10 @@ export default function CheckoutControlerPage() {
   }, []);
 
   return (
-    <main className="min-h-screen flex flex-col bg-background text-foreground">
-      <div className="min-h-screen bg-[#f7f7f8]">
+    <main className="min-h-screen flex flex-col text-foreground scene">
+      <div className="min-h-screen ">
         <Hero />
         <GetTicketForm onBuyTicket={confirmBuyTicket} formType={BOOKING_FORM_TYPE.CUSTOMER} />
-        <FooterFeatures />
       </div>
       {openQR && (
         <BankTransferQR

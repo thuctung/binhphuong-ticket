@@ -1,35 +1,46 @@
 // stores/useCartStore.ts
+import { ProductInCartType } from "@/types/ticket";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-export type CartItem = { id: string; name: string; price: number; qty: number };
-
 type CartState = {
-  items: CartItem[];
-  addItem: (item: CartItem) => void;
-  removeItem: (id: string) => void;
+  items: Map<string, ProductInCartType>;
+  addItem: (item: ProductInCartType) => void;
+  removeItem: (code: string) => void;
   clear: () => void;
 };
 
 export const useCartStore = create<CartState>()(
   persist(
     (set) => ({
-      items: [],
-      addItem: (item) =>
+      items: new Map(),
+      addItem: (productInCart) =>
         set((s) => {
-          const exist = s.items.find((i) => i.id === item.id);
-          return {
-            items: exist
-              ? s.items.map((i) => (i.id === item.id ? { ...i, qty: i.qty + item.qty } : i))
-              : [...s.items, item],
-          };
+          const newItems = new Map(s.items);
+          newItems.set(productInCart.product.code, productInCart);
+          return { items: newItems };
         }),
-      removeItem: (id) => set((s) => ({ items: s.items.filter((i) => i.id !== id) })),
-      clear: () => set({ items: [] }),
+      removeItem: (code) =>
+        set((s) => {
+          const newItems = new Map(s.items);
+          newItems.delete(code);
+          return { items: newItems };
+        }),
+      clear: () => set({ items: new Map() }),
     }),
     {
       name: "cart-storage",
       storage: createJSONStorage(() => sessionStorage),
+
+      partialize: (s) => ({ items: Array.from(s.items.entries()) }),
+
+      merge: (persisted, current) => {
+        const p = persisted as { items?: [string, ProductInCartType][] } | undefined;
+        return {
+          ...current,
+          items: new Map(Array.isArray(p?.items) ? p.items : []),
+        };
+      },
     }
   )
 );

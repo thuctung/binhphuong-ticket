@@ -1,17 +1,15 @@
-import { Trophy, Crown, Sparkles } from "lucide-react";
+import { TicketSlash, UserRoundPen, HandCoins } from "lucide-react";
 import Image from "next/image";
-
 const HIGHLIGHTS = [
-  { icon: Trophy, label: "Cáp treo đạt 2 kỷ lục thế giới" },
-  { icon: Crown, label: "Khung cảnh tuyệt đẹp" },
-  { icon: Sparkles, label: "Nhiều trải nghiệm hấp dẫn" },
+  { icon: TicketSlash, label: "Nhận vé nhanh chóng" },
+  { icon: UserRoundPen, label: "Đăng kí hội viên để nhận ưu đãi" },
+  { icon: HandCoins, label: "Thanh toán dễ dàng" },
 ];
-
 export default function Hero() {
   return (
     <section className="relative h-[340px] w-full overflow-hidden sm:h-[380px]">
       <Image
-        src="/cau-rong.png"
+        src="/banner-moonprice.png"
         alt="Moon Price"
         width={900}
         height={400}
@@ -21,11 +19,8 @@ export default function Hero() {
 
       <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-center px-4 sm:px-6 lg:px-8">
         <h1 className="max-w-xl text-4xl font-extrabold leading-tight text-white sm:text-5xl">
-          Khám phá Du lịch Đà Nẵng
+          Khám phá Du lịch Đà Nẵng cùng Moon Price
         </h1>
-        <p className="mt-3 max-w-md text-lg text-white/90">
-          Thiên đường giải trí và nghỉ dưỡng đẳng cấp
-        </p>
 
         <div className="mt-6 flex flex-wrap gap-3">
           {HIGHLIGHTS.map(({ icon: Icon, label }) => (

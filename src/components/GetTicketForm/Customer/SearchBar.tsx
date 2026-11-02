@@ -84,7 +84,17 @@ export default function SearchBar({
 
         <div className="mt-5 flex items-start gap-2 text-sm text-gray-500">
           <Info size={16} className="mt-0.5 shrink-0" />
-          <span>Vui lòng chọn đúng ngày sử dụng. </span>
+          <span>
+            <a
+              href="/uu-dai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-amber-600 underline"
+            >
+              Đăng kí ngay
+            </a>{" "}
+            để nhận ưu đãi
+          </span>
         </div>
       </div>
     </section>

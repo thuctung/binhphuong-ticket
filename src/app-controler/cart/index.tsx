@@ -11,6 +11,7 @@ import { CartItem, Coupon, PaymentMethodId, formatVND, CreatedOrder } from "./ty
 import { CustomerForm } from "./components/CustomerForm";
 import { CustomerInfo, EMPTY_CUSTOMER, validateCustomer } from "./components/customer";
 import { calcTotals, findCoupon } from "./calc";
+import { useCartStore } from "@/stores/useCartStore";
 
 const DRAFT_ITEMS: CartItem[] = [
   { id: "p1", name: "Vé Bà Nà Hills", desc: "Người lớn · gồm cáp treo", price: 900000, qty: 2 },
@@ -31,6 +32,12 @@ const DRAFT_ITEMS: CartItem[] = [
 ];
 
 export default function CartController() {
+  const itemsCart = useCartStore((s) => s.items);
+  console.log(
+    "🚀 ~ file: index.tsx:34 ~ CartController ~ itemsCart:",
+    itemsCart.values().toArray()
+  );
+
   const [items, setItems] = useState<CartItem[]>(DRAFT_ITEMS);
   const [coupon, setCoupon] = useState<Coupon | null>(null);
   const [couponError, setCouponError] = useState("");

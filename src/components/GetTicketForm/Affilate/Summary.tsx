@@ -159,17 +159,15 @@ export default function OrderAffSummary({
         >
           {loading ? "Đang tạo..." : "Xuất vé"}
         </button>
-        {selectedLines.length && formType === BOOKING_FORM_TYPE.AFFILATE ? (
-          <label className="mt-4 flex cursor-pointer items-center gap-2 text-sm text-[#1F3A2F]">
-            <input
-              type="checkbox"
-              checked={exportGuideTicket}
-              onChange={(e) => setExportGuideTicket?.(e.target.checked)}
-              className="h-4 w-4 rounded border-[#DCD6C2] text-[#1F3A2F] focus:ring-[#1F3A2F]"
-            />
-            <span>Xuất vé cho hướng dẫn viên</span>
-          </label>
-        ) : null}
+        <label className="mt-4 flex cursor-pointer items-center gap-2 text-sm text-[#1F3A2F]">
+          <input
+            type="checkbox"
+            checked={exportGuideTicket}
+            onChange={(e) => setExportGuideTicket?.(e.target.checked)}
+            className="h-4 w-4 rounded border-[#DCD6C2] text-[#1F3A2F] focus:ring-[#1F3A2F]"
+          />
+          <span>Xuất vé cho hướng dẫn viên</span>
+        </label>
       </div>
     </aside>
   );

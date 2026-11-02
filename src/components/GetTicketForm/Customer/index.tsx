@@ -6,14 +6,14 @@ import { CommonType } from "@/types";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { useMemo, useState } from "react";
 import SearchBar from "./SearchBar";
-import CustomerInfoForm from "./CustomerInfoForm";
-import TicketCard from "./TicketCard";
 import TicketTabs from "./TicketTabs";
 import { ProductBanaType } from "@/types/ticket";
 import { geNoteSiteCode } from "./constants";
 import OrderAffSummary from "../Affilate/Summary";
 import { getOrder } from "../Affilate/constants";
 import { SITE_CODES } from "@/commons/constant";
+import ProductCard from "./ProductCard";
+import SummaryCustomer from "./SumaryCustomer";
 
 export default function CustomerForm({
   siteCode,
@@ -89,8 +89,6 @@ export default function CustomerForm({
         />
       </div>
 
-      <CustomerInfoForm value={formData} errors={{}} onChange={setFieldFormData} />
-
       {listTicketFilter.length > 0 && (
         <main className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_360px]">
@@ -117,20 +115,19 @@ export default function CustomerForm({
                   </div>
                 </div>
                 {listTicketFilter.map((ticket) => (
-                  <TicketCard
+                  <ProductCard
                     key={ticket.code}
-                    ticket={ticket}
+                    setQty={setQty}
+                    product={ticket}
                     quantities={quantities[ticket.code]}
-                    formType={formType}
                     mapAgentPrice={mapAgentPrice}
                     agentPriceDefault={agentPriceDefault}
-                    setQty={setQty}
                   />
                 ))}
               </div>
             </div>
 
-            <OrderAffSummary
+            <SummaryCustomer
               siteName={siteName}
               dateUse={formData.date_use}
               selectedLines={selectedLines}

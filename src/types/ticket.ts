@@ -180,6 +180,11 @@ export interface ProductBanaType {
   min_quantity?: number;
 }
 
+export type ProductInCartType = {
+  product: ProductBanaType;
+  quantity: number;
+};
+
 export type ProductSubmitType = {
   productCode: string;
   siteCode: string;

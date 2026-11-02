@@ -24,6 +24,7 @@ import { sv_getCurrentProfile } from "@/app-controler/login/api";
 import { UserPopup } from "./PopupUser";
 import { HeaderMobile } from "./HeaderMobile";
 import { useCartStore } from "@/stores/useCartStore";
+import { ProductInCartType } from "@/types/ticket";
 
 export default function Header() {
   const router = useRouter();
@@ -32,8 +33,11 @@ export default function Header() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const supabase = createSupabaseBrowserClient();
 
-  const cartCount: number = useCartStore((state) => state.items.reduce((sum, i) => sum + i.qty, 0));
-
+  const cartCount = useCartStore((s) => {
+    let total = 0;
+    for (const item of s.items.values()) total += item.quantity;
+    return total;
+  });
   const { logout }: any = useProfileStore.getState();
   const { setGlobalLoading, setToastMessage }: CommonType | any = useCommonStore.getState();
 

@@ -2,11 +2,11 @@
 
 import { BOOKING_FORM_TYPE, BookingFormProps, PRODUCT_TYPE } from "../constants";
 import SearchBar from "../Customer/SearchBar";
-import TicketCard from "../Customer/TicketCard";
 import OrderAffSummary from "./Summary";
 import { getOrder } from "./constants";
 import { useMemo, useState } from "react";
 import TicketTabs from "../Customer/TicketTabs";
+import TicketCardAff from "./TicketCardAff";
 
 export default function AffilateBooking({
   siteCode,
@@ -77,8 +77,8 @@ export default function AffilateBooking({
                 {item.ticket
                   .sort((a, b) => getOrder(a?.id || 1) - getOrder(b?.id || 1))
                   .map((product) => (
-                    <div key={product.code} className="mt-5">
-                      <TicketCard
+                    <div key={product.code}>
+                      <TicketCardAff
                         ticket={product}
                         quantities={quantities[product.code]}
                         formType={formType}

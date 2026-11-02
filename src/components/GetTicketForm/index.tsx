@@ -26,12 +26,12 @@ import {
 } from "./constants";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType } from "@/types";
-import { get } from "lodash";
 import { CUSTOMER } from "@/commons/constant";
 import { useSearchParams } from "next/navigation";
 import CustomerForm from "./Customer";
 import AffilateBooking from "./Affilate";
 import { useCommonStore } from "@/stores/useCommonStore";
+import { useCartStore } from "@/stores/useCartStore";
 
 const initFormValues = {
   email: "",
@@ -53,9 +53,10 @@ export default function GetTicketForm({
   const searchParams = useSearchParams();
   const productURL = searchParams.get("product");
   const { setGlobalLoading }: CommonType | any = useCommonStore.getState();
+  const profile: ProfileType = useProfileStore((state: any) => state.profile);
+  const clearCart = useCartStore((s) => s.clear);
 
   const [quantities, setQuantities] = useState<Record<string, number>>({});
-  const profile: ProfileType = useProfileStore((state: any) => state.profile);
 
   const [listSite, setListSides] = useState<SiteType[]>([]);
   const [siteCode, setSiteCode] = useState("");
@@ -194,6 +195,7 @@ export default function GetTicketForm({
       }
       if (level) fetchPriceAgentLevelAndProducts(siteCode, level);
       setQuantities({});
+      clearCart();
     }
   }, [siteCode, profile.agent_level, formType, formData.date_use]);
 
@@ -205,6 +207,10 @@ export default function GetTicketForm({
 
   useEffect(() => {
     getSiteActive();
+  }, []);
+
+  useEffect(() => {
+    clearCart();
   }, []);
 
   const commonProps = {

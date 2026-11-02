@@ -45,6 +45,28 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --font-sans: var(--f-body);
+  --font-display: var(--f-display);
+  --color-ink: #0b2f3a;
+  --color-lagoon: #14808a;
+  --color-lagoon-dark: #0f5f68;
+  --color-foam: #e6f4f1;
+  --color-sun: #ffb32b;
+}
+
+.scene {
+  min-height: 100vh;
+  background:
+    radial-gradient(520px 520px at 85% 80px, rgba(255, 179, 43, 0.65), transparent 65%),
+    radial-gradient(800px 500px at 0% 0%, rgba(20, 128, 138, 0.7), transparent 65%),
+    linear-gradient(180deg, #0b2f3a 0, #12636d 380px, #cfe8e3 760px, #eaf5f2 100%);
+  background-repeat: no-repeat;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
 }
 
 :root {
