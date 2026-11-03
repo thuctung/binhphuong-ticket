@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { calcTotals, findCoupon } from "./calc";
 import { validateCustomer } from "./components/customer";
-import type { CartItem, PaymentMethodId } from "./types";
+import type { PaymentMethodId } from "./types";
 
 const METHODS: PaymentMethodId[] = ["qr", "card"];
 
@@ -14,7 +14,7 @@ function genOrderCode() {
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
-  const items: CartItem[] = body?.items;
+  const items: any[] = body?.items;
   const method: PaymentMethodId = body?.method;
   const couponCode: string | null = body?.couponCode ?? null;
 
