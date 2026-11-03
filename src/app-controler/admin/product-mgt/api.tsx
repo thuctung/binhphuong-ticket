@@ -138,15 +138,19 @@ export const saveAgentPriceDefault = async (listAgentPriceDefault: AgentPriceDef
   }
 };
 
-export const getListCategory = async () => {
+export const getListCategory = async (loading = true) => {
   try {
-    setGlobalLoading(true);
+    if (loading) {
+      setGlobalLoading(true);
+    }
     const { data }: any = await api.get(GET_CATEGORY);
     return data;
   } catch (error) {
     setToastMessage("Có lỗi xảy ra");
   } finally {
-    setGlobalLoading(false);
+    if (loading) {
+      setGlobalLoading(false);
+    }
   }
 };
 

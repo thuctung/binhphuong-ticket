@@ -28,7 +28,6 @@ import { useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType } from "@/types";
 import { CUSTOMER } from "@/commons/constant";
 import { useSearchParams } from "next/navigation";
-import CustomerForm from "./Customer";
 import AffilateBooking from "./Affilate";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { useCartStore } from "@/stores/useCartStore";
@@ -111,7 +110,6 @@ export default function GetTicketForm({
       fetchProductBySite(siteCode),
     ]);
     const mapAgentPrice = mapAgentPriceByProductCode(agentPrice);
-    console.log("priceDefault", priceDefault);
     setMapAgentPrice(mapAgentPrice);
     setAgentPriceDefault(priceDefault);
     setGlobalLoading(false);
@@ -235,9 +233,5 @@ export default function GetTicketForm({
     setSiteCode,
   };
 
-  return formType === BOOKING_FORM_TYPE.AFFILATE ? (
-    <AffilateBooking {...commonProps} />
-  ) : (
-    <CustomerForm {...commonProps} />
-  );
+  return <AffilateBooking {...commonProps} />;
 }

@@ -77,9 +77,10 @@ export const getPriceAgentAndMultiple = (
   let priceResult = 0;
   const isAffiliate = agentCode === BOOKING_FORM_TYPE.AFFILATE;
   const basePrice = isAffiliate ? ticket.unitPrice : ticket.publicPrice;
+
   const agentPriceItem = mapAgentPrice.get(ticket.code);
 
-  if (agentPriceItem) {
+  if (agentPriceItem && agentPriceItem.price !== 0) {
     priceResult = getPriceByType(agentPriceItem, basePrice);
   } else if (isAffiliate) {
     priceResult = basePrice + agentPriceDefault;

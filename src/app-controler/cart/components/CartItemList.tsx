@@ -42,17 +42,6 @@ export function CartItemList({ items, onIncrease, onDecrease, onRemove }: Props)
           key={item.product.code}
           className="relative flex rounded-2xl bg-white shadow-[0_12px_32px_-16px_rgba(28,91,65,0.35)] ring-1 ring-slate-900/5"
         >
-          {/* khuyết vé */}
-          <span
-            aria-hidden
-            className="absolute -top-2 left-12 h-4 w-4 sm:left-[88px] rounded-full bg-[#f3f6f4]"
-          />
-          <span
-            aria-hidden
-            className="absolute -bottom-2 left-12 h-4 w-4 sm:left-[88px] rounded-full bg-[#f3f6f4]"
-          />
-
-          {/* cuống vé */}
           <div
             className={`flex w-14 shrink-0 items-center sm:w-24 justify-center rounded-l-2xl bg-gradient-to-br bg-cover bg-center ${
               STUB_GRADIENTS[idx % STUB_GRADIENTS.length]
@@ -61,7 +50,6 @@ export function CartItemList({ items, onIncrease, onDecrease, onRemove }: Props)
            <Ticket className="h-6 w-6 text-white/90 sm:h-8 sm:w-8" />
           </div>
 
-          {/* đường xé */}
           <div aria-hidden className="my-3 border-l-2 border-dashed border-slate-200" />
 
           <div className="flex min-w-0 flex-1 flex-col justify-between gap-3 p-3 sm:p-4">

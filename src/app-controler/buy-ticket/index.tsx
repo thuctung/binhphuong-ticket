@@ -1,318 +1,210 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
 import {
-  cancleBooking,
-  customerCreateOrder,
-  customerCreateOrderTicket,
-  getListSite,
-  getTicketSunWorld,
-  senMailOrderProductInSystem,
-  updateStatusOrder,
-} from "./api";
-import {
-  ProductSubmitType,
-  SubmitSelectTicket,
-  TicketReponseType,
-  TicketResultQRType,
+  AgentPriceType,
+  CategorySubmitType,
+  ProductBanaType,
+  ResultListProductType,
+  SiteType,
 } from "@/types/ticket";
-import BankTransferQR from "../affi/topup/components/qrToBank";
-import { getBankInfo } from "@/helpers/getQRBank";
-import { CommonType, QRBankResponseType } from "@/types";
-import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
-import {
-  DB_TABLE_NAME,
-  ERROR_MESSAGE,
-  PAYMENT_STATUS,
-  SITE_CODES,
-  TYPE_TRANSFER,
-} from "@/commons/constant";
-import { LodingMessage } from "@/components/ui/loading-message";
-import { getCodeTopup } from "@/helpers/genCode";
+import { ProfileType } from "@/types";
+import { CUSTOMER, SITE_CODES } from "@/commons/constant";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
-import { ClientOrderItem, CustomerOrderType, PayloadGetTicketSunType } from "./type";
-import { downloadTicketPDF, generateThirdPartyCode } from "@/helpers/ticket";
-import { toast } from "react-toastify";
-import { KEY_MODIFY_DATA } from "../affi/stats/contants";
-import { useCommonStore } from "@/stores/useCommonStore";
-import GetTicketForm from "@/components/GetTicketForm";
-import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
-import { SendTicketInSystemMailType } from "../affi/getTicket/type";
-import { createTemplateTicketThanTaiMountain } from "../affi/getTicket/api";
-import FooterFeatures from "./components/FooterFeatures";
+import SearchBar from "./components/SearchBar";
+import { useProfileStore } from "@/stores/useProfileStore";
+import { useCartStore } from "@/stores/useCartStore";
 import Hero from "./components/Hero";
+import { FormDataType } from "./type";
 
-const initOrderData = {
-  dateUse: "",
-  orderCode: "",
-  orderId: "",
-  siteCode: "",
-  thirdPartyNum: "",
-  formData: {},
-  in_system: false,
-};
+import { getSideItem } from "../admin/product-mgt/contants";
+import {
+  getListAgentPriceDefaultBySite,
+  getPriceBuyAgentLevel,
+  getProductBySiteSun,
+  getProductionInSystem,
+} from "@/components/GetTicketForm/api";
+import TicketTabs from "./components/TicketTabs";
+import { getOrder } from "@/components/GetTicketForm/Affilate/constants";
+import { AlertCircle } from "lucide-react";
+import { geNoteSiteCode } from "@/components/GetTicketForm/Customer/constants";
+import ProductCard from "./components/ProductCard";
+import SummaryCustomer from "./components/SumaryCustomer";
+import { mapAgentPriceByProductCode } from "@/components/GetTicketForm/constants";
+import { getListCategory } from "../admin/product-mgt/api";
 
-export default function CheckoutControlerPage() {
-  const clientSupbase = createSupabaseBrowserClient();
-  const timeCancelOrderRef = useRef<NodeJS.Timeout | null>(null);
-  const [loadingMessage, setLoadingMessage] = useState("");
-  const { showConfirm }: CommonType | any = useCommonStore.getState();
+export default function BuyTicketController() {
+  const profile: ProfileType = useProfileStore((state: any) => state.profile);
 
-  const [openQR, setOpenQR] = useState(false);
+  const {
+    siteList,
+    formData,
+    siteCode,
+    items,
+    getSites,
+    clear: clearCart,
+    setFormData,
+  } = useCartStore((s) => s);
 
-  const chanenSupbase = useRef<any>(null);
+  const [listProduct, setListProductSun] = useState<ResultListProductType[]>([]);
+  const [agentPriceDefault, setAgentPriceDefault] = useState(0);
+  const [mapAgentPrice, setMapAgentPrice] = useState<Map<string, AgentPriceType>>(new Map());
+  const [listCategory, setListCategory] = useState<CategorySubmitType[]>([]);
 
-  const [currentOrderData, setCurrentOrderData] = useState<any>(initOrderData);
+  const currentSite: SiteType | null = useMemo(
+    () => getSideItem(formData.site_code, siteList),
+    [siteList, formData.site_code]
+  );
 
-  const [customerEmail, setCustomerEmail] = useState("");
+  const [filter, setFilter] = useState("");
 
-  const [productSelected, setProductSelected] = useState<ProductSubmitType[]>([]);
+  const [tickets, personTypes] = useMemo(() => {
+    let listTicket: ProductBanaType[] = [];
+    const listPersonType: string[] = [];
 
-  const [qrPaymant, setQRPayment] = useState<QRBankResponseType>({
-    qr: "",
-    code: "",
-    amount: 0,
-  });
-
-  const handleDoneQR = () => {
-    setOpenQR(false);
-  };
-
-  const cancleOrderTimeout = async (
-    orderId: string,
-    desc = ERROR_MESSAGE.PAYMENT_TIMEOUT,
-    showMesage = true
-  ) => {
-    await updateStatusOrder({
-      orderId: orderId,
-      status: KEY_MODIFY_DATA.CANCEL,
-      description: desc,
-      status_payment: KEY_MODIFY_DATA.ERROR,
+    listProduct.forEach((item) => {
+      listTicket = listTicket.concat([...item.ticket]);
+      listPersonType.push(item.personType);
     });
-    if (timeCancelOrderRef.current) {
-      clearTimeout(timeCancelOrderRef.current);
-      timeCancelOrderRef.current = null;
-    }
-    setCurrentOrderData(initOrderData);
+    return [listTicket.sort((a, b) => (a.order ?? 1) - (b.order ?? 1)), listPersonType];
+  }, [listProduct]);
 
-    if (showMesage) {
-      setLoadingMessage("");
-      toast.error("Đơn hàng đã hủy do hết thời gian thanh toán");
+  const listProductFilter = useMemo(() => {
+    let result: ProductBanaType[] = [];
+    if (!filter) {
+      result = tickets;
+    } else {
+      result = tickets.filter((item) => item.personType === filter);
     }
-    handleDoneQR();
+    if (formData.site_code === SITE_CODES.BANAHILL) {
+      return result.sort((a, b) => getOrder(a?.id || 1) - getOrder(b?.id || 1));
+    }
+    return result;
+  }, [filter, tickets, formData.site_code]);
+
+  const onChangeFormData = (key: keyof FormDataType, value: string) => {
+    const newData = { ...formData, [key]: value };
+    setFormData(newData);
   };
 
-  const confirmBuyTicket = (values: SubmitSelectTicket) => {
-    showConfirm({
-      message: "Thông tin mua vé đã đúng, xác nhận mua vé?",
-      okFunc: async () => handleBuyTicket(values),
-      textOk: "Mua",
-      onCancle: () => {
-        if (values.callback) values.callback(false);
-      },
-    });
+  const handleSearch = () => {
+    fetchProductBySite(formData.site_code);
+    clearCart();
   };
 
-  const handleBuyTicket = async (values: SubmitSelectTicket) => {
-    const { formData, totalMoney, siteCode, products, date_use, in_system, siteName, callback } =
-      values;
-    const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
-    const thirdPartyNum = generateThirdPartyCode(in_system);
-    const { email, phone, fullname }: any = formData;
-    setProductSelected(products);
-    setCustomerEmail(email);
-
-    const paramCreateOrder: CustomerOrderType = {
-      email,
-      phone,
-      fullname,
-      products,
-      thirdPartyNumber: thirdPartyNum,
-    };
-    let passProcess = true;
-    let dataOrderSunWorld: TicketReponseType | any = {};
-
-    // STEP 1: CREATE ORDER WITH SUN WORLD
-    if (!in_system) {
-      dataOrderSunWorld = await customerCreateOrder(paramCreateOrder);
-      if (!dataOrderSunWorld) {
-        passProcess = false;
-      }
-    }
-
-    // SUCCESS OF SUN WORLD
-    if (passProcess) {
-      // STEP 2: SAVE ORDER IN DATABASE WITH STATUS "pending" (WAIT PAYMENT)
-      const dataSubmit: ClientOrderItem = {
-        userEmail: email,
-        totalAmount: totalMoney,
-        dateUse: dayjs(date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT),
-        phone,
-        fullname: fullname,
-        thirdPartyNum,
-        listTicketSubmit: products,
-        siteCode,
-        paymentCode,
-        orderCode: dataOrderSunWorld.orderCode || thirdPartyNum, // in system user thirdPartyNum for ordercde
-      };
-      const orderID = await customerCreateOrderTicket(dataSubmit);
-
-      // CREATE ORDER SUCCESS: SHOW QR PAYMENT AND LISTEN PAYMENT CHANNEL (chanenSupbase.current)
-      if (orderID) {
-        const qrLink = getBankInfo(totalMoney, paymentCode);
-        setQRPayment({
-          qr: qrLink,
-          code: paymentCode,
-          amount: totalMoney,
-        });
-        setOpenQR(true);
-
-        setCurrentOrderData({
-          orderCode: dataOrderSunWorld.orderCode,
-          products,
-          orderId: orderID,
-          dateUse: date_use,
+  const fetchProductBySite = async (siteCode: string) => {
+    if (siteCode) {
+      let data: any = [];
+      if (currentSite && !currentSite.in_system) {
+        data = await getProductBySiteSun(
           siteCode,
-          formData,
-          thirdPartyNum,
-          in_system,
-          paymentCode,
-          siteName,
-        });
-        if (callback) callback(true);
-
-        // CANCLE ORDER TIMEOUT :
-        timeCancelOrderRef.current = setTimeout(() => cancleOrderTimeout(orderID), 10 * 60 * 1000); // 10m
+          dayjs(formData.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT)
+        );
+      } else {
+        data = await getProductionInSystem(siteCode);
+      }
+      if (data) {
+        setListProductSun(data);
+      } else {
+        setListProductSun([]);
       }
     }
-    if (callback) callback();
   };
 
-  const sendMailTicketInSystem = async () => {
-    const { siteCode, orderId, dateUse, formData, thirdPartyNum, siteName, products, paymentCode } =
-      currentOrderData;
-    const payload: SendTicketInSystemMailType = {
-      orderCode: thirdPartyNum,
-      dateUse,
-      email: formData.email,
-      phone: formData.phone,
-      fullName: formData.fullname,
-      paymentCode,
-      siteName,
-      listTicket: products.map((item: ProductSubmitType) => ({
-        name: item.productsName,
-        quantity: item.quantity,
-      })),
-    };
-
-    const senTicket =
-      siteCode === SITE_CODES.NUITHANTAI
-        ? createTemplateTicketThanTaiMountain
-        : senMailOrderProductInSystem;
-
-    const data = await senTicket(payload);
-    const payloadUpdate = {
-      orderId: orderId,
-      status_payment: PAYMENT_STATUS.SUCCESS,
-      status: KEY_MODIFY_DATA.ERROR,
-      description: "Lỗi đặt vé từ khách lẻ",
-    };
-    if (data) {
-      payloadUpdate.status = KEY_MODIFY_DATA.SUCCESS;
-      payloadUpdate.description = "";
-      toast.success("Đặt vé thành công");
-      setCurrentOrderData(initOrderData);
-    } else {
-      toast.error("Có lỗi xảy ra, liên hệ để được hỗ trợ");
-    }
-    updateStatusOrder(payloadUpdate);
+  const fetchPriceAgentLevelAndProducts = async (sideCode: string, level: string) => {
+    const [priceDefault, agentPrice, product]: any = await Promise.all([
+      getListAgentPriceDefaultBySite(sideCode, level),
+      getPriceBuyAgentLevel(sideCode, level),
+      fetchProductBySite(formData.site_code),
+    ]);
+    const mapAgentPrice = mapAgentPriceByProductCode(agentPrice);
+    setMapAgentPrice(mapAgentPrice);
+    setAgentPriceDefault(priceDefault);
   };
 
-  const confirmBookingSunworld = async () => {
-    const { orderCode, orderId, dateUse } = currentOrderData;
-    const paramGetTicket: PayloadGetTicketSunType = {
-      orderCode,
-      productSelected,
-      orderId,
-      dateUse,
-      customerEmail,
-    };
-
-    const ticketCustomer: TicketResultQRType[] = await getTicketSunWorld(paramGetTicket);
-    if (ticketCustomer?.length) {
-      downloadTicketPDF(ticketCustomer, []);
-      setProductSelected([]);
-      setCustomerEmail("");
-      setCurrentOrderData(initOrderData);
-      toast.success(`Vé đã được gửi qua email: ${customerEmail}`);
-    }
-  };
-
-  const getTicketSuccess = async () => {
-    handleDoneQR();
-    if (timeCancelOrderRef.current) {
-      clearTimeout(timeCancelOrderRef.current);
-      timeCancelOrderRef.current = null;
-    }
-    const { in_system } = currentOrderData;
-    if (in_system) {
-      sendMailTicketInSystem();
-      return;
-    } else {
-      confirmBookingSunworld();
-    }
-  };
-
-  const handleCancleBooking = async () => {
-    await cancleBooking(currentOrderData.orderCode);
-    cancleOrderTimeout(currentOrderData.orderId, ERROR_MESSAGE.USER_CANCLE, false);
-    handleDoneQR();
+  const fetchCategory = async () => {
+    const { data } = await getListCategory(false);
+    setListCategory(data);
   };
 
   useEffect(() => {
-    if (qrPaymant?.code) {
-      chanenSupbase.current = clientSupbase
-        .channel(`check-payment-${qrPaymant.code}`)
-        .on(
-          "postgres_changes",
-          {
-            event: "UPDATE",
-            schema: "public",
-            table: DB_TABLE_NAME.ORDERS,
-            filter: `payment_code=eq.${qrPaymant.code}`,
-          },
-          (payload) => {
-            if (payload.new.status_payment === KEY_MODIFY_DATA.SUCCESS) {
-              toast.success("Thanh toán thành công!");
-              clientSupbase.removeChannel(chanenSupbase.current);
-              getTicketSuccess();
-            } else if (payload.new.status_payment === KEY_MODIFY_DATA.ERROR) {
-              toast.error("Thanh toán thất bại! Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ");
-              handleDoneQR();
-            }
-          }
-        )
-        .subscribe((status, err) => {});
-
-      return () => {
-        clientSupbase.removeChannel(chanenSupbase.current);
-      };
-    }
-  }, [qrPaymant?.code]);
-
-  useEffect(() => {
-    getListSite();
+    fetchCategory();
   }, []);
+
+  useEffect(() => {
+    getSites();
+  }, [getSites]);
+
+  useEffect(() => {
+    if (formData.site_code) {
+      let level = CUSTOMER;
+      if (profile?.email) {
+        level = "register";
+      }
+      fetchPriceAgentLevelAndProducts(formData.site_code, level);
+    }
+  }, [formData.site_code, profile.agent_level]);
 
   return (
     <main className="min-h-screen flex flex-col text-foreground scene">
       <div className="min-h-screen ">
         <Hero />
-        <GetTicketForm onBuyTicket={confirmBuyTicket} formType={BOOKING_FORM_TYPE.CUSTOMER} />
+        <div className=" mx-auto max-w-7xl  sm:px-6 lg:px-8">
+          <SearchBar
+            formData={formData}
+            siteList={siteList}
+            onChangeFormData={onChangeFormData}
+            onSearch={handleSearch}
+          />
+          {listProductFilter.length > 0 && (
+            <main className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_360px]">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">Danh sách vé</h2>
+
+                  <div className="mt-4">
+                    <TicketTabs
+                      formType={CUSTOMER}
+                      active={filter}
+                      onChange={setFilter}
+                      listType={personTypes}
+                    />
+                  </div>
+
+                  <div className="mt-5 flex flex-col gap-4">
+                    <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-amber-100 bg-amber-50 px-4 py-3.5 text-sm text-amber-700">
+                      <AlertCircle size={18} className="mt-0.5 shrink-0" />
+                      <div>
+                        <p className="font-medium">{geNoteSiteCode(siteCode)}</p>
+                        <p className="mt-0.5 text-amber-600/90">
+                          Vui lòng mang theo giấy tờ tuỳ thân để được kiểm tra khi cần thiết.
+                        </p>
+                      </div>
+                    </div>
+                    {listProductFilter.map((ticket) => (
+                      <ProductCard
+                        lisCategory={listCategory}
+                        key={ticket.code}
+                        product={ticket}
+                        mapAgentPrice={mapAgentPrice}
+                        agentPriceDefault={agentPriceDefault}
+                        quantity={items?.get(ticket?.code)?.quantity || 0}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <SummaryCustomer
+                  siteName={currentSite?.name || ""}
+                  mapAgentPrice={mapAgentPrice}
+                  agentPriceDefault={agentPriceDefault}
+                />
+              </div>
+            </main>
+          )}
+        </div>
       </div>
-      
-      <LodingMessage loading={Boolean(loadingMessage)} messsage={loadingMessage} />
     </main>
   );
 }
