@@ -7,18 +7,26 @@ import { CartItemList } from "./components/CartItemList";
 import { OrderSummary } from "./components/OrderSummary";
 import { PaymentMethods } from "./components/PaymentMethods";
 import { RouteDecor } from "./components/RouteDecor";
-import {  Coupon, PaymentMethodId,  CreatedOrder } from "./types";
+import { Coupon, PaymentMethodId, CreatedOrder } from "./types";
 import { CustomerForm } from "./components/CustomerForm";
 import { CustomerInfo, EMPTY_CUSTOMER, validateCustomer } from "./components/customer";
 import { calcTotals, findCoupon } from "./calc";
 import { useCartStore } from "@/stores/useCartStore";
 import { ProductInCartType } from "@/types/ticket";
 
-
 export default function CartController() {
-  const itemsCart = useCartStore((s) => s.items).values()?.toArray();
+  const {
+    siteList,
+    formData,
+    siteCode,
+    items,
+    getSites,
+    clear: clearCart,
+    setFormData,
+  } = useCartStore((s) => s);
 
-  const [items, setItems] = useState<ProductInCartType[]>(itemsCart);
+  const itemsCart = items?.values()?.toArray();
+
   const [coupon, setCoupon] = useState<Coupon | null>(null);
   const [couponError, setCouponError] = useState("");
   const [payment, setPayment] = useState<PaymentMethodId | null>("qr");
@@ -30,13 +38,9 @@ export default function CartController() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  const increase = (id: string) =>{
-
-  }
-  const decrease = (id: string) =>{}
-  const remove = (id: string) => {
-
-  }
+  const increase = (id: string) => {};
+  const decrease = (id: string) => {};
+  const remove = (id: string) => {};
 
   const applyCoupon = (code: string) => {
     const found = findCoupon(code);
@@ -54,9 +58,7 @@ export default function CartController() {
   };
 
   const customerErrors = useMemo(() => validateCustomer(customer), [customer]);
-  const canCheckout = items.length > 0 && !!payment && !submitting;
-
-
+  const canCheckout = itemsCart.length > 0 && !!payment && !submitting;
 
   const handleCheckout = async () => {
     // Đã có QR -> khách báo đã chuyển khoản, sang trang kết quả theo mã đơn
@@ -80,7 +82,7 @@ export default function CartController() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          items,
+          itemsCart,
           couponCode: coupon?.code ?? null,
           method: payment,
           customer,
@@ -106,7 +108,7 @@ export default function CartController() {
     ? "Đang xử lý..."
     : order
       ? "Tôi đã chuyển khoản"
-      : `Thanh toán ${items.length > 0 ? 123232 : ""}`;
+      : `Thanh toán ${itemsCart.length > 0 ? 123232 : ""}`;
 
   return (
     <div className="min-h-screen bg-[#f3f6f4]">
@@ -120,8 +122,8 @@ export default function CartController() {
         <div className="relative mx-auto max-w-6xl px-4 md:px-6">
           <h1 className="text-2xl font-extrabold text-white sm:text-3xl md:text-4xl">Giỏ hàng</h1>
           <p className="mt-2 text-sm text-white/70 md:text-base">
-            {items.length > 0
-              ? `${items.length} vé đang chờ bạn thanh toán`
+            {itemsCart.length > 0
+              ? `${itemsCart.length} vé đang chờ bạn thanh toán`
               : "Chưa có vé nào được chọn"}
           </p>
         </div>
@@ -157,7 +159,6 @@ export default function CartController() {
 
           <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
             <PaymentMethods value={payment} onChange={setPayment} order={order} />
-
             <button
               type="button"
               onClick={handleCheckout}
@@ -168,7 +169,7 @@ export default function CartController() {
             </button>
 
             {error && <p className="text-center text-sm text-red-500">{error}</p>}
-            {items.length > 0 && !payment && (
+            {itemsCart.length > 0 && !payment && (
               <p className="text-center text-sm text-slate-500">
                 Chọn phương thức thanh toán để tiếp tục.
               </p>

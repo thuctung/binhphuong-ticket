@@ -85,6 +85,9 @@ export default function BuyTicketController() {
   }, [filter, tickets, formData.site_code]);
 
   const onChangeFormData = (key: keyof FormDataType, value: string) => {
+    if (value !== formData.site_code) {
+      clearCart();
+    }
     const newData = { ...formData, [key]: value };
     setFormData(newData);
   };
@@ -125,8 +128,10 @@ export default function BuyTicketController() {
   };
 
   const fetchCategory = async () => {
-    const { data } = await getListCategory(false);
-    setListCategory(data);
+    const data = await getListCategory(false);
+    if (data?.data) {
+      setListCategory(data.data);
+    }
   };
 
   useEffect(() => {
@@ -145,7 +150,7 @@ export default function BuyTicketController() {
       }
       fetchPriceAgentLevelAndProducts(formData.site_code, level);
     }
-  }, [formData.site_code, profile.agent_level]);
+  }, [formData.site_code, profile.email]);
 
   return (
     <main className="min-h-screen flex flex-col text-foreground scene">

@@ -20,8 +20,8 @@ type Props = {
   quantity: number;
   lisCategory: CategorySubmitType[];
 };
-const max = 20;
-
+const MAX = 99;
+const MIN = 0;
 export default function ProductCard({
   product,
   quantity,
@@ -33,11 +33,29 @@ export default function ProductCard({
   const [tampQty, setTempQty] = useState(quantity);
   const [openDetail, setOpenDetail] = useState(false);
 
+  const step = Math.max(1, product.multiple || 1);
+  const maxQty = Math.floor(MAX / step) * step;
+
+  const normalize = (n: number) => {
+    const snapped = Math.round(n / step) * step;
+    return Math.min(maxQty, Math.max(MIN, snapped));
+  };
+
   const handleAddCart = () => {
     if (tampQty > 0) {
       setCartItems({ product, quantity: tampQty });
     }
   };
+
+  const handleIncrease = () => setTempQty((prev) => normalize(prev + step));
+
+  const handleDecrease = () => setTempQty((prev) => normalize(prev - step));
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    setTempQty(Number.isNaN(value) ? 0 : Math.min(MAX, Math.max(MIN, value)));
+  };
+  const handleInputBlur = () => setTempQty((prev) => normalize(prev));
 
   return (
     <article className="flex flex-col overflow-hidden rounded-3xl bg-white p-3 shadow-lg shadow-ink/10 md:flex-row md:gap-5 md:p-4">
@@ -108,7 +126,7 @@ export default function ProductCard({
                 aria-label="Giảm số lượng"
                 className={stepBtn}
                 disabled={!tampQty}
-                onClick={() => setTempQty((pre) => (pre > 0 ? pre - product.multiple : pre))}
+                onClick={handleDecrease}
               >
                 −
               </button>
@@ -116,26 +134,26 @@ export default function ProductCard({
                 type="number"
                 inputMode="numeric"
                 min={1}
-                max={max}
+                max={MAX}
                 aria-label="Số lượng"
                 value={tampQty}
-                onChange={(e) =>
-                  setTempQty(
-                    parseInt(e.target.value, 10) > max ? max : parseInt(e.target.value, 10) || 0
-                  )
-                }
+                onChange={handleInputChange}
+                onBlur={handleInputBlur}
                 className="h-9 w-12 text-center text-base font-semibold outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               />
               <button
                 type="button"
                 aria-label="Tăng số lượng"
                 className={stepBtn}
-                disabled={tampQty >= max}
-                onClick={() => setTempQty((pre) => (pre < max ? pre + product.multiple : pre))}
+                disabled={tampQty >= MAX}
+                onClick={handleIncrease}
               >
                 +
               </button>
             </div>
+          </div>
+          <div>
+            <span>Vé phải là bội của: ${product.multiple}</span>
           </div>
 
           {/* Hành động */}

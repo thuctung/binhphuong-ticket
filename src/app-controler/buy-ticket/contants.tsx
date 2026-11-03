@@ -40,5 +40,7 @@ export const getImageProduct = (product: ProductBanaType) => {
       }
       return "/ba-na/ve-thuong.png";
     }
+    default:
+      return "/ba-na/ve-thuong.png";
   }
 };
