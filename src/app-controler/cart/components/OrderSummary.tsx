@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { Tag, X, Check } from "lucide-react";
-import { Coupon, formatVND } from "../types";
+import { Coupon } from "../types";
+import { formatVND } from "@/lib/money";
 
 type Props = {
   subtotal: number;

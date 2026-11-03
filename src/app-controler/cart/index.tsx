@@ -7,38 +7,18 @@ import { CartItemList } from "./components/CartItemList";
 import { OrderSummary } from "./components/OrderSummary";
 import { PaymentMethods } from "./components/PaymentMethods";
 import { RouteDecor } from "./components/RouteDecor";
-import { CartItem, Coupon, PaymentMethodId, formatVND, CreatedOrder } from "./types";
+import {  Coupon, PaymentMethodId,  CreatedOrder } from "./types";
 import { CustomerForm } from "./components/CustomerForm";
 import { CustomerInfo, EMPTY_CUSTOMER, validateCustomer } from "./components/customer";
 import { calcTotals, findCoupon } from "./calc";
 import { useCartStore } from "@/stores/useCartStore";
+import { ProductInCartType } from "@/types/ticket";
 
-const DRAFT_ITEMS: CartItem[] = [
-  { id: "p1", name: "Vé Bà Nà Hills", desc: "Người lớn · gồm cáp treo", price: 900000, qty: 2 },
-  {
-    id: "p2",
-    name: "Vé tham quan phố cổ Hội An",
-    desc: "Dùng trong 24 giờ",
-    price: 120000,
-    qty: 2,
-  },
-  {
-    id: "p3",
-    name: "Vé cano Cù Lao Chàm",
-    desc: "Khứ hồi · khởi hành 8:00",
-    price: 350000,
-    qty: 1,
-  },
-];
 
 export default function CartController() {
-  const itemsCart = useCartStore((s) => s.items);
-  console.log(
-    "🚀 ~ file: index.tsx:34 ~ CartController ~ itemsCart:",
-    itemsCart.values().toArray()
-  );
+  const itemsCart = useCartStore((s) => s.items).values()?.toArray();
 
-  const [items, setItems] = useState<CartItem[]>(DRAFT_ITEMS);
+  const [items, setItems] = useState<ProductInCartType[]>(itemsCart);
   const [coupon, setCoupon] = useState<Coupon | null>(null);
   const [couponError, setCouponError] = useState("");
   const [payment, setPayment] = useState<PaymentMethodId | null>("qr");
@@ -50,11 +30,13 @@ export default function CartController() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  const increase = (id: string) =>
-    setItems((prev) => prev.map((i) => (i.id === id ? { ...i, qty: i.qty + 1 } : i)));
-  const decrease = (id: string) =>
-    setItems((prev) => prev.map((i) => (i.id === id ? { ...i, qty: Math.max(1, i.qty - 1) } : i)));
-  const remove = (id: string) => setItems((prev) => prev.filter((i) => i.id !== id));
+  const increase = (id: string) =>{
+
+  }
+  const decrease = (id: string) =>{}
+  const remove = (id: string) => {
+
+  }
 
   const applyCoupon = (code: string) => {
     const found = findCoupon(code);
@@ -71,16 +53,10 @@ export default function CartController() {
     setCouponError("");
   };
 
-  const { subtotal, discount, total } = useMemo(() => calcTotals(items, coupon), [items, coupon]);
   const customerErrors = useMemo(() => validateCustomer(customer), [customer]);
-  const totalQty = items.reduce((s, i) => s + i.qty, 0);
   const canCheckout = items.length > 0 && !!payment && !submitting;
 
-  // Giỏ hàng / mã / phương thức đổi -> QR cũ không còn đúng số tiền, bỏ đi
-  useEffect(() => {
-    setOrder(null);
-    setError("");
-  }, [total, payment, customer]);
+
 
   const handleCheckout = async () => {
     // Đã có QR -> khách báo đã chuyển khoản, sang trang kết quả theo mã đơn
@@ -130,7 +106,7 @@ export default function CartController() {
     ? "Đang xử lý..."
     : order
       ? "Tôi đã chuyển khoản"
-      : `Thanh toán ${items.length > 0 ? formatVND(total) : ""}`;
+      : `Thanh toán ${items.length > 0 ? 123232 : ""}`;
 
   return (
     <div className="min-h-screen bg-[#f3f6f4]">
@@ -145,7 +121,7 @@ export default function CartController() {
           <h1 className="text-2xl font-extrabold text-white sm:text-3xl md:text-4xl">Giỏ hàng</h1>
           <p className="mt-2 text-sm text-white/70 md:text-base">
             {items.length > 0
-              ? `${totalQty} vé đang chờ bạn thanh toán`
+              ? `${items.length} vé đang chờ bạn thanh toán`
               : "Chưa có vé nào được chọn"}
           </p>
         </div>
@@ -156,7 +132,7 @@ export default function CartController() {
           <div className="space-y-4">
             <section aria-label="Vé đã chọn">
               <CartItemList
-                items={items}
+                items={itemsCart}
                 onIncrease={increase}
                 onDecrease={decrease}
                 onRemove={remove}
@@ -169,9 +145,9 @@ export default function CartController() {
               showAllErrors={submitted}
             />
             <OrderSummary
-              subtotal={subtotal}
-              discount={discount}
-              total={total}
+              subtotal={0}
+              discount={0}
+              total={1000}
               appliedCoupon={coupon}
               couponError={couponError}
               onApplyCoupon={applyCoupon}

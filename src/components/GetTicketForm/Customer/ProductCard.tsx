@@ -74,7 +74,7 @@ export default function ProductCard({
         </h3>
         <p className="mt-1.5 flex items-center gap-1.5 text-ink/60">
           <PinIcon />
-          <span className="text-sm">{product.site_code}</span>
+          <span className="text-sm">{product.restaurantName}</span>
         </p>
 
         <div className="mt-auto">

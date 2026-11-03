@@ -5,13 +5,14 @@ import DropdownSearch from "@/components/ui/dropdown-search";
 import { SiteType } from "@/types/ticket";
 import { Info, Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { toDate } from "../constants";
+import { BOOKING_FORM_TYPE, toDate } from "../constants";
 
 type SearchBarProp = {
   siteCode: string;
   setSiteCode: (value: string) => void;
   listSite: SiteType[];
   dateUse: string;
+  formType?: string;
   setDateUse: (value: string) => void;
 };
 
@@ -21,6 +22,7 @@ export default function SearchBar({
   setDateUse,
   setSiteCode,
   listSite,
+  formType,
 }: SearchBarProp) {
   const [state, setState] = useState({
     siteCode: siteCode,
@@ -82,20 +84,22 @@ export default function SearchBar({
           </button>
         </div>
 
-        <div className="mt-5 flex items-start gap-2 text-sm text-gray-500">
-          <Info size={16} className="mt-0.5 shrink-0" />
-          <span>
-            <a
-              href="/uu-dai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-amber-600 underline"
-            >
-              Đăng kí ngay
-            </a>{" "}
-            để nhận ưu đãi
-          </span>
-        </div>
+        {formType === BOOKING_FORM_TYPE.CUSTOMER ? (
+          <div className="mt-5 flex items-start gap-2 text-sm text-gray-500">
+            <Info size={16} className="mt-0.5 shrink-0" />
+            <span>
+              <a
+                href="/uu-dai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-amber-600 underline"
+              >
+                Đăng kí ngay
+              </a>{" "}
+              để nhận ưu đãi
+            </span>
+          </div>
+        ) : null}
       </div>
     </section>
   );

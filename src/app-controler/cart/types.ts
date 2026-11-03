@@ -1,11 +1,4 @@
-export type CartItem = {
-  id: string;
-  name: string;
-  desc?: string;
-  image?: string; // URL ảnh, bỏ trống sẽ hiện ô màu
-  price: number;
-  qty: number;
-};
+
 
 export type Coupon = {
   code: string;
@@ -16,8 +9,6 @@ export type Coupon = {
 
 export type PaymentMethodId = "qr" | "card";
 
-export const formatVND = (n: number) =>
-  new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(n);
 
 // Kết quả server trả về sau khi tạo đơn
 export type CreatedOrder = {

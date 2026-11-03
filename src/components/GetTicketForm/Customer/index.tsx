@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertCircle } from "lucide-react";
-import { BookingFormProps, CustomerInfoSchema } from "../constants";
+import { BOOKING_FORM_TYPE, BookingFormProps, CustomerInfoSchema } from "../constants";
 import { CommonType } from "@/types";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { useMemo, useState } from "react";
@@ -86,6 +86,7 @@ export default function CustomerForm({
           setSiteCode={setSiteCode}
           dateUse={formData.date_use}
           setDateUse={(value) => setFieldFormData("date_use", value)}
+          formType={BOOKING_FORM_TYPE.CUSTOMER}
         />
       </div>
 

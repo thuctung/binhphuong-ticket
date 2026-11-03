@@ -3,9 +3,7 @@ import { create } from "zustand";
 
 export const useCommonStore = create((set) => ({
   loadingGlobal: false,
-
   messageToast: "",
-
   confirm: {
     message: "",
     okFunc: null,

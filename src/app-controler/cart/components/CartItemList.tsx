@@ -2,7 +2,8 @@
 
 import { Minus, Plus, Trash2, Ticket } from "lucide-react";
 import Link from "next/link";
-import { CartItem, formatVND } from "../types";
+import { ProductInCartType } from "@/types/ticket";
+import { formatVND } from "@/lib/money";
 
 const STUB_GRADIENTS = [
   "from-[#1c5b41] to-[#2f8a63]",
@@ -11,7 +12,7 @@ const STUB_GRADIENTS = [
 ];
 
 type Props = {
-  items: CartItem[];
+  items: ProductInCartType[];
   onIncrease: (id: string) => void;
   onDecrease: (id: string) => void;
   onRemove: (id: string) => void;
@@ -38,16 +39,15 @@ export function CartItemList({ items, onIncrease, onDecrease, onRemove }: Props)
     <ul className="space-y-3">
       {items.map((item, idx) => (
         <li
-          key={item.id}
+          key={item.product.code}
           className="relative flex rounded-2xl bg-white shadow-[0_12px_32px_-16px_rgba(28,91,65,0.35)] ring-1 ring-slate-900/5"
         >
           <div
             className={`flex w-14 shrink-0 items-center sm:w-24 justify-center rounded-l-2xl bg-gradient-to-br bg-cover bg-center ${
               STUB_GRADIENTS[idx % STUB_GRADIENTS.length]
             }`}
-            style={item.image ? { backgroundImage: `url(${item.image})` } : undefined}
           >
-            {!item.image && <Ticket className="h-6 w-6 text-white/90 sm:h-8 sm:w-8" />}
+           <Ticket className="h-6 w-6 text-white/90 sm:h-8 sm:w-8" />
           </div>
 
           <div aria-hidden className="my-3 border-l-2 border-dashed border-slate-200" />
@@ -56,14 +56,17 @@ export function CartItemList({ items, onIncrease, onDecrease, onRemove }: Props)
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="line-clamp-2 font-semibold leading-snug text-slate-900">
-                  {item.name}
+                  {item.product.name} 
                 </p>
-                {item.desc && <p className="truncate text-sm text-slate-500">{item.desc}</p>}
+                  {item.product.restaurantName || ''} 
+
+                {/* {item.desc && <p className="truncate text-sm text-slate-500">{item.desc}</p>} */}
               </div>
               <button
                 type="button"
-                onClick={() => onRemove(item.id)}
-                aria-label={`Xóa ${item.name}`}
+                onClick={() => onRemove(item.product.code)}
+                aria-label={`Xóa ${item.product.name}`}
+
                 className="rounded-full p-1.5 text-slate-400 transition-colors hover:bg-red-50 hover:text-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#fe9614]"
               >
                 <Trash2 className="h-4 w-4" />
@@ -74,19 +77,19 @@ export function CartItemList({ items, onIncrease, onDecrease, onRemove }: Props)
               <div className="inline-flex items-center rounded-full border border-slate-200">
                 <button
                   type="button"
-                  onClick={() => onDecrease(item.id)}
-                  disabled={item.qty <= 1}
+                  onClick={() => onDecrease(item.product.code)}
+                  disabled={item.quantity <= 1}
                   aria-label="Giảm số lượng"
                   className="flex h-8 w-8 items-center justify-center rounded-full text-slate-600 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <Minus className="h-4 w-4" />
                 </button>
                 <span className="w-8 text-center text-sm font-semibold tabular-nums">
-                  {item.qty}
+                  {item.quantity}
                 </span>
                 <button
                   type="button"
-                  onClick={() => onIncrease(item.id)}
+                  onClick={() => onIncrease(item.product.code)}
                   aria-label="Tăng số lượng"
                   className="flex h-8 w-8 items-center justify-center rounded-full text-slate-600 hover:bg-slate-100"
                 >
@@ -96,11 +99,11 @@ export function CartItemList({ items, onIncrease, onDecrease, onRemove }: Props)
 
               <div className="ml-auto text-right">
                 <p className="text-[15px] font-bold text-[#1c5b41] tabular-nums sm:text-base">
-                  {formatVND(item.price * item.qty)}
+                  {formatVND(item.product.unitPrice * item.quantity)}
                 </p>
-                {item.qty > 1 && (
+                {item.quantity > 1 && (
                   <p className="text-xs text-slate-400 tabular-nums">
-                    {formatVND(item.price)} / vé
+                    {formatVND(item.product.unitPrice)} / vé
                   </p>
                 )}
               </div>
