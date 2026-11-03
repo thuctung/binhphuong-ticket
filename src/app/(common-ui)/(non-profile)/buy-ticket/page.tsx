@@ -1,5 +1,5 @@
-import CheckoutControlerPage from "@/app-controler/checkout-client";
+import BuyTicketController from "@/app-controler/buy-ticket";
 
 export default function CheckoutPage() {
-  return <CheckoutControlerPage />;
+  return <BuyTicketController />;
 }
