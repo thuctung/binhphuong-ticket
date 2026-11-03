@@ -5,6 +5,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 type CartState = {
   items: Map<string, ProductInCartType>;
+  siteCode: string;
   addItem: (item: ProductInCartType) => void;
   removeItem: (code: string) => void;
   clear: () => void;
@@ -14,6 +15,8 @@ export const useCartStore = create<CartState>()(
   persist(
     (set) => ({
       items: new Map(),
+      siteCode: "",
+      setSiteCode: (code: string) => set({ siteCode: code }),
       addItem: (productInCart) =>
         set((s) => {
           const newItems = new Map(s.items);

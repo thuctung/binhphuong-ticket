@@ -1,7 +1,8 @@
 "use client";
 
 import { QrCode, CreditCard, ShieldCheck } from "lucide-react";
-import { CreatedOrder, PaymentMethodId, formatVND } from "../types";
+import { CreatedOrder, PaymentMethodId } from "../types";
+import { formatVND } from "@/lib/money";
 
 // Thay bằng tài khoản nhận tiền của bạn (hoặc đặt trong .env)
 const BANK = {
