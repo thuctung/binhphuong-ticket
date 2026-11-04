@@ -2,12 +2,10 @@ import api from "@/axios";
 import {
   ADMIN_GET_SALE_SUMARY,
   COUNT_REPORT,
-  GET_ADMIN_REPORT,
-  SUN_GET_BALANCE,
 } from "@/commons/apiURL";
 import { BASIC_DATE_FORMAT, dayjsEx, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import { useCommonStore } from "@/stores/useCommonStore";
-import { AdminSearchReport, CommonType, SearchDateRangePayload, SearchTableType } from "@/types";
+import { CommonType, SearchDateRangePayload,  } from "@/types";
 import dayjs from "dayjs";
 import { get } from "lodash";
 import { SearchSalteSumamryType } from "./type";
@@ -33,20 +31,7 @@ export const countReportAdmin = async (from: string, to: string) => {
   }
 };
 
-export const getCurrentMoeny = async () => {
-  try {
-    const { data } = await api.get(SUN_GET_BALANCE);
 
-    if (data.errors?.[0]) {
-      setToastMessage(data.errors?.[0]);
-    }
-    return data.result;
-  } catch (error) {
-    setToastMessage("Có lỗi xảy ra");
-  } finally {
-    setGlobalLoading(false);
-  }
-};
 
 export const getSaleSumary = async (payload: SearchSalteSumamryType) => {
   try {

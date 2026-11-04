@@ -6,6 +6,7 @@ export type ParamStatusTicketType = {
 export type TicketStatusType = {
   productName: string;
   siteCode: string;
+  status:string;
   ticketNumber: string;
   usageStatus: string;
   productCode: string;

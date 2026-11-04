@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatVND } from "@/helpers/money";
 import {
   downloadTicketPDF,
@@ -18,7 +18,7 @@ import { get, isEmpty } from "lodash";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import TriCheckbox from "./ticket-checkbox";
-import { STATUS_MAP } from "../../../constant";
+import { STATUS_MAP, StatusData } from "../../../constant";
 import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
 import {
   CheckChargeRefundType,
@@ -84,12 +84,16 @@ function ChevronIcon({ open }: { open: boolean }) {
 export default function BookingDetailCard({
   booking,
   onReloadData,
+  onFetchMoney,
+  userEmail
 }: {
   booking: TicketReponseType;
   onReloadData: Function;
+  onFetchMoney:Function;
+  userEmail:string;
 }) {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
-  const { orderCode, orderStatus, pnr, referenceCode, thirdPartyNumber, items = [] } = booking;
+  const { orderCode, orderStatus, pnr, referenceCode, thirdPartyNumber, items = [],totalOrderPrice } = booking;
 
   const [open, setOpen] = useState(true);
   const [refundOpen, setRefundOpen] = useState(false);
@@ -140,6 +144,10 @@ export default function BookingDetailCard({
     });
 
   const checkChargeRefund = async () => {
+     if (!listSelected.length) {
+      toast.warning("Chọn vé cần kiểm tra");
+      return;
+    }
     const params: CheckChargeRefundType = {
       returnDate: usageDate,
       thirdPartyNumber,
@@ -154,6 +162,10 @@ export default function BookingDetailCard({
       setRefundOpen(true);
     }
   };
+
+  const refundMoneyAff = async (moeny:number) => {
+    
+  }
 
   const handleRefundTicket = async () => {
     setLoading(true);
@@ -174,7 +186,8 @@ export default function BookingDetailCard({
     };
     const data = await refundTicket(params);
     if (data) {
-      toast.success("Hoàn vé thành công");
+      toast.success("Hoàn vé thành công"); 
+      if(onFetchMoney)onFetchMoney();
       onReloadData();
       handleCheckStatusTicket();
       setRefundOpen(false);
@@ -206,6 +219,13 @@ export default function BookingDetailCard({
     }
     return "";
   };
+
+  useEffect(() => {
+    setRefundData(null);
+    setStatusTicketMap({});
+    setRefundData(null);
+    setSelected(new Set([]))
+  },[booking])
   return (
     <div className="w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       {orderStatus === "success" && (
@@ -219,15 +239,18 @@ export default function BookingDetailCard({
         </div>
       )}
 
-      <div className="flex items-start justify-between gap-3 px-5 pt-5">
+      <div className="flex items-start  gap-3 px-5 pt-5">
         <div>
           <p className="text-[11px] uppercase tracking-wide text-slate-400">Mã đơn hàng</p>
           <p className="font-mono text-base font-semibold text-slate-900">{orderCode}</p>
         </div>
+        
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 px-5">
+        <InfoField label="Tổng tiền" value={formatVND(totalOrderPrice)} />
         <InfoField label="Mã PNR" value={pnr} />
+        <InfoField label="Email booking" value={userEmail} />
         <InfoField label="Reference code" value={referenceCode} />
         <InfoField label="Third-party code" value={thirdPartyNumber} />
         <InfoField label="Trạng thái" value={<StatusBadge status={orderStatus} />} mono={false} />
@@ -235,6 +258,7 @@ export default function BookingDetailCard({
 
       <div className="flex justify-end gap-[20px]  px-[10px] py-5">
         <ButtonCommon title="Xem phí hoàn vé" onClick={checkChargeRefund} />
+        <ButtonCommon title="Hoàn vé" onClick={handleRefundTicket} />
         <ButtonCommon title="Xem trạng thái vé" onClick={handleCheckStatusTicket} />
       </div>
 
@@ -282,7 +306,7 @@ export default function BookingDetailCard({
                       <span className="text-sm font-medium text-slate-800">{p.productName}</span>
                     )}
                     <span className="rounded-md bg-slate-200 px-2 py-0.5 font-mono text-xs font-medium text-slate-600">
-                      x{p.quantity}
+                     {formatVND(p.unitPrice)} x{p.quantity}
                     </span>
                   </div>
 
@@ -314,7 +338,7 @@ export default function BookingDetailCard({
                                       : "bg-slate-100 text-red-500"
                                   }`}
                                 >
-                                  {getStatusTicket(t.ticketNumber)}
+                                  {StatusData [getStatusTicket(t.ticketNumber)]}
                                 </span>
                               ) : null}
                             </div>

@@ -45,6 +45,14 @@ export default function TicketStatus({ listSideSun }: { listSideSun: SiteType[] 
       title: "Mã vé ",
     },
     {
+      key: "status",
+      title: "Hiệu lực",
+      align: "center",
+      render: (row) => (
+        <span className={statusClass[row.status]}>{get(StatusData, row.status)}</span>
+      ),
+    },
+{
       key: "usageStatus",
       title: "Trạng thái",
       align: "center",
@@ -52,7 +60,6 @@ export default function TicketStatus({ listSideSun }: { listSideSun: SiteType[] 
         <span className={statusClass[row.usageStatus]}>{get(StatusData, row.usageStatus)}</span>
       ),
     },
-
     {
       key: "validDateFrom",
       title: "Ngày hiệu lực",

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
-import { getStatusBooking, refundTicket } from "../../api";
+import { getProfileOrder, getStatusBooking, refundTicket } from "../../api";
 import { toast } from "react-toastify";
 import { SearchBookingStatus } from "./components/searchTicketForm";
 import BookingDetailCard from "./components/bookingDetail";
@@ -13,47 +13,29 @@ import { TicketReponseType } from "@/types/ticket";
 import { RefuncTicketSubmitType } from "../../type";
 import { generateThirdPartyCodeRefund } from "@/helpers/ticket";
 
-export default function AdminBookingStatus() {
+export default function AdminBookingStatus({onFetchMoney}:{onFetchMoney:Function}) {
   const [bookingDetail, setBookingDetail] = useState<TicketReponseType>();
 
   const [orderCode, setOrderCode] = useState("");
+  const [userEmail, setUserEmail] = useState("")
 
   const handleSearch = async () => {
     if (!orderCode) {
       toast.error("Chưa nhập thông tin");
       return;
     }
-    const data = await getStatusBooking(orderCode);
-    setBookingDetail(data);
+    const [resBooking, resProfile] = await Promise.all([ getStatusBooking(orderCode),getProfileOrder(orderCode)]);
+    setBookingDetail(resBooking);
+    setUserEmail(resProfile?.user_email)
   };
 
-  const handleRefundTicket = async () => {
-    const params: RefuncTicketSubmitType = {
-      thirdPartyNumber: generateThirdPartyCodeRefund("SBD"),
-      returnReason: "Test huy ve",
-      referenceOrders: [
-        {
-          email: "demo@gmail.com",
-          fullname: "test amb",
-          referenceThirdPartyNumber: "QN50J40S41650O",
-          tickets: [
-            {
-              siteCode: "SBD",
-              ticketNumber: "LCG5NOOUHCLRTN",
-            },
-          ],
-        },
-      ],
-    };
-    const data = await refundTicket(params);
-    console.log("data", data);
-  };
+   
 
   return (
     <div className="space-y-4">
       <Card className="rounded-2xl">
         <CardHeader>
-          <CardTitle>Tra cứu thông order </CardTitle>
+          <CardTitle>Tra cứu thông tin order </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <Separator />
@@ -64,7 +46,7 @@ export default function AdminBookingStatus() {
           />
           <Separator />
           {bookingDetail && (
-            <BookingDetailCard booking={bookingDetail} onReloadData={handleSearch} />
+            <BookingDetailCard booking={bookingDetail} userEmail={userEmail} onFetchMoney={onFetchMoney} onReloadData={handleSearch} />
           )}
         </CardContent>
       </Card>

@@ -65,6 +65,8 @@ export const EXPORT_EXCEL = "/api/auth/admin/history/export-excel";
 
 export const GET_ALL_AFFILATE = "/api/auth/admin/history/get-all-affilate";
 
+export const GET_PROFILE_BY_ORDER = "/api/auth/admin/history/get-info-by-order"
+
 export const ADMIN_GET_SALE_SUMARY = "/api/auth/admin/stats/sumary-email";
 
 export const ADMIN_UPDATE_STATUS_TOPUP = "/api/webhook/sepay";

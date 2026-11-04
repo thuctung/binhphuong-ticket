@@ -1,6 +1,8 @@
 import api from "@/axios";
 import {
+  GET_PROFILE_BY_ORDER,
   SUN_CHECK_USEGE_TICKET,
+  SUN_GET_BALANCE,
   SUN_GET_CHARGE_REFUND,
   SUN_GET_ORDER,
   SUN_REFUND_TICKET,
@@ -98,3 +100,46 @@ export const checkUsegeTicket = async (prams: CheckStatusTicketType) => {
     setGlobalLoading(false);
   }
 };
+
+export const getCurrentMoeny = async () => {
+  try {
+    const { data } = await api.get(SUN_GET_BALANCE);
+
+    if (data.errors?.[0]) {
+      setToastMessage(data.errors?.[0]);
+    }
+    return data.result;
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const getInforPersonOrder = async() => {
+  try {
+    const { data } = await api.get(SUN_GET_BALANCE);
+
+    if (data.errors?.[0]) {
+      setToastMessage(data.errors?.[0]);
+    }
+    return data.result;
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+}
+
+export const getProfileOrder = async(orderCode:string) => {
+try {
+    const { data } = await api.post(GET_PROFILE_BY_ORDER,{
+      orderCode
+    });
+    return data
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+}

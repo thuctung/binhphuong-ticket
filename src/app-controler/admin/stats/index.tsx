@@ -12,7 +12,6 @@ import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { SiteType } from "@/types/ticket";
 
 import { AllSaleType, SaleSumaryType } from "./type";
-import { CurrentMoney } from "./components/current-money";
 import ShowAllData from "./components/show-all";
 
 export default function AdminStatsPageControler() {
@@ -82,7 +81,6 @@ export default function AdminStatsPageControler() {
   }, []);
   return (
     <div className="space-y-6">
-      <CurrentMoney />
       <SearchReport
         onChangeForm={handleChangeForm}
         onReset={handleResetForm}
