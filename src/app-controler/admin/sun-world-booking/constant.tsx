@@ -39,3 +39,27 @@ export const statusClass: Record<string, string> = {
   [KEY_STATUS_TICKET.Unused]: "text-green-600 bg-green-100 ",
   [KEY_STATUS_TICKET.Expired]: "text-red-600 bg-red-100 ",
 };
+
+export const STATUS_MAP = {
+  cancelled: {
+    label: "Đã huỷ",
+    dot: "bg-rose-500",
+    text: "text-rose-700",
+    bg: "bg-rose-50",
+    ring: "ring-rose-200",
+  },
+  success: {
+    label: "Thành công",
+    dot: "bg-emerald-500",
+    text: "text-emerald-700",
+    bg: "bg-emerald-50",
+    ring: "ring-emerald-200",
+  },
+  onhold: {
+    label: "Đang đặt vé",
+    dot: "bg-green-500",
+    text: "text-green-700",
+    bg: "bg-green-50",
+    ring: "ring-green-200",
+  },
+};

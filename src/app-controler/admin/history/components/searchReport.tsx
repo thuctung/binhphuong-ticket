@@ -84,7 +84,7 @@ export function SearchReport({
               onChange={(value) => onChangeForm("siteCode", value)}
             >
               <option value="">Tất cả</option>
-              {listSite.map((item) => (
+              {listSite?.map((item) => (
                 <option key={item.code} value={item.code}>
                   {item.name}
                 </option>

@@ -11,16 +11,16 @@ import { SiteType } from "@/types/ticket";
 import { useState } from "react";
 
 type SearchTicketStatusProps = {
-  onSearch: (value: string) => void;
+  setOrderCode: (value: string) => void;
+  orderCode: string;
+  onSearch: () => void;
 };
 
-export function SearchBookingStatus({ onSearch }: SearchTicketStatusProps) {
-  const [orderCode, setOrderCode] = useState<string>("");
-
-  const handleSerch = () => {
-    onSearch(orderCode);
-  };
-
+export function SearchBookingStatus({
+  orderCode,
+  setOrderCode,
+  onSearch,
+}: SearchTicketStatusProps) {
   return (
     <div>
       <div className="mb-4 pl-4 flex flex-wrap items-center gap-3">
@@ -36,7 +36,7 @@ export function SearchBookingStatus({ onSearch }: SearchTicketStatusProps) {
       </div>
       <div className=" flex flex-wrap justify-end  pr-3">
         <div className="flex justify-end gap-3 mt-6">
-          <SearchButton onClick={handleSerch} />
+          <SearchButton onClick={onSearch} />
         </div>
       </div>
     </div>

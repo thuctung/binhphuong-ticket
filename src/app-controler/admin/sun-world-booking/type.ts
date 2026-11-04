@@ -36,3 +36,37 @@ export type RefuncTicketSubmitType = {
   returnReason: string;
   referenceOrders: TicketRunfundType[];
 };
+
+export type RefundItem = {
+  productId: string;
+  ticketNumber: string;
+  returnRate: number;
+  numberReturnDate: number;
+  usageDateFrom: string;
+  usageDateTo: string;
+  unitPrice: number;
+  returnCharge: number;
+};
+
+export type RefundInfo = {
+  thirdPartyNumber: string;
+  sapThirdPartyNumber: string;
+  returnDate: string;
+  totalReturnCharge: number;
+  items: RefundItem[];
+};
+
+export type CheckStatusTicketType = {
+  siteCode: string;
+  ticketNumbers: string[];
+};
+
+export type StatusTicketListType = {
+  siteCode: string;
+  usageStatus: string;
+  status: string;
+  productName: string;
+  firstUsageDateTime: string;
+  validDateTo: string;
+  ticketNumber: string;
+};

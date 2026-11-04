@@ -2,36 +2,38 @@
 
 import { useState } from "react";
 import { formatVND } from "@/helpers/money";
-import { downloadTicketPDF, rebuildDataTicket } from "@/helpers/ticket";
-import { TicketReponseType, TicketResultQRType } from "@/types/ticket";
+import {
+  downloadTicketPDF,
+  generateThirdPartyCodeRefund,
+  rebuildDataTicket,
+} from "@/helpers/ticket";
+import {
+  TicketInItemType,
+  TicketItemReponseType,
+  TicketReponseType,
+  TicketResultQRType,
+} from "@/types/ticket";
 import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
-import { get } from "lodash";
+import { get, isEmpty } from "lodash";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
-
-const STATUS_MAP = {
-  cancelled: {
-    label: "Đã huỷ",
-    dot: "bg-rose-500",
-    text: "text-rose-700",
-    bg: "bg-rose-50",
-    ring: "ring-rose-200",
-  },
-  success: {
-    label: "Thành công",
-    dot: "bg-emerald-500",
-    text: "text-emerald-700",
-    bg: "bg-emerald-50",
-    ring: "ring-emerald-200",
-  },
-  onhold: {
-    label: "Đang đặt vé",
-    dot: "bg-green-500",
-    text: "text-green-700",
-    bg: "bg-green-50",
-    ring: "ring-green-200",
-  },
-};
+import TriCheckbox from "./ticket-checkbox";
+import { STATUS_MAP } from "../../../constant";
+import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
+import {
+  CheckChargeRefundType,
+  CheckStatusTicketType,
+  RefuncTicketSubmitType,
+  RefundInfo,
+  StatusTicketListType,
+} from "../../../type";
+import { checkUsegeTicket, getCharegeRefund, refundTicket } from "../../../api";
+import { toDate } from "@/components/GetTicketForm/constants";
+import { RefundFeeDialog } from "./refundChargeDetail";
+import { useProfileStore } from "@/stores/useProfileStore";
+import { ProfileType } from "@/types";
+import { toast } from "react-toastify";
+import { is } from "zod/v4/locales";
 
 function StatusBadge({ status }: { status: string }) {
   const s = STATUS_MAP[status as keyof typeof STATUS_MAP] ?? STATUS_MAP.cancelled;
@@ -79,18 +81,24 @@ function ChevronIcon({ open }: { open: boolean }) {
   );
 }
 
-export default function BookingDetailCard({ booking }: { booking: TicketReponseType }) {
-  const [open, setOpen] = useState(false);
+export default function BookingDetailCard({
+  booking,
+  onReloadData,
+}: {
+  booking: TicketReponseType;
+  onReloadData: Function;
+}) {
+  const profile: ProfileType = useProfileStore((state: any) => state.profile);
+  const { orderCode, orderStatus, pnr, referenceCode, thirdPartyNumber, items = [] } = booking;
 
-  const {
-    orderCode,
-    orderStatus,
-    pnr,
-    referenceCode,
-    thirdPartyNumber,
-    totalOrderPrice,
-    items = [],
-  } = booking;
+  const [open, setOpen] = useState(true);
+  const [refundOpen, setRefundOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [refundData, setRefundData] = useState<RefundInfo | null>(null);
+  const [statusTicketMap, setStatusTicketMap] = useState<Record<string, StatusTicketListType>>({});
+
+  const siteCode = get(items, [0, "siteCode"]) || "";
+  const usageDate = get(items, [0, "usageDate"]) || "";
 
   const handleDownloadFile = async () => {
     const date_use = get(booking, ["items", 0, "usageDate"]);
@@ -103,44 +111,133 @@ export default function BookingDetailCard({ booking }: { booking: TicketReponseT
     await downloadTicketPDF(customerTickets, focTickets);
   };
 
+  const isSelectable = (t: TicketInItemType) => !!t.ticketNumber;
+
+  const allTickets: TicketInItemType[] = items.flatMap((p) => p.tickets ?? []);
+  const selectableTickets: TicketInItemType[] = allTickets.filter(isSelectable);
+  const getTicketKey = (t: TicketInItemType) => t.ticketNumber;
+
+  const [selected, setSelected] = useState<Set<string>>(
+    () => new Set(selectableTickets.map(getTicketKey))
+  );
+
+  const listSelected = selected.values().toArray();
+
+  const toggleTicket = (key: string) =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      next.has(key) ? next.delete(key) : next.add(key);
+      return next;
+    });
+
+  const toggleMany = (tickets: TicketInItemType[], checked: boolean) =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      tickets
+        .filter(isSelectable)
+        .forEach((t) => (checked ? next.add(getTicketKey(t)) : next.delete(getTicketKey(t))));
+      return next;
+    });
+
+  const checkChargeRefund = async () => {
+    const params: CheckChargeRefundType = {
+      returnDate: usageDate,
+      thirdPartyNumber,
+      items: listSelected.map((item) => ({
+        siteCode,
+        ticketNumber: item,
+      })),
+    };
+    const data = await getCharegeRefund(params);
+    if (data) {
+      setRefundData(data);
+      setRefundOpen(true);
+    }
+  };
+
+  const handleRefundTicket = async () => {
+    setLoading(true);
+    const params: RefuncTicketSubmitType = {
+      thirdPartyNumber: generateThirdPartyCodeRefund(siteCode),
+      returnReason: "Hủy vé",
+      referenceOrders: [
+        {
+          email: profile.email || process.env.NEXT_PUBLIC_EMAIL_COMPANY || "",
+          fullname: profile.full_name || "",
+          referenceThirdPartyNumber: thirdPartyNumber,
+          tickets: listSelected.map((item) => ({
+            siteCode,
+            ticketNumber: item,
+          })),
+        },
+      ],
+    };
+    const data = await refundTicket(params);
+    if (data) {
+      toast.success("Hoàn vé thành công");
+      onReloadData();
+      handleCheckStatusTicket();
+      setRefundOpen(false);
+    }
+    setLoading(false);
+  };
+
+  const handleCheckStatusTicket = async () => {
+    if (!listSelected.length) {
+      toast.warning("Chọn vé cần kiểm tra");
+      return;
+    }
+    const param: CheckStatusTicketType = {
+      siteCode,
+      ticketNumbers: listSelected,
+    };
+    const data = await checkUsegeTicket(param);
+    if (data) {
+      const ticketMap: Record<string, StatusTicketListType> = Object.fromEntries(
+        data.map((t: StatusTicketListType) => [t.ticketNumber, t])
+      );
+      setStatusTicketMap(ticketMap);
+    }
+  };
+
+  const getStatusTicket = (ticketNumber: string) => {
+    if (!isEmpty(statusTicketMap)) {
+      return statusTicketMap[ticketNumber]?.status || "";
+    }
+    return "";
+  };
   return (
     <div className="w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-      {/* Header */}
-      <div className="flex items-start justify-between gap-3 px-5 pt-5">
-        {orderStatus === "success" ? (
+      {orderStatus === "success" && (
+        <div className="flex items-center justify-end gap-3 px-5 pt-5">
           <button
             onClick={handleDownloadFile}
-            className="rounded-lg border border-gray-200 px-4 py-2 bg-green-200 text-sm font-medium text-green-600 transition hover:bg-green-300"
+            className="rounded-lg border border-gray-200 bg-green-200 px-4 py-2 text-sm font-medium text-green-600 transition hover:bg-green-300 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Tải vé
           </button>
-        ) : null}
-      </div>
+        </div>
+      )}
 
       <div className="flex items-start justify-between gap-3 px-5 pt-5">
         <div>
           <p className="text-[11px] uppercase tracking-wide text-slate-400">Mã đơn hàng</p>
           <p className="font-mono text-base font-semibold text-slate-900">{orderCode}</p>
         </div>
-        <StatusBadge status={orderStatus} />
       </div>
 
-      {/* Info grid */}
       <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 px-5">
         <InfoField label="Mã PNR" value={pnr} />
         <InfoField label="Reference code" value={referenceCode} />
         <InfoField label="Third-party code" value={thirdPartyNumber} />
-        <InfoField label="Tổng tiền" value={formatVND(totalOrderPrice)} mono={false} />
+        <InfoField label="Trạng thái" value={<StatusBadge status={orderStatus} />} mono={false} />
       </div>
 
-      {/* Perforated divider (ticket style) */}
-      <div className="relative my-5 flex items-center px-5">
-        <div className="-ml-8 h-4 w-4 rounded-full bg-slate-50" />
-        <div className="flex-1 border-t border-dashed border-slate-300" />
-        <div className="-mr-8 h-4 w-4 rounded-full bg-slate-50" />
+      <div className="flex justify-end gap-[20px]  px-[10px] py-5">
+        <ButtonCommon title="Xem phí hoàn vé" onClick={checkChargeRefund} />
+        <ButtonCommon title="Xem trạng thái vé" onClick={handleCheckStatusTicket} />
       </div>
 
-      {/* Toggle button */}
       <div className="px-5 pb-2">
         <button
           type="button"
@@ -148,33 +245,116 @@ export default function BookingDetailCard({ booking }: { booking: TicketReponseT
           aria-expanded={open}
           className="flex w-full items-center justify-between rounded-lg border border-slate-200 px-3.5 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 active:scale-[0.99]"
         >
-          <span>Xem chi tiết sản phẩm ({items.length})</span>
+          <span>Xem chi tiết</span>
           <ChevronIcon open={open} />
         </button>
       </div>
 
-      {/* Collapsible product list */}
       <div
         className={`grid transition-all duration-200 ease-in-out ${
           open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         }`}
       >
         <div className="overflow-hidden">
-          <ul className="mx-5 mb-5 divide-y divide-slate-100 rounded-lg border border-slate-100">
-            {items.length === 0 && (
-              <li className="px-3.5 py-3 text-sm text-slate-400">Không có sản phẩm nào.</li>
-            )}
-            {items.map((p, index) => (
-              <li key={index} className="flex items-center justify-between px-3.5 py-2.5 text-sm">
-                <span className="text-slate-700">{p.productName}</span>
-                <span className="rounded-md bg-slate-100 px-2 py-0.5 font-mono text-xs font-medium text-slate-600">
-                  x{p.quantity}
-                </span>
-              </li>
-            ))}
-          </ul>
+          <div className="mx-5 mb-5 space-y-3">
+            {items.map((p, index) => {
+              const tickets: TicketInItemType[] = p.tickets ?? [];
+              const selectable = tickets.filter(isSelectable);
+
+              const groupChecked =
+                selectable.length > 0 && selectable.every((t) => selected.has(getTicketKey(t)));
+              const groupSome =
+                !groupChecked && selectable.some((t) => selected.has(getTicketKey(t)));
+
+              return (
+                <div key={index} className="overflow-hidden rounded-lg border border-slate-100">
+                  <div className="flex items-center justify-between gap-2 bg-slate-50 px-3.5 py-2.5">
+                    {selectable.length > 0 ? (
+                      <label className="flex cursor-pointer items-center gap-2.5 text-sm font-medium text-slate-800">
+                        <TriCheckbox
+                          checked={groupChecked}
+                          indeterminate={groupSome}
+                          onChange={(c) => toggleMany(selectable, c)}
+                        />
+                        {p.productName}
+                      </label>
+                    ) : (
+                      <span className="text-sm font-medium text-slate-800">{p.productName}</span>
+                    )}
+                    <span className="rounded-md bg-slate-200 px-2 py-0.5 font-mono text-xs font-medium text-slate-600">
+                      x{p.quantity}
+                    </span>
+                  </div>
+
+                  <ul className="divide-y divide-slate-100">
+                    {tickets.map((t, tIndex) => {
+                      const canSelect = isSelectable(t);
+                      const key = canSelect ? getTicketKey(t) : `${p.productCode}-${tIndex}`;
+
+                      const content = (
+                        <>
+                          {canSelect && (
+                            <input
+                              type="checkbox"
+                              checked={selected.has(key)}
+                              onChange={() => toggleTicket(key)}
+                              className="mt-0.5 h-4 w-4 cursor-pointer rounded border-slate-300 accent-green-600"
+                            />
+                          )}
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="truncate font-mono text-xs font-semibold text-slate-800">
+                                {t.ticketNumber}
+                              </span>
+                              {canSelect ? (
+                                <span
+                                  className={`rounded px-1.5 py-0.5 text-[10px] font-medium ${
+                                    getStatusTicket(t.ticketNumber) === "Active"
+                                      ? "bg-green-100 text-green-700"
+                                      : "bg-slate-100 text-red-500"
+                                  }`}
+                                >
+                                  {getStatusTicket(t.ticketNumber)}
+                                </span>
+                              ) : null}
+                            </div>
+                            {canSelect ? (
+                              <p className="mt-0.5 text-xs text-slate-500">
+                                Hiệu lực: {t.validDateFrom.slice(0, 10)} →{" "}
+                                {t.validDateTo.slice(0, 10)}
+                              </p>
+                            ) : null}
+                          </div>
+                        </>
+                      );
+                      return (
+                        <li key={key}>
+                          {canSelect ? (
+                            <label className="flex cursor-pointer items-start gap-2.5 px-3.5 py-2.5 text-sm hover:bg-slate-50">
+                              {content}
+                            </label>
+                          ) : (
+                            <div className="flex items-start gap-2.5 px-3.5 py-2.5 pl-[2.375rem] text-sm opacity-70">
+                              {content}
+                            </div>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
+      <RefundFeeDialog
+        open={refundOpen}
+        onClose={() => setRefundOpen(false)}
+        data={refundData}
+        loading={isLoading}
+        onConfirm={handleRefundTicket}
+      />
     </div>
   );
 }
