@@ -55,6 +55,11 @@ export const SIDEBAR_ADMIN: MenuMgtType[] = [
     lable: "Quản lý cấp bậc",
     icon: "M12 3a2 2 0 1 0 0 4a2 2 0 1 0 0 -4M12 7v3M6 10h12M6 10v3M18 10v3M6 16a2 2 0 1 0 0 4a2 2 0 1 0 0 -4M18 16a2 2 0 1 0 0 4a2 2 0 1 0 0 -4",
   },
+  {
+    link: "/admin/sunworld-booking",
+    lable: "Tra cứu Sunworld",
+    icon: "M7 7h.01M7 3h5a1.99 1.99 0 011.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z",
+  },
 
   {
     link: "/admin/ticket-status",

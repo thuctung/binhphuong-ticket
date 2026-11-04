@@ -90,7 +90,7 @@ export const getPriceAgentAndMultiple = (
   priceResult = Math.max(0, priceResult);
   priceResult = ticket.multiple > 1 ? Math.ceil(priceResult / ticket.multiple) : priceResult;
 
-  return Math.ceil(priceResult / 1000) * 1000;
+  return Math.ceil(priceResult / 10) * 10;
 };
 
 export const PRODUCT_TYPE = {

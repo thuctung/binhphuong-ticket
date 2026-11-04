@@ -119,3 +119,7 @@ export const SUN_TICKET_LISTING = "/api/sun-api/ticket-listing";
 export const SUN_BOOKING_CREATE = "/api/sun-api/booking-create";
 
 export const SUN_BOOKING_CONFIRM = "/api/sun-api/booking-confirm";
+
+export const SUN_GET_CHARGE_REFUND = "/api/sun-api/check-charge-refund";
+
+export const SUN_REFUND_TICKET = "/api/sun-api/refund-ticket";

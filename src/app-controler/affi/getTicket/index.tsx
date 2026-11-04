@@ -33,6 +33,8 @@ import {
   SendTicketInSystemMailType,
 } from "./type";
 import { KEY_MODIFY_DATA } from "../stats/contants";
+import { useEffect } from "react";
+import { getListSite } from "@/app-controler/checkout-client/api";
 
 export default function GetTicketPageControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -65,6 +67,10 @@ export default function GetTicketPageControler() {
     }
     return result;
   };
+
+  useEffect(() => {
+    getListSite();
+  }, []);
 
   const handleByTicketSunWorld = async (
     order_id: string,
