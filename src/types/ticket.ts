@@ -178,6 +178,7 @@ export interface ProductBanaType {
   status?: boolean;
   category?: string;
   min_quantity?: number;
+  pinalPrice?: number;
 }
 
 export type ProductInCartType = {

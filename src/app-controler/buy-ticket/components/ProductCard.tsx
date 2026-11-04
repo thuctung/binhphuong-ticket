@@ -2,33 +2,22 @@
 
 import { stepBtn } from "@/components/ui/const-class";
 import { formatVND } from "@/lib/money";
-import { AgentPriceType, CategorySubmitType, ProductBanaType } from "@/types/ticket";
-import PinIcon from "./PinIcon";
+import { CategorySubmitType, ProductBanaType } from "@/types/ticket";
 import { useState } from "react";
 import CartIcon from "./CartIcon";
-import { CUSTOMER } from "@/commons/constant";
 import { useCartStore } from "@/stores/useCartStore";
-import { getPriceAgentAndMultiple } from "@/components/GetTicketForm/constants";
-import { Soup, UtensilsCrossed } from "lucide-react";
+import { Soup } from "lucide-react";
 import { BADGE_STYLES, getCategaryItem, getImageProduct } from "../contants";
 import ProductDetailModal from "./ProdcutDetail";
 
 type Props = {
   product: ProductBanaType;
-  mapAgentPrice: Map<string, AgentPriceType>;
-  agentPriceDefault: number;
   quantity: number;
   lisCategory: CategorySubmitType[];
 };
 const MAX = 99;
 const MIN = 0;
-export default function ProductCard({
-  product,
-  quantity,
-  mapAgentPrice,
-  agentPriceDefault,
-  lisCategory,
-}: Props) {
+export default function ProductCard({ product, quantity, lisCategory }: Props) {
   const setCartItems = useCartStore((s) => s.addItem);
   const [tampQty, setTempQty] = useState(quantity);
   const [openDetail, setOpenDetail] = useState(false);
@@ -114,9 +103,7 @@ export default function ProductCard({
               <p className="text-sm text-ink/45 line-through">{formatVND(product.publicPrice)}</p>
 
               <p className="font-display text-xl font-bold text-[#e5252a]">
-                {formatVND(
-                  getPriceAgentAndMultiple(product, CUSTOMER, mapAgentPrice, agentPriceDefault)
-                )}
+                {formatVND(product.pinalPrice || 0)}
               </p>
             </div>
 
@@ -153,7 +140,11 @@ export default function ProductCard({
             </div>
           </div>
           <div>
-            <span>Vé phải là bội của: ${product.multiple}</span>
+            {product.multiple > 1 ? (
+              <p className="w-full  text-right text-[12px] text-[#ff006c]">
+                Vé phải là bội của: {product.multiple}
+              </p>
+            ) : null}
           </div>
 
           {/* Hành động */}

@@ -32,7 +32,10 @@ import { AlertCircle } from "lucide-react";
 import { geNoteSiteCode } from "@/components/GetTicketForm/Customer/constants";
 import ProductCard from "./components/ProductCard";
 import SummaryCustomer from "./components/SumaryCustomer";
-import { mapAgentPriceByProductCode } from "@/components/GetTicketForm/constants";
+import {
+  getPriceAgentAndMultiple,
+  mapAgentPriceByProductCode,
+} from "@/components/GetTicketForm/constants";
 import { getListCategory } from "../admin/product-mgt/api";
 
 export default function BuyTicketController() {
@@ -63,11 +66,14 @@ export default function BuyTicketController() {
   const [tickets, personTypes] = useMemo(() => {
     let listTicket: ProductBanaType[] = [];
     const listPersonType: string[] = [];
-
     listProduct.forEach((item) => {
       listTicket = listTicket.concat([...item.ticket]);
       listPersonType.push(item.personType);
     });
+    listTicket = listTicket.map((items) => ({
+      ...items,
+      pinalPrice: getPriceAgentAndMultiple(items, CUSTOMER, mapAgentPrice, agentPriceDefault),
+    }));
     return [listTicket.sort((a, b) => (a.order ?? 1) - (b.order ?? 1)), listPersonType];
   }, [listProduct]);
 
@@ -193,18 +199,12 @@ export default function BuyTicketController() {
                         lisCategory={listCategory}
                         key={ticket.code}
                         product={ticket}
-                        mapAgentPrice={mapAgentPrice}
-                        agentPriceDefault={agentPriceDefault}
                         quantity={items?.get(ticket?.code)?.quantity || 0}
                       />
                     ))}
                   </div>
                 </div>
-                <SummaryCustomer
-                  siteName={currentSite?.name || ""}
-                  mapAgentPrice={mapAgentPrice}
-                  agentPriceDefault={agentPriceDefault}
-                />
+                <SummaryCustomer siteName={currentSite?.name || ""} />
               </div>
             </main>
           )}

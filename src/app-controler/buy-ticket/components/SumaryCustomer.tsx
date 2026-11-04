@@ -5,23 +5,15 @@ import { formatVND } from "@/helpers/money";
 import { useState } from "react";
 import { useIsMobile } from "@/helpers/useResize";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { AgentPriceType, ProductBanaType, ProductInCartType, SiteType } from "@/types/ticket";
+import { ProductInCartType } from "@/types/ticket";
 import { useCartStore } from "@/stores/useCartStore";
-import { CUSTOMER } from "@/commons/constant";
-import { getPriceAgentAndMultiple } from "@/components/GetTicketForm/constants";
 import { useRouter } from "next/navigation";
 
 type OrderSummaryProps = {
   siteName: string;
-  mapAgentPrice: Map<string, AgentPriceType>;
-  agentPriceDefault: number;
 };
 
-export default function SummaryCustomer({
-  siteName,
-  mapAgentPrice,
-  agentPriceDefault,
-}: OrderSummaryProps) {
+export default function SummaryCustomer({ siteName }: OrderSummaryProps) {
   const route = useRouter();
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
@@ -33,7 +25,7 @@ export default function SummaryCustomer({
   const listProduct = items?.values()?.toArray() || [];
 
   const total = listProduct.reduce((sum, t) => {
-    let price = getPriceAgentAndMultiple(t.product, CUSTOMER, mapAgentPrice, agentPriceDefault);
+    let price = t.product.pinalPrice || 0;
     return sum + price * (t.quantity ?? 0);
   }, 0);
 
@@ -92,14 +84,7 @@ export default function SummaryCustomer({
                     <span className="w-20 text-[#1C2620]">SL: {t.quantity}</span>
                     <div className="flex">
                       <span className="font-semibold text-[#2d8020]">
-                        {formatVND(
-                          getPriceAgentAndMultiple(
-                            t.product,
-                            CUSTOMER,
-                            mapAgentPrice,
-                            agentPriceDefault
-                          ) * (t.quantity ?? 0)
-                        )}
+                        {formatVND(t.product.pinalPrice || 0)}
                       </span>
                       <button
                         type="button"

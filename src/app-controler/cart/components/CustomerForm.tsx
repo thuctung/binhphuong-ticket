@@ -26,11 +26,11 @@ export function CustomerForm({ value, onChange, errors, showAllErrors }: Props) 
     wide?: boolean;
   }[] = [
     {
-      key: "name",
+      key: "fullname",
       label: "Họ và tên",
       placeholder: "Nguyễn Văn A",
       type: "text",
-      autoComplete: "name",
+      autoComplete: "fullname",
       wide: true,
     },
     {
