@@ -222,7 +222,7 @@ export const MENUS = [
     iconColor: "text-gray-600",
   },
   {
-    link: "/dang-ky-dai-ly",
+    link: "/dai-ly",
     name: "Đại lý",
     icon: Store,
     iconBg: "bg-purple-50",

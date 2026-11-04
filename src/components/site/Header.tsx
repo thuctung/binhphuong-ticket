@@ -24,7 +24,6 @@ import { sv_getCurrentProfile } from "@/app-controler/login/api";
 import { UserPopup } from "./PopupUser";
 import { HeaderMobile } from "./HeaderMobile";
 import { useCartStore } from "@/stores/useCartStore";
-import { ProductInCartType } from "@/types/ticket";
 
 export default function Header() {
   const router = useRouter();
@@ -86,9 +85,7 @@ export default function Header() {
         <div className=" flex  items-center justify-between px-4 py-3 md:px-6">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative transition-transform group-hover:scale-105">
-              <a href="#" className="font-display text-2xl font-extrabold text-ocean">
-                <Image alt="" src="/moonlogo.png" width={52} height={44} />
-              </a>
+              <Image alt="" src="/moonlogo.png" width={52} height={44} />
             </div>
           </Link>
 

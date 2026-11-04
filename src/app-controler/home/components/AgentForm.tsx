@@ -20,11 +20,12 @@ export default function AgentForm() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-2">
         <div>
           <h2 className="font-display text-3xl font-extrabold sm:text-4xl">
-            Trở thành đại lý của <span className="text-amber-300">Moon Price</span>
+            Trở thành hội viên của <span className="text-amber-300">Moon Price</span>
           </h2>
           <p className="mt-4 max-w-md text-white/80">
-            Bán vé cho khách của bạn, nhận hoa hồng đến 12% mỗi đơn và đối soát hàng tuần. Không phí
-            đăng ký.
+            Đăng ký trở thành hội viên ngay hôm nay để tận hưởng nhiều ưu đãi hấp dẫn quanh năm!
+            Nhận thông tin khuyến mãi độc quyền, giá vé ưu đãi và những chương trình tri ân đặc biệt
+            dành riêng cho thành viên. Càng đồng hành lâu dài, càng có nhiều quyền lợi hấp dẫn!
           </p>
         </div>
 
@@ -56,11 +57,15 @@ export default function AgentForm() {
               <input name="email" type="email" required className={field} autoComplete="email" />
             </label>
             <label className="grid gap-1 text-sm font-medium">
-              Tỉnh / thành phố
+              Mật khẩu
+              <input name="city" required className={field} />
+            </label>
+            <label className="grid gap-1 text-sm font-medium">
+              Nhập lại mật khẩu
               <input name="city" required className={field} />
             </label>
             <button className="rounded-xl bg-sun py-3 font-bold hover:brightness-95">
-              Gửi đăng ký
+              Đăng ký ngay
             </button>
           </form>
         )}
