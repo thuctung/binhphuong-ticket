@@ -1,11 +1,9 @@
-import { Input } from "@/components/ui/customs/input";
-import { ResetButton } from "@/components/ui/customs/ressetButton";
 import { SearchButton } from "@/components/ui/customs/searchButton";
 import { SelectBox } from "@/components/ui/customs/selectBox";
 import DatePickerCustom from "@/components/ui/date-picker";
 
 import { SearchTicketSale } from "@/types";
-import { Calendar, MapPin, User } from "lucide-react";
+import { Calendar, User } from "lucide-react";
 import { StatusData } from "@/app-controler/affi/stats/contants";
 import DropdownSearch from "@/components/ui/dropdown-search";
 import { ListAffDropdownType } from "../type";

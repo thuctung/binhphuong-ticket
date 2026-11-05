@@ -144,7 +144,7 @@ export default function Login() {
       </section>
 
       {/* Footer */}
-      <p className="mt-5 text-xs text-neutral-600 text-[#ffcb00]">
+      <p className="mt-5 text-xs  text-[#ffcb00]">
         Chưa có tài khoản?{" "}
         <Link
           href="/dai-ly"
