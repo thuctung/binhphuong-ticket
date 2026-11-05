@@ -139,7 +139,5 @@ try {
     return data
   } catch (error) {
     setToastMessage("Có lỗi xảy ra");
-  } finally {
-    setGlobalLoading(false);
-  }
+  } 
 }

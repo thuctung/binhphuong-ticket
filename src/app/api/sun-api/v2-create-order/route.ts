@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       thirdPartyNumber,
       products,
       email,
-      phone,
+      phone, 
       fullname,
     });
     const { result, messages, success } = dataSunworld;

@@ -35,6 +35,7 @@ import {
 import { KEY_MODIFY_DATA } from "../stats/contants";
 import { useEffect } from "react";
 import { getListSite } from "@/app-controler/checkout-client/api";
+import { splitByQuantity } from "./helper";
 
 export default function GetTicketPageControler() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
@@ -146,7 +147,7 @@ export default function GetTicketPageControler() {
 
     if (validByTicket) {
       const { products, totalMoney, date_use, siteCode, in_system, callback } = values;
-      const items: TicketSubmitAgentType[] = products.map((item) => ({
+      const items: TicketSubmitAgentType[] = splitByQuantity(products).map((item) => ({
         quantity: item.quantity,
         price: Number(item.unitPrice),
         product_code: item.productCode,
