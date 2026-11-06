@@ -48,7 +48,7 @@ export default function AffiliateStatsControler() {
   const [orderList, setOrderList] = useState<OrderHistoryType[]>([]);
   const [curentRow, setCurrentRow] = useState<OrderHistoryType>();
 
-  const [countTicket, setCountTicket] = useState({ quantity: 0, total: 0 });
+  const [countTicket, setCountTicket] = useState({ cancelled_tickets: 0, total_amount: 0,total_tickets:0 });
 
   const [orderDetails, setOrderDetails] = useState<OrderDetailType[]>([]);
   const [siteList, setSiteList] = useState<SiteType[]>([]);
@@ -80,24 +80,15 @@ export default function AffiliateStatsControler() {
   };
 
   const handleCountTicketSale = async () => {
-    const { data } = await countTicketSale(
+    if(!profile.email) return
+    const  data  = await countTicketSale(
       params.searchValue.from,
       params.searchValue.to,
-      profile.user_id,
+      profile.email,
       params.searchValue.siteCode
     );
-    if (data) {
-      const result = data.reduce(
-        (acc: { quantity: number; total: number }, item: CountTicketSaleResponse) => {
-          return {
-            quantity: acc.quantity + item.quantity,
-            total: acc.total + item.total,
-          };
-        },
-        { quantity: 0, total: 0 }
-      );
-      setCountTicket(result);
-    }
+      setCountTicket(data);
+    
   };
 
   const onShowDialogDetail = async (orderItem: OrderHistoryType) => {
@@ -190,8 +181,9 @@ export default function AffiliateStatsControler() {
             siteList={siteList}
           />
           <Revenue
-            total={countTicket.total}
-            ticket={countTicket.quantity}
+            total={countTicket.total_amount}
+            ticket={countTicket.total_tickets}
+            cancel={countTicket.cancelled_tickets}
             from={params.searchValue.from}
             to={params.searchValue.to}
           />

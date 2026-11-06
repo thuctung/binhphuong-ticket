@@ -17,7 +17,7 @@ const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.g
 export const countTicketSale = async (
   from: string,
   to: string,
-  user_id: string,
+  email: string,
   siteCode?: string
 ) => {
   try {
@@ -25,14 +25,14 @@ export const countTicketSale = async (
     const dateTo = dayjsEx(to, BASIC_DATE_FORMAT);
 
     const body: CountTicketSaleParamType = {
-      user_id,
+      email,
       from: dayjs(dateForm).format(SERVER_DATE_FORMAT),
       to: dayjs(dateTo).format(SERVER_DATE_FORMAT),
       siteCode,
     };
-    const response = await api.post(COUNT_TICKET_SALE, body);
-    const data = get(response, "data") || [];
-    return data;
+    const {data} = await api.post(COUNT_TICKET_SALE, body);
+    return get(data, ['data',0]);
+
   } catch (error) {
     setToastMessage("Có lỗi xảy ra");
   } finally {

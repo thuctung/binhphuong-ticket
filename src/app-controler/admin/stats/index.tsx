@@ -56,9 +56,12 @@ export default function AdminStatsPageControler() {
     },
     {
       key: "total_tickets",
-      title: "Số vé",
+      title: "Số vé bán",
     },
-
+ {
+      key: "cancelled_tickets",
+      title: "Số vé hủy",
+    },
     {
       key: "total_amount",
       title: "Tổng tiền",

@@ -32,7 +32,7 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
 
   const returnMoney = useMemo(() => {
     if (currentData) {
-      return currentData.unit_price - currentData.return_charge;
+      return currentData.total_price - currentData.return_charge;
     }
     return 0;
   }, [currentData]);
@@ -76,6 +76,7 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
   const handleReturnMoneyAffilate = async (money: number) => {
     if (currentData) {
       const { data } = await getProfileByEmail(currentData.email_order);
+      console.log(currentData.total_price , currentData.return_charge , money)
       if (data) {
         const { role, agent_level, user_id } = data;
         if (role !== "affiliate" || agent_level === "register" || agent_level === "customer") {

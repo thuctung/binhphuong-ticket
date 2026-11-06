@@ -1,6 +1,7 @@
 export type CountTicketSaleParamType = {
-  user_id: string;
+  email: string;
   from: string;
   to: string;
   siteCode?: string;
+
 };

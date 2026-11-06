@@ -128,7 +128,6 @@ export default function BookingDetailCard({
 
   const siteCode = get(items, [0, "siteCode"]) || "";
   const usageDate = get(items, [0, "usageDate"]) || "";
-  const isSelectable = (t: TicketInItemType) => !!t.ticketNumber;
 
   const handleDownloadFile = async () => {
     const date_use = get(booking, ["items", 0, "usageDate"]);
