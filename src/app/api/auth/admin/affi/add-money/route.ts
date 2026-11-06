@@ -5,7 +5,7 @@ import { ProfileUpdateStatusType } from "@/types";
 import { DB_TABLE_NAME } from "@/commons/constant";
 
 export async function POST(request: Request) {
-  const { user_id, amount, payment_code } = await request.json();
+  const { user_id, amount, payment_code, refund } = await request.json();
 
   const { error } = await supabaseAdmin.from(DB_TABLE_NAME.TOPUPS).insert({
     user_id,

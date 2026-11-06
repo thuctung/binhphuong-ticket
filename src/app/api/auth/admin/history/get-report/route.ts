@@ -22,7 +22,7 @@ export async function POST(request: Request) {
   }: AdminSearchReport = searchValue;
 
   let query = supabaseAdmin
-    .from(DB_TABLE_NAME.VIEW_TICKET_SALE)
+    .from(DB_TABLE_NAME.VIEW_TICKET_SALE_SUMARY)
     .select("*", { count: "exact" })
     .order("created_at", { ascending: false })
     .range(offset, offset + LIMIT_TABLE - 1);

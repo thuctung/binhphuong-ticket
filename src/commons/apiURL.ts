@@ -65,7 +65,7 @@ export const EXPORT_EXCEL = "/api/auth/admin/history/export-excel";
 
 export const GET_ALL_AFFILATE = "/api/auth/admin/history/get-all-affilate";
 
-export const GET_PROFILE_BY_ORDER = "/api/auth/admin/history/get-info-by-order"
+export const GET_PROFILE_BY_ORDER = "/api/auth/admin/history/get-info-by-order";
 
 export const ADMIN_GET_SALE_SUMARY = "/api/auth/admin/stats/sumary-email";
 
@@ -102,6 +102,19 @@ export const GET_PRICE_AGENT_DEFAULT = "/api/auth/admin/products/get-agent-price
 export const UPDATE_PRICE_AGENT_DEFAULT = "/api/auth/admin/products/update-agent-price-default";
 
 export const GET_CATEGORY = "/api/auth/admin/category/get-list";
+
+// REFUND TICKET HISTORY
+export const RH_GET_ORDER_BY_THIRD_PARTY = "/api/auth/admin/refun-ticket/get-order-by-third";
+
+export const RH_SAVE_REFUND_HISTORY = "/api/auth/admin/refun-ticket/save-history";
+
+export const RH_GET_REFUND_HISTORY = "/api/auth/admin/refun-ticket/get-history";
+
+export const RH_GET_PROFILE_BY_EMAIL = "/api/auth/admin/refun-ticket/get-profile";
+
+export const RH_UPDAE_BALANCE_HISTORY = "/api/auth/admin/refun-ticket/return-money-aff";
+
+export const RH_UPDATE_ORDER_ITEM_CANCLE = "/api/auth/admin/refun-ticket/update-oder-item-cancel";
 
 // Sun API
 export const LOGIN_SUN_SYSTEM = "/api/auth/affiliate/get-ticket/login-sun-system";

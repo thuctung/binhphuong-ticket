@@ -119,8 +119,12 @@ export const DB_TABLE_NAME = {
   PROMOTION_PRICE: "promotion_price",
   PROMOTION_LOCATION: "promotion_location",
   ORDERS: "orders",
+  REFUND_HISTORY: "refund_history",
   ORDERS_ITEMS: "order_items",
   VIEW_TICKET_SALE: "view_sale_history",
+  VIEW_TICKET_SALE_SUMARY: "view_sale_summary",
+  RF_REFUND_AGENT_BALANCE: "refund_agent_balance",
+  RF_UPDATE_ORDER_ITEM_CANCEL: "cancel_order_tickets",
   FUNC_AFF_ADD_MONEY: "handle_topup_webhook",
   AGENTS: "agents",
   FUNC_CREATE_ORDER_PENDING: "create_order_pending",
@@ -182,6 +186,7 @@ export const TYPE_TRANSFER = {
   CUSTOMER: "CMT",
   AFF: "AFF",
   STAFF: "STF",
+  REFUND: "REFUND",
 };
 
 export const MENUS = [

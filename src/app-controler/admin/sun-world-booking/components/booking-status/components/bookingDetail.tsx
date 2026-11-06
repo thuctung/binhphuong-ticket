@@ -23,17 +23,28 @@ import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
 import {
   CheckChargeRefundType,
   CheckStatusTicketType,
+  OrderType,
   RefuncTicketSubmitType,
+  RefundHistorySubmit,
   RefundInfo,
+  RefundResponeType,
   StatusTicketListType,
 } from "../../../type";
-import { checkUsegeTicket, getCharegeRefund, refundTicket } from "../../../api";
+import {
+  checkUsegeTicket,
+  getCharegeRefund,
+  getOrderByThirdPartyCode,
+  refundTicket,
+  saveRefundHistory,
+  updateOrderItemCancel,
+} from "../../../api";
 import { toDate } from "@/components/GetTicketForm/constants";
 import { RefundFeeDialog } from "./refundChargeDetail";
 import { useProfileStore } from "@/stores/useProfileStore";
-import { ProfileType } from "@/types";
+import { CommonType, ProfileType } from "@/types";
 import { toast } from "react-toastify";
 import { is } from "zod/v4/locales";
+import { useCommonStore } from "@/stores/useCommonStore";
 
 function StatusBadge({ status }: { status: string }) {
   const s = STATUS_MAP[status as keyof typeof STATUS_MAP] ?? STATUS_MAP.cancelled;
@@ -81,19 +92,33 @@ function ChevronIcon({ open }: { open: boolean }) {
   );
 }
 
+const getTicketKey = (t: TicketInItemType) => t.ticketNumber;
+const createKeyMap = (product: TicketItemReponseType) => {
+  return `${product.productCode}###${product.productName}`;
+};
+
 export default function BookingDetailCard({
   booking,
   onReloadData,
   onFetchMoney,
-  userEmail
+  userEmail,
 }: {
   booking: TicketReponseType;
   onReloadData: Function;
-  onFetchMoney:Function;
-  userEmail:string;
+  onFetchMoney: Function;
+  userEmail: string;
 }) {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
-  const { orderCode, orderStatus, pnr, referenceCode, thirdPartyNumber, items = [],totalOrderPrice } = booking;
+  const {
+    orderCode,
+    orderStatus,
+    pnr,
+    referenceCode,
+    thirdPartyNumber,
+    items = [],
+    totalOrderPrice,
+  } = booking;
+  const { setGlobalLoading }: CommonType | any = useCommonStore.getState();
 
   const [open, setOpen] = useState(true);
   const [refundOpen, setRefundOpen] = useState(false);
@@ -103,6 +128,7 @@ export default function BookingDetailCard({
 
   const siteCode = get(items, [0, "siteCode"]) || "";
   const usageDate = get(items, [0, "usageDate"]) || "";
+  const isSelectable = (t: TicketInItemType) => !!t.ticketNumber;
 
   const handleDownloadFile = async () => {
     const date_use = get(booking, ["items", 0, "usageDate"]);
@@ -115,36 +141,48 @@ export default function BookingDetailCard({
     await downloadTicketPDF(customerTickets, focTickets);
   };
 
-  const isSelectable = (t: TicketInItemType) => !!t.ticketNumber;
+  const [ticketMap, setTicketMap] = useState<Map<string, string[]>>(new Map());
 
-  const allTickets: TicketInItemType[] = items.flatMap((p) => p.tickets ?? []);
-  const selectableTickets: TicketInItemType[] = allTickets.filter(isSelectable);
-  const getTicketKey = (t: TicketInItemType) => t.ticketNumber;
-
-  const [selected, setSelected] = useState<Set<string>>(
-    () => new Set(selectableTickets.map(getTicketKey))
-  );
-
-  const listSelected = selected.values().toArray();
-
-  const toggleTicket = (key: string) =>
-    setSelected((prev) => {
-      const next = new Set(prev);
-      next.has(key) ? next.delete(key) : next.add(key);
-      return next;
+  const handleSelectTicket = (productCode: string, ticketNumber: string, checked: boolean) => {
+    setTicketMap((prev) => {
+      const currentProductCode = prev.keys().next().value;
+      const newMap =
+        currentProductCode && currentProductCode !== productCode
+          ? new Map<string, string[]>()
+          : new Map(prev);
+      const current = newMap.get(productCode) || [];
+      if (checked) {
+        newMap.set(productCode, [...new Set([...current, ticketNumber])]);
+      } else {
+        const updated = current.filter((code) => code !== ticketNumber);
+        if (updated.length) {
+          newMap.set(productCode, updated);
+        } else {
+          newMap.delete(productCode);
+        }
+      }
+      return newMap;
     });
+  };
 
-  const toggleMany = (tickets: TicketInItemType[], checked: boolean) =>
-    setSelected((prev) => {
-      const next = new Set(prev);
-      tickets
-        .filter(isSelectable)
-        .forEach((t) => (checked ? next.add(getTicketKey(t)) : next.delete(getTicketKey(t))));
-      return next;
+  const handleCheckAll = (product: TicketItemReponseType, value: boolean) => {
+    setTicketMap((prev) => {
+      const newMap = new Map<string, string[]>();
+
+      if (value) {
+        newMap.set(
+          createKeyMap(product),
+          product.tickets.map((item) => item.ticketNumber)
+        );
+      }
+
+      return newMap;
     });
+  };
+  const listSelected = Array.from(ticketMap.values()).flat();
 
   const checkChargeRefund = async () => {
-     if (!listSelected.length) {
+    if (!listSelected.length) {
       toast.warning("Chọn vé cần kiểm tra");
       return;
     }
@@ -163,12 +201,53 @@ export default function BookingDetailCard({
     }
   };
 
-  const refundMoneyAff = async (moeny:number) => {
-    
-  }
+  const getOrderDetail = async (thirdPartyNumber: string) => {
+    const order: OrderType = await getOrderByThirdPartyCode(thirdPartyNumber);
+    return order;
+  };
+
+  const getProductName = (listKey: string[], productCode: string) => {
+    return listKey.find((item) => item.startsWith(`${productCode}###`))?.split("###")[1] || "";
+  };
+
+  const updateStatusOrderItem = async (refundReponse: RefundResponeType) => {
+    const { productId, quantity } = refundReponse.items[0];
+    const data = await updateOrderItemCancel({
+      third_party_number: refundReponse.referenceThirdPartyNumber,
+      product_code: productId,
+      quantity,
+    });
+  };
+
+  const handleSaveRefundHistory = async (refundReponse: RefundResponeType) => {
+    if (!refundReponse) return;
+    const orderItem = await getOrderDetail(refundReponse.referenceThirdPartyNumber);
+    const listKey = [...ticketMap.keys()];
+
+    const refundItems: RefundHistorySubmit[] = refundReponse.items.map((item) => ({
+      third_party_number: refundReponse.referenceThirdPartyNumber,
+      product_code: item.productId,
+      quantity: item.quantity,
+      return_rate: item.returnRate,
+      return_charge: item.returnCharge,
+      total_price: item.totalPrice,
+      unit_price: item.unitPrice,
+      email_order: orderItem?.user_email,
+      site_code: orderItem?.site_code,
+      product_name: getProductName(listKey, item.productId),
+    }));
+    await saveRefundHistory(refundItems);
+    await updateStatusOrderItem(refundReponse);
+  };
 
   const handleRefundTicket = async () => {
+    if (!listSelected.length) {
+      toast.warning("Chọn vé cần hoàn");
+      return;
+    }
     setLoading(true);
+    setGlobalLoading(true);
+
     const params: RefuncTicketSubmitType = {
       thirdPartyNumber: generateThirdPartyCodeRefund(siteCode),
       returnReason: "Hủy vé",
@@ -186,13 +265,16 @@ export default function BookingDetailCard({
     };
     const data = await refundTicket(params);
     if (data) {
-      toast.success("Hoàn vé thành công"); 
-      if(onFetchMoney)onFetchMoney();
+      const resFund: RefundResponeType = get(data, 0);
+      await handleSaveRefundHistory(resFund);
+      toast.success("Hoàn vé thành công");
+      if (onFetchMoney) onFetchMoney();
       onReloadData();
       handleCheckStatusTicket();
       setRefundOpen(false);
     }
     setLoading(false);
+    setGlobalLoading(false);
   };
 
   const handleCheckStatusTicket = async () => {
@@ -224,8 +306,9 @@ export default function BookingDetailCard({
     setRefundData(null);
     setStatusTicketMap({});
     setRefundData(null);
-    setSelected(new Set([]))
-  },[booking])
+    setTicketMap(new Map([]));
+  }, [booking]);
+
   return (
     <div className="w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       {orderStatus === "success" && (
@@ -244,7 +327,6 @@ export default function BookingDetailCard({
           <p className="text-[11px] uppercase tracking-wide text-slate-400">Mã đơn hàng</p>
           <p className="font-mono text-base font-semibold text-slate-900">{orderCode}</p>
         </div>
-        
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 px-5">
@@ -283,22 +365,24 @@ export default function BookingDetailCard({
           <div className="mx-5 mb-5 space-y-3">
             {items.map((p, index) => {
               const tickets: TicketInItemType[] = p.tickets ?? [];
-              const selectable = tickets.filter(isSelectable);
+              const allListTicketNumber = tickets.map((item) => getTicketKey(item));
+              const selectedTickets = ticketMap.get(createKeyMap(p)) || [];
+              const hasSelected = allListTicketNumber.some((ticket) =>
+                selectedTickets.includes(ticket)
+              );
 
-              const groupChecked =
-                selectable.length > 0 && selectable.every((t) => selected.has(getTicketKey(t)));
-              const groupSome =
-                !groupChecked && selectable.some((t) => selected.has(getTicketKey(t)));
+              const checkAll = selectedTickets.length === allListTicketNumber.length;
+              const groupSome = !checkAll && hasSelected;
 
               return (
                 <div key={index} className="overflow-hidden rounded-lg border border-slate-100">
                   <div className="flex items-center justify-between gap-2 bg-slate-50 px-3.5 py-2.5">
-                    {selectable.length > 0 ? (
+                    {allListTicketNumber.length > 0 && p.unitPrice ? (
                       <label className="flex cursor-pointer items-center gap-2.5 text-sm font-medium text-slate-800">
                         <TriCheckbox
-                          checked={groupChecked}
+                          checked={checkAll}
                           indeterminate={groupSome}
-                          onChange={(c) => toggleMany(selectable, c)}
+                          onChange={(value) => handleCheckAll(p, value)}
                         />
                         {p.productName}
                       </label>
@@ -306,22 +390,30 @@ export default function BookingDetailCard({
                       <span className="text-sm font-medium text-slate-800">{p.productName}</span>
                     )}
                     <span className="rounded-md bg-slate-200 px-2 py-0.5 font-mono text-xs font-medium text-slate-600">
-                     {formatVND(p.unitPrice)} x{p.quantity}
+                      {formatVND(p.unitPrice)} x{p.quantity}
                     </span>
                   </div>
 
                   <ul className="divide-y divide-slate-100">
                     {tickets.map((t, tIndex) => {
-                      const canSelect = isSelectable(t);
+                      const canSelect = Boolean(p.unitPrice);
                       const key = canSelect ? getTicketKey(t) : `${p.productCode}-${tIndex}`;
-
+                      console.log("canSelect", canSelect);
                       const content = (
                         <>
                           {canSelect && (
                             <input
                               type="checkbox"
-                              checked={selected.has(key)}
-                              onChange={() => toggleTicket(key)}
+                              checked={
+                                ticketMap.get(createKeyMap(p))?.includes(t.ticketNumber) ?? false
+                              }
+                              onChange={(e) =>
+                                handleSelectTicket(
+                                  createKeyMap(p),
+                                  t.ticketNumber,
+                                  e.target.checked
+                                )
+                              }
                               className="mt-0.5 h-4 w-4 cursor-pointer rounded border-slate-300 accent-green-600"
                             />
                           )}
@@ -338,7 +430,7 @@ export default function BookingDetailCard({
                                       : "bg-slate-100 text-red-500"
                                   }`}
                                 >
-                                  {StatusData [getStatusTicket(t.ticketNumber)]}
+                                  {StatusData[getStatusTicket(t.ticketNumber)]}
                                 </span>
                               ) : null}
                             </div>

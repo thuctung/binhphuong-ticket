@@ -1,6 +1,12 @@
 import api from "@/axios";
 import {
   GET_PROFILE_BY_ORDER,
+  RH_GET_ORDER_BY_THIRD_PARTY,
+  RH_GET_PROFILE_BY_EMAIL,
+  RH_GET_REFUND_HISTORY,
+  RH_SAVE_REFUND_HISTORY,
+  RH_UPDAE_BALANCE_HISTORY,
+  RH_UPDATE_ORDER_ITEM_CANCLE,
   SUN_CHECK_USEGE_TICKET,
   SUN_GET_BALANCE,
   SUN_GET_CHARGE_REFUND,
@@ -9,12 +15,16 @@ import {
   SUN_TICKET_LISTING,
 } from "@/commons/apiURL";
 import { useCommonStore } from "@/stores/useCommonStore";
-import { CommonType } from "@/types";
+import { CommonType, SearchTableType } from "@/types";
 import {
   CheckChargeRefundType,
   CheckStatusTicketType,
   ParamStatusTicketType,
   RefuncTicketSubmitType,
+  RefundHistorySubmit,
+  SearchRefunType,
+  UpdateBlanceHistorySubmit,
+  UpdateOrderItemCancelSubmit,
 } from "./type";
 
 const { setToastMessage, setGlobalLoading }: CommonType | any = useCommonStore.getState();
@@ -71,7 +81,6 @@ export const getCharegeRefund = async (prams: CheckChargeRefundType) => {
 
 export const refundTicket = async (prams: RefuncTicketSubmitType) => {
   try {
-    setGlobalLoading(true);
     const { data, error }: any = await api.post(SUN_REFUND_TICKET, prams);
     if (data.success) {
       return data.result;
@@ -80,8 +89,6 @@ export const refundTicket = async (prams: RefuncTicketSubmitType) => {
     return;
   } catch (e) {
     setToastMessage("Có lỗi xảy ra! Thử lại sau");
-  } finally {
-    setGlobalLoading(false);
   }
 };
 
@@ -116,7 +123,7 @@ export const getCurrentMoeny = async () => {
   }
 };
 
-export const getInforPersonOrder = async() => {
+export const getInforPersonOrder = async () => {
   try {
     const { data } = await api.get(SUN_GET_BALANCE);
 
@@ -126,18 +133,83 @@ export const getInforPersonOrder = async() => {
     return data.result;
   } catch (error) {
     setToastMessage("Có lỗi xảy ra");
+  }
+};
+
+export const getProfileOrder = async (orderCode: string) => {
+  try {
+    const { data } = await api.post(GET_PROFILE_BY_ORDER, {
+      orderCode,
+    });
+    return data;
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
+  }
+};
+
+export const getOrderByThirdPartyCode = async (thirdPartyCode: string) => {
+  try {
+    const { data } = await api.post(RH_GET_ORDER_BY_THIRD_PARTY, {
+      thirdPartyCode,
+    });
+    return data.data;
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
+  }
+};
+
+export const saveRefundHistory = async (payload: RefundHistorySubmit[]) => {
+  try {
+    const { data } = await api.post(RH_SAVE_REFUND_HISTORY, payload);
+    return data;
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
+  }
+};
+
+export const getRefundHistory = async (payload: SearchTableType<SearchRefunType>) => {
+  try {
+    setGlobalLoading(true);
+    const { data } = await api.post(RH_GET_REFUND_HISTORY, payload);
+    return data;
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
   } finally {
     setGlobalLoading(false);
   }
-}
+};
 
-export const getProfileOrder = async(orderCode:string) => {
-try {
-    const { data } = await api.post(GET_PROFILE_BY_ORDER,{
-      orderCode
+export const getProfileByEmail = async (email: string) => {
+  try {
+    setGlobalLoading(true);
+    const { data } = await api.post(RH_GET_PROFILE_BY_EMAIL, {
+      email,
     });
-    return data
+    return data;
   } catch (error) {
     setToastMessage("Có lỗi xảy ra");
-  } 
-}
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const updateBalanceHistory = async (payload: UpdateBlanceHistorySubmit) => {
+  try {
+    setGlobalLoading(true);
+    const { data } = await api.post(RH_UPDAE_BALANCE_HISTORY, payload);
+    return data;
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const updateOrderItemCancel = async (payload: UpdateOrderItemCancelSubmit) => {
+  try {
+    const { data } = await api.post(RH_UPDATE_ORDER_ITEM_CANCLE, payload);
+    return data;
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
+  }
+};

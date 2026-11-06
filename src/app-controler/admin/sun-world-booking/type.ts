@@ -6,7 +6,7 @@ export type ParamStatusTicketType = {
 export type TicketStatusType = {
   productName: string;
   siteCode: string;
-  status:string;
+  status: string;
   ticketNumber: string;
   usageStatus: string;
   productCode: string;
@@ -70,4 +70,64 @@ export type StatusTicketListType = {
   firstUsageDateTime: string;
   validDateTo: string;
   ticketNumber: string;
+};
+
+export type RefundItemResponeType = {
+  productId: string;
+  quantity: number;
+  returnCharge: number;
+  returnRate: number;
+  totalPrice: number;
+  unitPrice: number;
+  usageDate: string;
+};
+
+export type RefundResponeType = {
+  referenceThirdPartyNumber: string;
+  thirdPartyNumber: string;
+  items: RefundItemResponeType[];
+};
+
+export type RefundHistorySubmit = {
+  third_party_number: string;
+  product_code: string;
+  quantity: number;
+  return_rate: number;
+  return_charge: number;
+  total_price: number;
+  unit_price: number;
+  email_order: string;
+  site_code: string;
+  product_name: string;
+  created_date?: string;
+  status?: string;
+  id?: string;
+};
+
+export type OrderType = {
+  id: string;
+  user_id: string;
+  user_email: string;
+  third_party_number: string;
+  site_code: string;
+};
+
+export type SearchRefunType = {
+  email: string;
+  from: string;
+  to: string;
+  third_party_number: string;
+  site_code: string;
+};
+
+export type UpdateBlanceHistorySubmit = {
+  user_id: string;
+  id_history: string;
+  amount: number;
+};
+
+export type UpdateOrderItemCancelSubmit = {
+  product_code: string;
+  quantity: number;
+  third_party_number: string;
 };

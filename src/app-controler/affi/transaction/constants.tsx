@@ -10,6 +10,10 @@ export const getTypeName = (status: string) => {
       return "Nạp tiền";
     case TYPE_TRANSACTION.TICKET_BUY:
       return "Rút vé";
+    case TYPE_TRANSACTION.TICKET_BUY:
+      return "Rút vé";
+    case "REFUND":
+      return "Hoàn tiền";
     default:
       return "";
   }

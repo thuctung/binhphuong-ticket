@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -12,7 +12,6 @@ import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 
 import { get } from "lodash";
 import { statusClass, StatusData } from "../../constant";
-import { getSiteByStatus } from "@/components/GetTicketForm/api";
 import { SiteType } from "@/types/ticket";
 import { ParamStatusTicketType, TicketStatusType } from "../../type";
 import { getStatusTicket } from "../../api";
@@ -52,7 +51,7 @@ export default function TicketStatus({ listSideSun }: { listSideSun: SiteType[] 
         <span className={statusClass[row.status]}>{get(StatusData, row.status)}</span>
       ),
     },
-{
+    {
       key: "usageStatus",
       title: "Trạng thái",
       align: "center",

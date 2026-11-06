@@ -1,30 +1,31 @@
 "use client";
 
-import { useEffect, useState,   } from "react";
+import { useEffect, useState } from "react";
 import AdminBookingStatus from "./components/booking-status";
 import TicketStatus from "./components/ticket-statatus";
 import { getSiteByStatus } from "@/components/GetTicketForm/api";
 import { SiteType } from "../site/type";
 import type { SiteType as TicketSiteType } from "@/types/ticket";
-import { getCurrentMoeny, getProfileOrder } from "./api";
+import { getCurrentMoeny } from "./api";
 import { get } from "lodash";
 import { formatVND } from "@/lib/money";
+import RefundHistory from "./components/refund-history";
 
-
-type TabProps = { listSideSun: TicketSiteType[] , onFetchMoney:Function};
+type TabProps = { listSideSun: TicketSiteType[]; onFetchMoney: Function };
 
 const TABS: {
   id: "status" | "booking" | "refund";
   label: string;
   Component: React.ComponentType<TabProps>;
 }[] = [
-  { id: "status", label: "Tra cứu trạng thái vé", Component: TicketStatus },
   { id: "booking", label: "Tra cứu booking", Component: AdminBookingStatus },
+  { id: "status", label: "Trạng thái vé", Component: TicketStatus },
+  { id: "refund", label: "Lịch sử hoàn hủy", Component: RefundHistory },
 ];
 type TabId = (typeof TABS)[number]["id"];
 
 export default function SunworldBookingController() {
-  const [active, setActive] = useState<TabId>("status");
+  const [active, setActive] = useState<TabId>("booking");
   const [currentPrice, setCurrentPrice] = useState(0);
 
   const [listSideSun, setListSideSun] = useState<TicketSiteType[]>([]);
@@ -47,8 +48,6 @@ export default function SunworldBookingController() {
       setCurrentPrice(credit);
     }
   };
-
-  
 
   useEffect(() => {
     fetchListSite();
