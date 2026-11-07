@@ -79,7 +79,7 @@ export default function Login() {
         </div>
 
         {/* Form */}
-        <div className="mt-7 space-y-5">
+        <form onSubmit={signIn} className="mt-7 space-y-5">
           {/* Email */}
           <div>
             <label htmlFor="email" className="mb-1.5 block text-xs font-semibold text-slate-700">
@@ -116,7 +116,7 @@ export default function Login() {
           Quên mật khẩu?
         </button> */}
             </div>
-            <form onSubmit={signIn} className="relative">
+            <div  className="relative">
               <LockIcon
                 size={16}
                 className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
@@ -138,7 +138,7 @@ export default function Login() {
               >
                 <EyeIcon off={showPassword} className="h-4 w-4" />
               </button>
-            </form>
+            </div>
           </div>
 
           {/* Error */}
@@ -167,7 +167,7 @@ export default function Login() {
               "Đăng nhập"
             )}
           </button>
-        </div>
+        </form>
         {/* Back link */}
         <Link
           href="/"
