@@ -1,8 +1,8 @@
 import { formatVND } from "@/lib/money";
 
-type RevenueProps = { total: number; ticket: number;cancel:number; from: string; to: string };
+type RevenueProps = { total: number; ticket: number;cancel:number; from: string; to: string,refundCharge:number };
 
-export function Revenue({ total, ticket,cancel, from, to }: RevenueProps) {
+export function Revenue({ total, ticket,cancel, from, to,refundCharge }: RevenueProps) {
   return (
     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
       <div className="flex items-center gap-2 mb-6 text-gray-500">
@@ -56,7 +56,7 @@ export function Revenue({ total, ticket,cancel, from, to }: RevenueProps) {
             Phí hủy vé
           </p>
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold text-green-900">{formatVND(total)}</span>
+            <span className="text-2xl font-bold text-green-900">{formatVND(refundCharge)}</span>
           </div>
         </div>
       </div>

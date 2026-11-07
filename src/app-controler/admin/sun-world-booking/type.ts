@@ -102,6 +102,10 @@ export type RefundHistorySubmit = {
   created_date?: string;
   status?: string;
   id?: string;
+  price_agent:number;
+  surcharge:number;
+  total_fee:number;
+  real_amount:number;
 };
 
 export type OrderType = {
@@ -122,8 +126,11 @@ export type SearchRefunType = {
 
 export type UpdateBlanceHistorySubmit = {
   user_id: string;
-  id_history: string;
+  id: string;
   amount: number;
+  surcharge:number;
+  price_agent:number;
+  total_fee:number;
 };
 
 export type UpdateOrderItemCancelSubmit = {

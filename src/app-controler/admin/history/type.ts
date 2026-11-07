@@ -14,7 +14,7 @@ export type AdminReportResponseType = {
   user_id: string;
   third_party_number: number;
   status: string;
-  site_codeL: string;
+  site_code: string;
   payment_code: string;
   status_payment: string;
   order_code: string;

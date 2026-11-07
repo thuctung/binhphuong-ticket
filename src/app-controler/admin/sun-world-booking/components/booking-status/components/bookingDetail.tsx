@@ -338,8 +338,12 @@ export default function BookingDetailCard({
       </div>
 
       <div className="flex justify-end gap-[20px]  px-[10px] py-5">
-        <ButtonCommon title="Xem phí hoàn vé" onClick={checkChargeRefund} />
-        <ButtonCommon title="Hoàn vé" onClick={handleRefundTicket} />
+        {profile.role && profile.role === "admin" ? (
+          <>
+            <ButtonCommon title="Xem phí hoàn vé" onClick={checkChargeRefund} />
+            <ButtonCommon title="Hoàn vé" onClick={handleRefundTicket} />
+          </>
+        ) : null}
         <ButtonCommon title="Xem trạng thái vé" onClick={handleCheckStatusTicket} />
       </div>
 

@@ -5,3 +5,9 @@ export type CountTicketSaleParamType = {
   siteCode?: string;
 
 };
+export type CountTicketType = {
+  ticketSale: number;
+  ticketReund:number;
+  total:number;
+  refundCharge:number
+}

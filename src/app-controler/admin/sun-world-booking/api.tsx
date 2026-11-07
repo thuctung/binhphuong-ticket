@@ -2,6 +2,7 @@ import api from "@/axios";
 import {
   GET_PROFILE_BY_ORDER,
   RH_GET_ORDER_BY_THIRD_PARTY,
+  RH_GET_PRICE_ORDER_ITEM,
   RH_GET_PROFILE_BY_EMAIL,
   RH_GET_REFUND_HISTORY,
   RH_SAVE_REFUND_HISTORY,
@@ -213,3 +214,21 @@ export const updateOrderItemCancel = async (payload: UpdateOrderItemCancelSubmit
     setToastMessage("Có lỗi xảy ra");
   }
 };
+
+
+export const getAffProductPriceOrder =async(thirpary:string,productCode:string) =>{
+try {
+  setGlobalLoading(true)
+    const { data } = await api.post(RH_GET_PRICE_ORDER_ITEM, {
+      thirpary,
+      productCode
+    });
+    return data;
+  } catch (error) {
+    setToastMessage("Có lỗi xảy ra");
+  }
+  finally{
+  setGlobalLoading(false)
+
+  }
+}

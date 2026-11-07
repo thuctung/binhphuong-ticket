@@ -1,13 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { SearchTableType } from "@/types";
 import { RefundHistorySubmit, SearchRefunType } from "../../type";
 import { SiteType } from "@/types/ticket";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { df_From, df_To } from "@/app-controler/admin/history/constant";
-import { getProfileByEmail, getRefundHistory, updateBalanceHistory } from "../../api";
+import { getAffProductPriceOrder, getProfileByEmail, getRefundHistory, updateBalanceHistory } from "../../api";
 import SearchRefundForm from "./components/search-form";
 import { covertDateFormToServer } from "@/helpers/dateTime";
 import { formatVND } from "@/lib/money";
@@ -16,19 +16,21 @@ import { getSideItem } from "@/app-controler/admin/product-mgt/contants";
 import RefundAgentDialog from "./components/add-moeny";
 import { toast } from "react-toastify";
 
-const initSearch = { site_code: "", email: "", from: df_From, to: df_To, third_party_number: "" };
-
+const initParam = { site_code: "", email: "", from: df_From, to: df_To, third_party_number: "" };
+const initSearch = {
+  searchValue: initParam,
+    currentPage: 1,
+}
 export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[] }) {
   const [totalPages, setTotalPage] = useState(0);
-  const [params, setParams] = useState<SearchTableType<SearchRefunType>>({
-    searchValue: initSearch,
-    currentPage: 1,
-  });
+  const [params, setParams] = useState<SearchTableType<SearchRefunType>>(initSearch);
 
   const [litsHistory, setListHistory] = useState<RefundHistorySubmit[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
 
   const [currentData, setCurrentData] = useState<RefundHistorySubmit | null>(null);
+
+  const [priceAffBuy, setPriceAffBuy] = useState(0);
 
   const returnMoney = useMemo(() => {
     if (currentData) {
@@ -37,7 +39,9 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
     return 0;
   }, [currentData]);
 
-  const handleOpenDialog = (row: RefundHistorySubmit) => {
+  const handleOpenDialog =async (row: RefundHistorySubmit) => {
+      const {data:price} = await getAffProductPriceOrder(row.third_party_number, row.product_code);
+      setPriceAffBuy(price)
     setCurrentData(row);
     setOpenDialog(true);
   };
@@ -57,13 +61,13 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
     }));
   };
 
-  const handleSearchHistory = async () => {
+  const fetchListHistory = async (payload:SearchTableType<SearchRefunType>) => {
     const data = await getRefundHistory({
-      ...params,
+      currentPage:1,
       searchValue: {
-        ...params.searchValue,
-        from: covertDateFormToServer(params.searchValue.from),
-        to: covertDateFormToServer(params.searchValue.to),
+        ...payload.searchValue,
+        from: covertDateFormToServer(payload.searchValue.from),
+        to: covertDateFormToServer(payload.searchValue.to),
       },
     });
     if (data) {
@@ -73,10 +77,21 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
     }
   };
 
-  const handleReturnMoneyAffilate = async (money: number) => {
+  const handleSearch = () => {
+    fetchListHistory(params)
+  }
+  const handleChangePage = (page: number) => {
+    setParams((pre) => {
+      const newValue = { ...pre, currentPage: page };
+      fetchListHistory(newValue);
+      return newValue;
+    });
+  };
+
+  const handleReturnMoneyAffilate = async (baseCharge: number, surcharge:number) => {
     if (currentData) {
+      console.log(currentData,);
       const { data } = await getProfileByEmail(currentData.email_order);
-      console.log(currentData.total_price , currentData.return_charge , money)
       if (data) {
         const { role, agent_level, user_id } = data;
         if (role !== "affiliate" || agent_level === "register" || agent_level === "customer") {
@@ -84,14 +99,18 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
           return;
         }
         const resUpdate = await updateBalanceHistory({
+          id: currentData.id || "",
           user_id,
-          id_history: currentData.id || "",
-          amount: money,
+          surcharge,
+          total_fee:surcharge + currentData.return_charge,
+          amount: baseCharge - surcharge,
+          price_agent:priceAffBuy
         });
+
         if (resUpdate) {
           toast.success("Hoàn tiền thành công");
           onCloseDialog();
-          handleSearchHistory();
+          handleSearch  ();
         }
       } else {
         toast.error("Không tìm thấy đại lý");
@@ -113,14 +132,18 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
     {
       key: "product_name",
       title: "Tên vé",
-      align: "left",
     },
 
     {
       key: "unit_price",
-      title: "Giá vé",
-      align: "center",
+      title: "Giá gốc",
       render: (row) => formatVND(row.unit_price),
+    },
+    {
+      key: "unit_price",
+      title: "Giá đại lý mua",
+      align: "right",
+      render: (row) => formatVND(row.price_agent || 0),
     },
     {
       key: "quantity",
@@ -141,15 +164,29 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
     },
     {
       key: "return_charge",
-      title: "Phí hoàn vé",
+      title: "Phí hoàn Sunworld",
       align: "center",
       render: (row) => formatVND(row.return_charge),
     },
+      {
+      key: "surcharge",
+      title: "Phụ phí",
+      align: "center",
+      render: (row) => formatVND(row.surcharge),
+    },
+
+     {
+      key: "total_fee",
+      title: "Tổng phí",
+      align: "center",
+      render: (row) => formatVND(row.total_fee),
+    },
+    
     {
       key: "get_price",
-      title: "Nhận lại",
+      title: "Thực nhận",
       align: "center",
-      render: (row) => formatVND(row.total_price - row.return_charge),
+      render: (row) => formatVND(row.real_amount),
     },
     {
       key: "action",
@@ -164,8 +201,12 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
     },
   ];
 
+  useEffect(() => {
+    fetchListHistory(initSearch)
+  },[])
+
   return (
-    <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
+    <main className="mx-auto w-full  px-4 py-8 sm:px-6">
       {/* Header */}
       <header className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight text-slate-900">Lịch sử hoàn vé</h1>
@@ -173,7 +214,7 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
       <SearchRefundForm
         searchValue={params.searchValue}
         onChange={onChangeSearch}
-        handleSearch={handleSearchHistory}
+        handleSearch={handleSearch}
         listSideSun={listSideSun}
       />
 
@@ -182,16 +223,20 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
           columns={columnAffStats}
           data={litsHistory}
           totalPages={totalPages}
-          onChangePage={(page) => setParams((pre) => ({ ...pre, currentPage: page }))}
+                      currentPage={params.currentPage}
+
+          onChangePage={(page) => handleChangePage(page)}
         />
       </section>
 
       {currentData ? (
         <RefundAgentDialog
           open={openDialog}
+          unitPrice={currentData.unit_price*currentData.quantity}
           onClose={onCloseDialog}
           onSubmit={handleReturnMoneyAffilate}
           maxAmount={returnMoney}
+          priceAff = {priceAffBuy*currentData.quantity}
         />
       ) : null}
     </main>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AdminBookingStatus from "./components/booking-status";
 import TicketStatus from "./components/ticket-statatus";
 import { getSiteByStatus } from "@/components/GetTicketForm/api";
@@ -10,6 +10,8 @@ import { getCurrentMoeny } from "./api";
 import { get } from "lodash";
 import { formatVND } from "@/lib/money";
 import RefundHistory from "./components/refund-history";
+import { useProfileStore } from "@/stores/useProfileStore";
+import { ProfileType } from "@/types";
 
 type TabProps = { listSideSun: TicketSiteType[]; onFetchMoney: Function };
 
@@ -27,8 +29,16 @@ type TabId = (typeof TABS)[number]["id"];
 export default function SunworldBookingController() {
   const [active, setActive] = useState<TabId>("booking");
   const [currentPrice, setCurrentPrice] = useState(0);
+  const profile: ProfileType = useProfileStore((state: any) => state.profile);
 
   const [listSideSun, setListSideSun] = useState<TicketSiteType[]>([]);
+
+  const TAB_MODE  = useMemo(() => {
+    if(profile.role ==="admin"){
+      return TABS
+    }
+    return TABS.filter(item => item.id !=="refund")
+  },[profile.role])
 
   const ActiveTab = TABS.find((t) => t.id === active)!.Component;
 
@@ -58,26 +68,29 @@ export default function SunworldBookingController() {
     <main className="min-h-screen  text-slate-900">
       <div className="mx-auto ">
         <h1 className="text-xl font-semibold">Tra cứu booking Sunworld</h1>
-        <section className="rounded-2xl border mt-3 border-slate-200 bg-white p-6 shadow-sm">
-          <div className="flex">
-            <div className="mb-5 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-              <div>
-                <div className="flex items-center gap-2 text-sm font-medium text-slate-500">
-                  Số tiền hiện tại
-                </div>
-                <div className="mt-1 text-3xl font-bold tracking-tight text-slate-900 md:text-3xl">
-                  {formatVND(currentPrice)}
+        {profile.role && profile.role === "admin" ? (
+          <section className="rounded-2xl border mt-3 border-slate-200 bg-white p-6 shadow-sm">
+            <div className="flex">
+              <div className="mb-5 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+                <div>
+                  <div className="flex items-center gap-2 text-sm font-medium text-slate-500">
+                    Số tiền hiện tại
+                  </div>
+                  <div className="mt-1 text-3xl font-bold tracking-tight text-slate-900 md:text-3xl">
+                    {formatVND(currentPrice)}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : null}
+
         <div
           role="tablist"
           aria-label="Chức năng tra cứu"
           className="mt-6 flex gap-1  border-b border-slate-200"
         >
-          {TABS.map((t) => {
+          {TAB_MODE.map((t) => {
             const selected = t.id === active;
             return (
               <button
@@ -105,7 +118,6 @@ export default function SunworldBookingController() {
           aria-labelledby={`tab-${active}`}
           className="pt-6"
         >
-          {/* key để reset form/kết quả khi đổi tab */}
           <ActiveTab key={active} listSideSun={listSideSun} onFetchMoney={fetchCurrentMoney} />
         </div>
       </div>
