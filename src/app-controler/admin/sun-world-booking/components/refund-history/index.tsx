@@ -172,21 +172,21 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
       key: "surcharge",
       title: "Phụ phí",
       align: "center",
-      render: (row) => formatVND(row.surcharge),
+      render: (row) => formatVND(row.surcharge ||0),
     },
 
      {
       key: "total_fee",
       title: "Tổng phí",
       align: "center",
-      render: (row) => formatVND(row.total_fee),
+      render: (row) => formatVND(row?.total_fee || 0),
     },
     
     {
       key: "get_price",
       title: "Thực nhận",
       align: "center",
-      render: (row) => formatVND(row.real_amount),
+      render: (row) => formatVND(row?.real_amount || 0),
     },
     {
       key: "action",

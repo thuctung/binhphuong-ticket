@@ -102,10 +102,10 @@ export type RefundHistorySubmit = {
   created_date?: string;
   status?: string;
   id?: string;
-  price_agent:number;
-  surcharge:number;
-  total_fee:number;
-  real_amount:number;
+  price_agent?:number;
+  surcharge?:number;
+  total_fee?:number;
+  real_amount?:number;
 };
 
 export type OrderType = {

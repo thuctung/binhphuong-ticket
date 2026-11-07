@@ -22,7 +22,7 @@ export default function SummaryCustomer({ siteName }: OrderSummaryProps) {
   const style = open ? "530px" : "92px";
 
   const { items, formData } = useCartStore((s) => s);
-  const listProduct = items?.values()?.toArray() || [];
+  const listProduct = Array.from(items?.values?.() ?? []);
 
   const total = listProduct.reduce((sum, t) => {
     let price = t.product.pinalPrice || 0;

@@ -61,7 +61,7 @@ export default function CartController() {
     clear: clearCart,
   } = useCartStore((s) => s);
 
-  const itemsCart = items?.values()?.toArray();
+const itemsCart = Array.from(items?.values?.() ?? []);
   const timeCancelOrderRef = useRef<NodeJS.Timeout | null>(null);
   const chanenSupbase = useRef<any>(null);
 

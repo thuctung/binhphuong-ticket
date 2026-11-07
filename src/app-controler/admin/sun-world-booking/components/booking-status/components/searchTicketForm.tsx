@@ -1,14 +1,5 @@
-import { ParamStatusTicketType } from "@/app-controler/affi/ticket-statatus/type";
 import { inputCls } from "@/components/ui/const-class";
-import { ResetButton } from "@/components/ui/customs/ressetButton";
 import { SearchButton } from "@/components/ui/customs/searchButton";
-import { SelectBox } from "@/components/ui/customs/selectBox";
-
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { SiteType } from "@/types/ticket";
-
-import { useState } from "react";
 
 type SearchTicketStatusProps = {
   setOrderCode: (value: string) => void;

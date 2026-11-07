@@ -39,7 +39,9 @@ export default function Login() {
     }
   }, [profile]);
 
-  const signIn = async () => {
+  const signIn = async (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
+    if (isLogin) return;
     sv_Login({
       email,
       password,
@@ -114,7 +116,7 @@ export default function Login() {
           Quên mật khẩu?
         </button> */}
             </div>
-            <div className="relative">
+            <form onSubmit={signIn} className="relative">
               <LockIcon
                 size={16}
                 className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
@@ -136,7 +138,7 @@ export default function Login() {
               >
                 <EyeIcon off={showPassword} className="h-4 w-4" />
               </button>
-            </div>
+            </form>
           </div>
 
           {/* Error */}
@@ -153,7 +155,7 @@ export default function Login() {
           {/* Submit */}
           <button
             disabled={isLogin}
-            onClick={signIn}
+            type="submit"
             className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-[#6cae69] to-[#559652] text-sm font-semibold text-white shadow-[0_4px_12px_-2px_rgba(97,160,94,0.5)] transition-all hover:brightness-105 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#61a05e]/30 disabled:cursor-not-allowed disabled:opacity-70"
           >
             {isLogin ? (
