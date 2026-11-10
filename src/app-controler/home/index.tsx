@@ -1,15 +1,17 @@
 import Banner from "./components/Banner";
 import Tours from "./components/Tours";
 import Locations from "./components/Locations";
-import AgentForm from "./components/AgentForm";
+import About from "./components/About";
+import Consult from "./components/Consult";
 
 const HomeA = () => {
   return (
     <main>
       <Banner />
-      <Tours />
       <Locations />
-      <AgentForm />
+      <Tours />
+      <Consult />
+      <About />
     </main>
   );
 };
