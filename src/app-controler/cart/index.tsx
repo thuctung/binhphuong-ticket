@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { CartItemList } from "./components/CartItemList";
 import { OrderSummary } from "./components/OrderSummary";
@@ -38,6 +39,7 @@ import BankTransferQR from "../affi/topup/components/qrToBank";
 import { KEY_MODIFY_DATA } from "../affi/stats/contants";
 import { toast } from "react-toastify";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { Plus } from "lucide-react";
 
 const initOrderData = {
   dateUse: "",
@@ -61,7 +63,7 @@ export default function CartController() {
     clear: clearCart,
   } = useCartStore((s) => s);
 
-const itemsCart = Array.from(items?.values?.() ?? []);
+  const itemsCart = Array.from(items?.values?.() ?? []);
   const timeCancelOrderRef = useRef<NodeJS.Timeout | null>(null);
   const chanenSupbase = useRef<any>(null);
 
@@ -84,7 +86,11 @@ const itemsCart = Array.from(items?.values?.() ?? []);
   const [couponError, setCouponError] = useState("");
   const [payment, setPayment] = useState<PaymentMethodId | null>("qr");
   const [customer, setCustomer] = useState<CustomerInfo>(EMPTY_CUSTOMER);
-
+  const [submitted, setSubmitted] = useState(false);
+  const route = useRouter();
+  const [order, setOrder] = useState<CreatedOrder | null>(null); // chỉ dùng cho chuyển khoản QR
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const [currentOrderData, setCurrentOrderData] = useState<any>(initOrderData);
   const [productSelected, setProductSelected] = useState<ProductSubmitType[]>([]);
 
@@ -105,15 +111,9 @@ const itemsCart = Array.from(items?.values?.() ?? []);
     }
   }, [profile.email]);
 
-  const [submitted, setSubmitted] = useState(false);
-
   const totalPayment = useMemo(() => {
     return subTotal;
   }, [subTotal, coupon]);
-
-  const [order, setOrder] = useState<CreatedOrder | null>(null); // chỉ dùng cho chuyển khoản QR
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
 
   const applyCoupon = (code: string) => {
     const found = false;
@@ -132,6 +132,10 @@ const itemsCart = Array.from(items?.values?.() ?? []);
 
   const customerErrors = useMemo(() => validateCustomer(customer), [customer]);
   const canCheckout = itemsCart.length > 0 && !!payment && !submitting;
+
+  const backToBuyTicket = () => {
+    route.push("/buy-ticket");
+  };
 
   const cancleOrderTimeout = async (
     orderId: string,
@@ -362,6 +366,24 @@ const itemsCart = Array.from(items?.values?.() ?? []);
           <div className="space-y-4">
             <section aria-label="Vé đã chọn">
               <CartItemList items={itemsCart} />
+              <div className="flex justify-end">
+                <button
+                  onClick={backToBuyTicket}
+                  className="
+                group mt-3 inline-flex items-center gap-1.5
+                rounded-full px-4 py-2
+                bg-gradient-to-r from-teal-600 to-emerald-400
+                text-sm font-semibold text-white
+                shadow-md shadow-emerald-600/25
+                transition-all duration-200
+                hover:-translate-y-0.5 hover:shadow-lg hover:shadow-emerald-600/40 hover:brightness-105
+                active:translate-y-0 active:scale-95
+                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2"
+                >
+                  <Plus className="h-4 w-4 transition-transform duration-200 group-hover:rotate-90" />
+                  Mua thêm vé
+                </button>
+              </div>
             </section>
             <CustomerForm
               value={customer}

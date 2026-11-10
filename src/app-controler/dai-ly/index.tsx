@@ -120,7 +120,6 @@ export default function DaiLyController() {
 
   return (
     <main className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#0b1020] px-4 py-10  antialiased [background-image:radial-gradient(circle_at_50%_-5%,rgba(250,204,21,0.35)_0%,rgba(250,204,21,0.1)_30%,transparent_60%),radial-gradient(rgba(253,230,138,0.35)_1px,transparent_1px)] [background-size:100%_100%,28px_28px] before:pointer-events-none before:absolute before:left-1/2 before:top-8 before:-z-10 before:h-24 before:w-24 before:-translate-x-1/2 before:rounded-full before:bg-[radial-gradient(circle_at_35%_35%,#fffbeb,#fde68a_55%,#facc15)] before:shadow-[0_0_100px_40px_rgba(250,204,21,0.4)] before:content-['']">
-      {/* Card */}
       <section className="w-full max-w-[680px] rounded-2xl border border-neutral-200 bg-white px-6 pb-6 pt-7 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.05)]">
         <div className="flex flex-col items-center text-center my-4">
           <Image

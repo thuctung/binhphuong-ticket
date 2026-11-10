@@ -84,12 +84,23 @@ export default function Header() {
     <>
       <header className="sticky top-0 z-50 border-b border-slate-100 bg-[#FFFF] backdrop-blur-md">
         <div className=" flex  items-center justify-between px-4 py-3 md:px-6">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative transition-transform group-hover:scale-103 flex flex-col justify-center items-center">
-              <Image alt="" src="/moonlogo.png" width={52} height={44} />
-              <span className="text-[#fba405]">Hoàng Nguyệt</span>
+          <div className="flex items-center">
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="relative transition-transform group-hover:scale-103 flex flex-col justify-center items-center">
+                <Image alt="" src="/moonlogo.png" width={52} height={44} />
+                <span className="text-[#fba405]">Hoàng Nguyệt</span>
+              </div>
+            </Link>
+            <div className="ml-5">
+              <Image
+                className="animate-[rotateY_3s_linear_infinite]"
+                alt="Moonprice Trophy"
+                src="/moonprice_trophy.png"
+                width={42}
+                height={34}
+              />
             </div>
-          </Link>
+          </div>
 
           {/* Desktop nav */}
           <nav className="hidden items-center gap-8 text-sm font-semibold text-slate-500 md:flex">
