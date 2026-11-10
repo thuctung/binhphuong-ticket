@@ -147,10 +147,12 @@ export function CartItemList({ items }: Props) {
   }
 
   return (
-    <ul className="space-y-3">
-      {items.map((item, idx) => (
-        <CartItem item={item} key={idx} idx={idx} />
-      ))}
-    </ul>
+    <>
+      <ul className="space-y-3">
+        {items.map((item, idx) => (
+          <CartItem item={item} key={idx} idx={idx} />
+        ))}
+      </ul>
+    </>
   );
 }

@@ -9,6 +9,7 @@ import DropdownSearch from "@/components/ui/dropdown-search";
 import { ListAffDropdownType } from "../type";
 import { SiteType } from "@/types/ticket";
 import { inputCls } from "@/components/ui/const-class";
+import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
 
 type SearchTicketFormProps = {
   onChangeForm: (key: string, value: string) => void;
@@ -16,6 +17,7 @@ type SearchTicketFormProps = {
   searchValue: SearchTicketSale;
   listAff: ListAffDropdownType[];
   listSite: SiteType[];
+  handleExcel: () => void;
 };
 
 export function SearchReport({
@@ -23,6 +25,7 @@ export function SearchReport({
   listAff,
   listSite,
   onChangeForm,
+  handleExcel,
   onSearch,
 }: SearchTicketFormProps) {
   return (
@@ -131,6 +134,7 @@ export function SearchReport({
         <div className=" flex flex-wrap justify-end  pr-3">
           <div className="flex justify-end gap-3 mt-6">
             <SearchButton onClick={onSearch} />
+            <ButtonCommon title="Export Excel" onClick={handleExcel} />
           </div>
         </div>
       </div>

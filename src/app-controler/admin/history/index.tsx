@@ -166,6 +166,7 @@ export default function AdminHistoryPageControler() {
     <div className="space-y-6">
       <SearchReport
         onChangeForm={handleChangeForm}
+        handleExcel={handleExportExcel}
         searchValue={params.searchValue}
         onSearch={fetchTicketSale}
         listAff={listAff}
