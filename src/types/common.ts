@@ -1,4 +1,3 @@
-import { I18nKey } from "@/lib/i18n/keys";
 import { MouseEventHandler } from "react";
 
 export type CommonType = {
@@ -43,9 +42,9 @@ export type SideCard = {
 
 export type ExperienceCard = {
   key: string;
-  nameKey: I18nKey;
-  taglineKey: I18nKey;
-  badgeKey: I18nKey;
+  nameKey: LangKey;
+  taglineKey: LangKey;
+  badgeKey: LangKey;
   image1: string;
   image2: string;
   color: string;
