@@ -4,14 +4,14 @@ import Locations from "./components/Locations";
 import About from "./components/About";
 import Consult from "./components/Consult";
 
-const HomeA = () => {
+const HomeA = async ({ lng }: { lng: string }) => {
   return (
     <main>
-      <Banner />
-      <Locations />
-      <Tours />
+      <Banner lng={lng} />
+      <Locations lng={lng} />
+      <Tours lng={lng} />
       <Consult />
-      <About />
+      <About lng={lng} />
     </main>
   );
 };

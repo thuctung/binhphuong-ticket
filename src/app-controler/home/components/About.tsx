@@ -1,7 +1,8 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n/client";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 
 export const aboutStats = [
   { value: 8, suffix: "+", label: "Năm kinh nghiệm" },
@@ -64,26 +65,23 @@ function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
   );
 }
 
-export default function About() {
+export default async function About({ lng }: { lng: string }) {
+  const { t } = useTranslation();
+
   return (
     <section id="gioi-thieu" className="scroll-mt-16 bg-ocean py-20 text-white">
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 lg:grid-cols-2">
-        {/* Trái: giới thiệu */}
         <div>
           <p className="inline-block rounded-full bg-white/10 px-4 py-1 text-xs font-bold uppercase tracking-wider text-sun ring-1 ring-white/20">
-            Về chúng tôi
+            {t("homepage.about.eyebrow")}
           </p>
           <h2 className="font-display mt-4 text-3xl font-extrabold sm:text-4xl">
-            <span className="text-sun">Moon Price</span> - Đồng hành cùng mọi chuyến đi
+            <span className="text-sun">Moon Price</span> - {t("homepage.about.title")}
           </h2>
-          <p className="mt-4 max-w-lg text-white/80">
-            Chúng tôi cung cấp vé tham quan, vui chơi và dịch vụ tour với mức giá minh bạch, thủ tục
-            nhanh gọn và mã QR vào cổng ngay sau khi đặt. Hơn nhiều năm hoạt động, Moon Price đã trở
-            thành địa chỉ quen thuộc của hàng trăm nghìn du khách và đối tác trên khắp cả nước.
-          </p>
+          <p className="mt-4 max-w-lg text-white/80">{t("homepage.about.description")}</p>
 
           <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-            {aboutBadges.map((b) => (
+            {aboutBadges.map((b, index) => (
               <li key={b} className="flex items-start gap-2.5 text-sm text-white/90">
                 <svg
                   viewBox="0 0 24 24"
@@ -98,7 +96,7 @@ export default function About() {
                   <circle cx="12" cy="12" r="9" className="opacity-40" />
                   <path d="m8 12.5 2.8 2.8L16 9.5" />
                 </svg>
-                {b}
+                {t(`homepage.about.highlights.${index}`)}
               </li>
             ))}
           </ul>
@@ -107,14 +105,13 @@ export default function About() {
             href="/gioi-thieu"
             className="group mt-8 inline-flex items-center gap-2 rounded-full bg-sun px-6 py-3 font-bold text-ink shadow-lg shadow-black/20 transition hover:brightness-95"
           >
-            Xem thêm về chúng tôi
+            {t("homepage.about.learn_more")}
             <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
           </Link>
         </div>
 
-        {/* Phải: thành tựu */}
         <div className="grid grid-cols-2 gap-4">
-          {aboutStats.map((s) => (
+          {aboutStats.map((s, index) => (
             <div
               key={s.label}
               className="rounded-2xl bg-white/10 p-6 ring-1 ring-white/15 backdrop-blur transition duration-300 hover:-translate-y-1 hover:bg-white/15"
@@ -122,7 +119,9 @@ export default function About() {
               <p className="font-display text-3xl font-extrabold text-sun sm:text-4xl">
                 <CountUp to={s.value} suffix={s.suffix} />
               </p>
-              <p className="mt-1 text-sm text-white/80">{s.label}</p>
+              <p className="mt-1 text-sm text-white/80">
+                {t(`homepage.about.stats.${index}.label`)}
+              </p>
             </div>
           ))}
         </div>

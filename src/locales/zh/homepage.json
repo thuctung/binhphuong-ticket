@@ -1,4 +1,164 @@
 {
-  "title": "Welcome",
-  "subtitle": "Your subtitle here"
+  "meta": {
+    "title": "Moon Price",
+    "description": "Da Nang Travel Ticket"
+  },
+  "hero": {
+    "title": "让每一段旅程都圆满",
+    "description": "覆盖越南60多个省市的景点门票、缆车、主题乐园及旅游套餐。付款后即可立即获取电子票。",
+    "search_location": "搜索目的地",
+    "search_placeholder": "您想去哪里？",
+    "search_button": "搜索门票"
+  },
+  "tickets": {
+    "eyebrow": "旅游及娱乐门票",
+    "title": "旅游及娱乐门票",
+    "description": "选择目的地，获取入园二维码。",
+    "view_more": "查看更多 →",
+    "price_from": "起价",
+    "buy": "购买门票",
+    "items": [
+      {
+        "location": "岘港",
+        "name": "太阳世界巴拿山",
+        "description": "缆车 + 金桥",
+        "price": "900,000 越南盾"
+      },
+      {
+        "location": "岘港",
+        "name": "珍珠奇幻南会安",
+        "description": "主题乐园",
+        "price": "880,000 越南盾"
+      },
+      {
+        "location": "岘港",
+        "name": "Mikazuki 水上乐园",
+        "description": "探索日本文化",
+        "price": "30,000 越南盾"
+      },
+      {
+        "location": "岘港",
+        "name": "神 tài 山旅游区",
+        "description": "水上乐园",
+        "price": "200,000 越南盾"
+      },
+      {
+        "location": "会安",
+        "name": "会安印象",
+        "description": "文化遗产演出",
+        "price": "125,000 越南盾"
+      },
+      {
+        "location": "老街",
+        "name": "番西邦传奇",
+        "description": "三线缆车",
+        "price": "750,000 越南盾"
+      }
+    ]
+  },
+  "tours": {
+    "eyebrow": "旅游套餐 · 机票",
+    "title": "旅游套餐 · 机票",
+    "description": "套餐包含门票、接送交通及酒店住宿。",
+    "book": "预订行程",
+    "items": [
+      {
+        "name": "下龙湾 2天1夜",
+        "departure": "河内出发 · 2天1夜",
+        "original_price": "2,300,000 越南盾",
+        "price": "1,890,000 越南盾"
+      },
+      {
+        "name": "富国岛度假之旅",
+        "departure": "胡志明市出发 · 3天2夜",
+        "original_price": "3,900,000 越南盾",
+        "price": "3,290,000 越南盾"
+      },
+      {
+        "name": "岘港 – 会安 – 巴拿山",
+        "departure": "岘港出发 · 4天3夜",
+        "original_price": "4,800,000 越南盾",
+        "price": "4,150,000 越南盾"
+      },
+      {
+        "name": "沙坝 – 番西邦",
+        "departure": "河内出发 · 3天2夜",
+        "original_price": "3,200,000 越南盾",
+        "price": "2,750,000 越南盾"
+      }
+    ]
+  },
+  "consultation": {
+    "title": "旅游行程咨询",
+    "description": "请留下您的联系方式，我们的顾问团队将尽快与您联系，为您报价并设计合适的行程。",
+    "benefits": ["免费咨询，无需承诺", "为家庭、团体及企业定制行程", "24小时内回复"],
+    "name": "姓名",
+    "name_placeholder": "张三",
+    "phone": "电话号码",
+    "phone_placeholder": "+84 xxx xxx xxx",
+    "email": "电子邮箱",
+    "email_placeholder": "email@example.com",
+    "destination": "感兴趣的目的地",
+    "destination_placeholder": "尚未选择 / 需要咨询",
+    "people": "出行人数",
+    "date": "出行日期",
+    "message": "留言",
+    "message_placeholder": "预算、兴趣、儿童人数及特殊要求……",
+    "submit": "提交咨询请求"
+  },
+  "about": {
+    "eyebrow": "关于我们",
+    "title": "陪伴您的每一段旅程",
+    "description": "我们提供景点门票、娱乐项目及旅游服务，价格透明、预订流程便捷，预订后即可获取入园二维码。经过多年的发展，Moon Price 已成为越南各地数十万游客及合作伙伴信赖的选择。",
+    "highlights": [
+      "旅游景区官方合作伙伴",
+      "国际旅行社经营许可证",
+      "2025年值得信赖的门票销售平台",
+      "全天候24小时客户支持"
+    ],
+    "learn_more": "了解更多",
+    "stats": [
+      {
+        "value": "8+",
+        "label": "年行业经验"
+      },
+      {
+        "value": "500,000+",
+        "label": "累计服务游客"
+      },
+      {
+        "value": "30+",
+        "label": "目的地合作伙伴"
+      },
+      {
+        "value": "98%",
+        "label": "客户满意度"
+      }
+    ]
+  },
+  "footer": {
+    "brand": "Moon Price",
+    "description": "在线景点门票及旅游服务预订平台。陪伴您探索每一段精彩旅程。",
+    "policies_title": "政策与条款",
+    "customer_support": "客户服务",
+    "links_police": [
+      "使用条款",
+      "隐私政策",
+      "个人信息保护",
+      "支付政策",
+      "门票交付",
+      "门票更改与退款"
+    ],
+    "links_support": [
+      "门票取消政策",
+      "价格与优惠",
+      "预订流程",
+      "投诉处理",
+      "网站运营规则",
+      "所有者信息"
+    ],
+    "owner_info": "所有者信息",
+    "copyright": "© 2026 Moon Price. All rights reserved.",
+    "tagline": "探索旅程 · 珍藏体验"
+  }
 }

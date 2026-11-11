@@ -1,4 +1,168 @@
 {
-  "title": "Welcome",
-  "subtitle": "Your subtitle here"
+  "meta": {
+    "title": "Moon Price",
+    "description": "Da Nang Travel Ticket"
+  },
+  "hero": {
+    "title": "Make Every Journey Complete",
+    "description": "Attraction tickets, cable cars, theme parks, and package tours across more than 60 provinces and cities. Get your e-ticket immediately after payment.",
+    "search_location": "Find a destination",
+    "search_placeholder": "Where would you like to go?",
+    "search_button": "Find tickets"
+  },
+  "tickets": {
+    "eyebrow": "TRAVEL & ATTRACTION TICKETS",
+    "title": "TRAVEL & ATTRACTION TICKETS",
+    "description": "Choose your destination and receive a QR code for entry.",
+    "view_more": "View more →",
+    "price_from": "From",
+    "buy": "Buy tickets",
+    "items": [
+      {
+        "location": "Da Nang",
+        "name": "Sun World Ba Na Hills",
+        "description": "Cable car + Golden Bridge",
+        "price": "VND 900,000"
+      },
+      {
+        "location": "Da Nang",
+        "name": "VinWonders Nam Hoi An",
+        "description": "Theme park",
+        "price": "VND 880,000"
+      },
+      {
+        "location": "Da Nang",
+        "name": "Mikazuki",
+        "description": "Discover Japanese culture",
+        "price": "VND 30,000"
+      },
+      {
+        "location": "Da Nang",
+        "name": "Than Tai Mountain",
+        "description": "Water park",
+        "price": "VND 200,000"
+      },
+      {
+        "location": "Hoi An",
+        "name": "Hoi An Memories",
+        "description": "Cultural heritage",
+        "price": "VND 125,000"
+      },
+      {
+        "location": "Lao Cai",
+        "name": "Fansipan Legend",
+        "description": "Three-cable system",
+        "price": "VND 750,000"
+      }
+    ]
+  },
+  "tours": {
+    "eyebrow": "TOURS & FLIGHTS",
+    "title": "TOURS & FLIGHTS",
+    "description": "Packages include tickets, transfers, and accommodation.",
+    "book": "Book tour",
+    "items": [
+      {
+        "name": "Ha Long Bay · 2D1N",
+        "departure": "Departing from Hanoi · 2 days, 1 night",
+        "original_price": "VND 2,300,000",
+        "price": "VND 1,890,000"
+      },
+      {
+        "name": "Phu Quoc Getaway",
+        "departure": "Departing from Ho Chi Minh City · 3 days, 2 nights",
+        "original_price": "VND 3,900,000",
+        "price": "VND 3,290,000"
+      },
+      {
+        "name": "Da Nang – Hoi An – Ba Na Hills",
+        "departure": "Departing from Da Nang · 4 days, 3 nights",
+        "original_price": "VND 4,800,000",
+        "price": "VND 4,150,000"
+      },
+      {
+        "name": "Sa Pa – Fansipan",
+        "departure": "Departing from Hanoi · 3 days, 2 nights",
+        "original_price": "VND 3,200,000",
+        "price": "VND 2,750,000"
+      }
+    ]
+  },
+  "consultation": {
+    "title": "TOUR CONSULTATION",
+    "description": "Leave your details and our team will get back to you as soon as possible with a quote and an itinerary tailored to your needs.",
+    "benefits": [
+      "Free, no-obligation consultation",
+      "Custom itineraries for families, groups, and companies",
+      "Response within 24 hours"
+    ],
+    "name": "Full name",
+    "name_placeholder": "John Smith",
+    "phone": "Phone number",
+    "phone_placeholder": "+84 xxx xxx xxx",
+    "email": "Email",
+    "email_placeholder": "email@example.com",
+    "destination": "Destination of interest",
+    "destination_placeholder": "Not selected / Need advice",
+    "people": "Number of travelers",
+    "date": "Travel date",
+    "message": "Message",
+    "message_placeholder": "Budget, interests, number of children, special requests...",
+    "submit": "Request a consultation"
+  },
+  "about": {
+    "eyebrow": "About us",
+    "title": "With You on Every Journey",
+    "description": "We provide attraction tickets, entertainment experiences, and tour services with transparent pricing, a simple booking process, and QR entry tickets issued immediately after booking. Over the years, Moon Price has become a trusted choice for hundreds of thousands of travelers and partners nationwide.",
+    "highlights": [
+      "Official partners of tourist attractions",
+      "International travel business license",
+      "Recognized as a trusted ticket seller in 2025",
+      "24/7 customer support"
+    ],
+    "learn_more": "Learn more about us",
+    "stats": [
+      {
+        "value": "8+",
+        "label": "Years of experience"
+      },
+      {
+        "value": "500,000+",
+        "label": "Guests served"
+      },
+      {
+        "value": "30+",
+        "label": "Destination partners"
+      },
+      {
+        "value": "98%",
+        "label": "Customer satisfaction"
+      }
+    ]
+  },
+  "footer": {
+    "brand": "Moon Price",
+    "description": "An online platform for booking attraction tickets and travel services. We're with you on every journey of discovery.",
+    "policies_title": "Policies & Terms",
+    "customer_support": "Customer Support",
+    "links_police": [
+      "Terms of Use",
+      "Privacy Policy",
+      "Personal Data Protection",
+      "Payment Policy",
+      "Ticket Delivery",
+      "Ticket Changes and Refunds"
+    ],
+    "links_support": [
+      "Ticket Cancellation Policy",
+      "Pricing and Promotions",
+      "Booking Process",
+      "Complaint Resolution",
+      "Website Operating Regulations",
+      "Owner Information"
+    ],
+    "owner_info": "Owner Information",
+    "copyright": "© 2026 Moon Price. All rights reserved.",
+    "tagline": "Discover the journey · Keep the memories"
+  }
 }

@@ -2,6 +2,8 @@
 
 import { useState, FormEvent } from "react";
 import { places } from "@/lib/data";
+import { getTranslation } from "@/lib/i18n";
+import { useTranslation } from "@/lib/i18n/client";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -9,6 +11,8 @@ const field =
   "w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-sm outline-none transition focus:border-lagoon focus:ring-2 focus:ring-lagoon/30";
 
 export default function Consult() {
+  const { t } = useTranslation();
+
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
 
@@ -41,21 +45,18 @@ export default function Consult() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-5">
         <div className="lg:col-span-2">
           <h2 className="font-display text-3xl font-extrabold text-ocean sm:text-4xl">
-            TƯ VẤN TOUR
+            {t("homepage.consultation.title")}
           </h2>
-          <p className="mt-3 text-ink/70">
-            Để lại thông tin, đội ngũ tư vấn sẽ liên hệ lại trong thời gian sớm nhất để báo giá và
-            thiết kế lịch trình phù hợp với bạn.
-          </p>
+          <p className="mt-3 text-ink/70">{t("homepage.consultation.description")}</p>
           <ul className="mt-6 space-y-3 text-sm text-ink/80">
             <li className="flex gap-3">
-              <span className="text-sun">●</span> Tư vấn miễn phí, không ràng buộc
+              <span className="text-sun">●</span> {t("homepage.consultation.benefits.0")}
             </li>
             <li className="flex gap-3">
-              <span className="text-sun">●</span> Lịch trình riêng cho gia đình, nhóm, công ty
+              <span className="text-sun">●</span> {t("homepage.consultation.benefits.1")}
             </li>
             <li className="flex gap-3">
-              <span className="text-sun">●</span> Phản hồi trong vòng 24 giờ
+              <span className="text-sun">●</span> {t("homepage.consultation.benefits.2")}
             </li>
           </ul>
         </div>
@@ -65,7 +66,6 @@ export default function Consult() {
           onSubmit={onSubmit}
           className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-ink/5 sm:p-8 lg:col-span-3"
         >
-          {/* Honeypot chống spam bot */}
           <input
             type="text"
             name="website"
@@ -77,38 +77,38 @@ export default function Consult() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="text-sm font-medium">
-              Họ và tên *
+              {t("homepage.consultation.name")}*
               <input
                 name="name"
                 required
                 minLength={2}
                 className={`${field} mt-1`}
-                placeholder="Nguyễn Văn A"
+                placeholder={t("homepage.consultation.name_placeholder")}
               />
             </label>
             <label className="text-sm font-medium">
-              Số điện thoại *
+              {t("homepage.consultation.phone")} *
               <input
                 name="phone"
                 type="tel"
                 required
                 className={`${field} mt-1`}
-                placeholder="09xx xxx xxx"
+                placeholder={t("homepage.consultation.phone_placeholder")}
               />
             </label>
             <label className="text-sm font-medium sm:col-span-2">
-              Email
+              {t("homepage.consultation.email")} *
               <input
                 name="email"
                 type="email"
                 className={`${field} mt-1`}
-                placeholder="email@example.com"
+                placeholder={t("homepage.consultation.email_placeholder")}
               />
             </label>
             <label className="text-sm font-medium">
-              Điểm đến quan tâm
+              {t("homepage.consultation.destination")}
               <select name="destination" className={`${field} mt-1`} defaultValue="">
-                <option value="">Chưa chọn / cần tư vấn</option>
+                <option value="">{t("homepage.consultation.destination_placeholder")}</option>
                 {places.map((p) => (
                   <option key={p.id} value={p.name}>
                     {p.name} ({p.city})
@@ -118,7 +118,7 @@ export default function Consult() {
             </label>
             <div className="grid grid-cols-2 gap-4">
               <label className="text-sm font-medium">
-                Số người
+                {t("homepage.consultation.people")}
                 <input
                   name="people"
                   type="number"
@@ -129,18 +129,17 @@ export default function Consult() {
                 />
               </label>
               <label className="text-sm font-medium">
-                Ngày đi
+                {t("homepage.consultation.date")}
                 <input name="date" type="date" className={`${field} mt-1`} />
               </label>
             </div>
             <label className="text-sm font-medium sm:col-span-2">
-              Lời nhắn
               <textarea
                 name="message"
                 rows={4}
                 maxLength={2000}
                 className={`${field} mt-1 resize-none`}
-                placeholder="Ngân sách, sở thích, số trẻ em, yêu cầu đặc biệt..."
+                placeholder={t("homepage.consultation.message_placeholder")}
               />
             </label>
           </div>
@@ -150,7 +149,7 @@ export default function Consult() {
             disabled={status === "loading"}
             className="mt-6 w-full rounded-full bg-sun px-6 py-3 font-bold transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {status === "loading" ? "Đang gửi..." : "Gửi yêu cầu tư vấn"}
+            {t("homepage.consultation.submit")}
           </button>
 
           <div aria-live="polite" className="mt-4 text-sm">
