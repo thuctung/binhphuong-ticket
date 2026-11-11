@@ -1,7 +1,7 @@
 import { ConfirmProvider } from "@/components/site/Confirm";
+import FloatingContact from "@/components/site/FloatingContact";
 import Footer from "@/components/site/Footer";
 import Header from "@/components/site/Header";
-import FloatingContact from "@/components/site/FloatingContact";
 
 export default function RootLayout({
   children,
@@ -14,6 +14,7 @@ export default function RootLayout({
       {children}
       <Footer />
       <ConfirmProvider />
+      <FloatingContact />
     </main>
   );
 }

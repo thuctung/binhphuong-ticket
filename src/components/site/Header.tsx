@@ -25,10 +25,12 @@ import { UserPopup } from "./PopupUser";
 import { HeaderMobile } from "./HeaderMobile";
 import { useCartStore } from "@/stores/useCartStore";
 import Languages from "./Languages";
+import { useTranslation } from "@/lib/i18n/client";
 
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
   const supabase = createSupabaseBrowserClient();
@@ -122,7 +124,7 @@ export default function Header() {
                   item.link === pathname ? "text-[#1c5b41]" : "text-[#1c5b41] hover:text-[#fe9614]"
                 }`}
               >
-                {item.name}
+                {t(`common.${item.name}`)}
                 {item.link === pathname && (
                   <span className="absolute -bottom-[13px] left-0 right-0 h-0.5 rounded-full bg-[#fe9614]" />
                 )}

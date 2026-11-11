@@ -88,13 +88,15 @@ export const SIDEBAR_AFF: MenuMgtType[] = [
     lable: "Nạp tiền",
     icon: "M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z",
   },
-  { link: "/affiliate/stats", lable: "Lịch sử rút vé",  
+  {
+    link: "/affiliate/stats",
+    lable: "Lịch sử rút vé",
     icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
   },
   {
     link: "/affiliate/transaction",
     lable: "Biến động số dư",
-    icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+    icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6",
   },
   {
     link: "/affiliate/sunworld-booking",
@@ -137,7 +139,7 @@ export const DB_TABLE_NAME = {
   FUNC_CREATE_ORDER_PENDING: "create_order_pending",
   FUNC_COMPLETE_ORDER: "complete_order",
   FUNC_GET_AGENT_SALE_SUMARY: "get_agent_sale_summary",
-  FUNC_GET_REFUND_SUMARY:'get_refund_summary',
+  FUNC_GET_REFUND_SUMARY: "get_refund_summary",
   FUNC_GET_ALL_SALE_SUMARY: "get_all_sale_summary",
   FUNC_COMPLETE_ORDER_CUSTOMER: "complete_order_customer",
   FUNC_SYNC_PRODUCT_PRICE: "sync_products_prices",
@@ -200,14 +202,14 @@ export const TYPE_TRANSFER = {
 export const MENUS = [
   {
     link: "/",
-    name: "Trang chủ",
+    name: "header.hompage",
     icon: Award,
     iconBg: "bg-green-50",
     iconColor: "text-green-600",
   },
   {
     link: "/buy-ticket",
-    name: "Đặt vé",
+    name: "header.buyticket",
     icon: Ticket,
     iconBg: "bg-green-50",
     iconColor: "text-green-600",
@@ -215,7 +217,7 @@ export const MENUS = [
 
   {
     link: "/#",
-    name: "Giới thiệu",
+    name: "header.about",
     icon: Award,
     iconBg: "bg-yellow-50",
     iconColor: "text-yellow-600",
@@ -223,14 +225,14 @@ export const MENUS = [
 
   {
     link: "/#",
-    name: "Hỏi đáp",
+    name: "header.question",
     icon: HelpCircle,
     iconBg: "bg-gray-50",
     iconColor: "text-gray-600",
   },
   {
     link: "/dai-ly",
-    name: "Đại lý",
+    name: "header.agent",
     icon: Store,
     iconBg: "bg-purple-50",
     iconColor: "text-purple-600",
