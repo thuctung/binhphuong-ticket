@@ -5,7 +5,12 @@ import { ProductSubmitType, TicketReponseType, TicketResultQRType } from "@/type
 import { jsPDF } from "jspdf";
 import QRCodePDF from "qrcode";
 import dayjs from "dayjs";
-import { BASIC_DATE_FORMAT, FULL_DATE_FORMAT, FULL_DATE_TIME_FORMAT } from "@/helpers/dateTime";
+import {
+  BASIC_DATE_FORMAT,
+  BASIC_TICKET_DATE_FORMAT,
+  FULL_DATE_FORMAT,
+  FULL_DATE_TIME_FORMAT,
+} from "@/helpers/dateTime";
 import {
   BNC_NOTES,
   FOC_GUIDES,
@@ -181,6 +186,7 @@ export const downloadTicketPDF = async (
     pdf.setTextColor(...GREEN_LABEL);
     pdf.text("Giá/Price:", leftTextQR, yTextQR);
     pdf.setTextColor(...TEXT_DARK);
+
     pdf.text(isFOCTicket ? "0 ₫" : formatVND(t.publicPrice), leftTextQR + 36, yTextQR);
 
     // ===== DATE USE =====
@@ -190,7 +196,7 @@ export const downloadTicketPDF = async (
     yTextQR += 10;
     pdf.setTextColor(...TEXT_DARK);
     pdf.text(
-      `${dayjs(t.validDateFrom, FULL_DATE_TIME_FORMAT).format(BASIC_DATE_FORMAT)}/${dayjs(t.validDateTo, FULL_DATE_TIME_FORMAT).format(BASIC_DATE_FORMAT)}` ||
+      `${dayjs(t.validDateFrom, FULL_DATE_TIME_FORMAT).format(BASIC_TICKET_DATE_FORMAT)}-${dayjs(t.validDateTo, FULL_DATE_TIME_FORMAT).format(BASIC_TICKET_DATE_FORMAT)}` ||
         "",
       leftTextQR,
       yTextQR

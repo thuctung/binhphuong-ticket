@@ -271,13 +271,13 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
       switch (productCode) {
         case "8F6DC61C-99C9-FCFD-4824-0195373FFD4B": {
           return [
-            "- Đối tượng: KHÁCH THƯỜNG TRÚ ĐÀ NẴNG (bao gồm: Đà Nẵng + Quảng Nam) cao trên 1m40. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./PERMANENT RESIDENTS OF DA NANG (Includes: Da Nang + Quang Nam) over 1m40 tall. Must present original photo ID at the ticket control gate.",
+            "- Đối tượng: KHÁCH THƯỜNG TRÚ ĐÀ NẴNG (bao gồm: Đà Nẵng + Quảng Nam) cao trên 1m40. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: PERMANENT RESIDENTS OF DA NANG (Includes: Da Nang + Quang Nam) over 1m40 tall. Must present original photo ID at the ticket control gate.",
             "- Bao gồm: Vé cáp treo khứ hồi không giới hạn lượt di chuyển trong vòng 03 ngày, tính từ ngày quét vé đầu tiên và trong khoảng thời gian sử dụng được in trên vé + tham quan các điểm miễn phí tại Khu Du Lịch/Includes: Unlimited round-trip cable car rides within 03 days, counted from the first ticket scan and within the validity period printed on the ticket + access to free attractions at the tourist site",
           ];
         }
         case "ED235D4F-CA6E-3FD9-62D0-019537137A25": {
           return [
-            "- Đối tượng: TRẺ EM THƯỜNG TRÚ ĐÀ NẴNG từ 1m00-1m40. Xuất trình giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: CHILDREN PERMANENTLY RESIDING IN DA NANG 1m00-1m40. Must present original photo ID at the ticket control gate.",
+            "- Đối tượng: TRẺ EM THƯỜNG TRÚ ĐÀ NẴNG từ 1m00-1m40. Xuất trình hộ khẩu/giấy khai sinh/thẻ học sinh/giấy tờ tùy thân có ảnh, bản gốc để qua cổng kiểm soát vé./Eligible guests: CHILDREN PERMANENTLY RESIDING IN DA NANG 1m00-1m40. Must present household registration/birth certificate/student card/original photo ID at the ticket control gate.",
             "- Bao gồm: Vé cáp treo khứ hồi không giới hạn lượt di chuyển trong vòng 03 ngày, tính từ ngày quét vé đầu tiên và trong khoảng thời gian sử dụng được in trên vé + tham quan các điểm miễn phí tại Khu Du Lịch/Includes: Unlimited round-trip cable car rides within 03 days, counted from the first ticket scan and within the validity period printed on the ticket + access to free attractions at the tourist site",
           ];
         }
@@ -1275,7 +1275,15 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
             "- Thời gian trình diễn SHOW: 21h00/Showtime: 9p.m",
           ];
         }
-        case "A64204C7-6C12-A168-5FDA-019A23BB91E2":
+        case "A64204C7-6C12-A168-5FDA-019A23BB91E2": {
+          return [
+            "- Vé CÁP TREO KHỨ HỒI tham quan dành cho KHÁCH cao trên 1m40/Round-trip Cable Car tickets for VISITORS over 1m40 tall",
+            "- Drink Coupon: 01 ly bia Sun KraftBeer hoặc 01 ly nước ép dưa hấu, áp dụng tại các điểm đã được chỉ định/Drink Coupon: 1 glass of Sun KraftBeer or 1 glass of watermelon juice, redeemable at the specified locations",
+            "- Miễn phí vé vào Cầu Hôn trước 19h hoặc sau 20h30/Free Kiss Bridge admission before 19h00 & after 20h30",
+            "-  Thời gian hoạt động Cáp Treo: 9h00-11h30&13h30-14h00&13h30-17h30/Cable car operating hours: 9:00a.m - 11:30a.m & 1:30p.m - 2:00p.m & 3:30p.m-5:30p.m",
+          ];
+        }
+
         case "B30E2A3C-5E20-9F60-6049-019A23BB9467":
         case "BC55F1BE-62EC-2FC8-5D89-0197687B128F": {
           return [
@@ -1340,7 +1348,15 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
           ];
         }
 
-        case "FA5B7A3C-B4EF-838D-5EF2-019A23BB8CB7":
+        case "FA5B7A3C-B4EF-838D-5EF2-019A23BB8CB7": {
+          return [
+            "- Combo bao gồm CÁP TREO 1 CHIỀU và BUFFET TRƯA dành cho khách cao trên 1m40/1-WAY Cable Car and Lunch Buffet tickets for VISITORS over 1m40",
+            "- Drink Coupon: 01 ly bia Sun KraftBeer hoặc 01 ly nước ép dưa hấu, áp dụng tại các điểm đã được chỉ định./ Drink Coupon: 1 glass of Sun KraftBeer or 1 glass of watermelon juice, redeemable at the specified locations.",
+            "- Miễn phí vé vào Cầu Hôn trước 19h và sau 20h30/Free Kiss Bridge admission before 19h00 and after 20h30",
+            "- Thời gian hoạt động Cáp treo: 9h00-11h30&13h30-14h00&13h30-17h30/Cable car operating hours: 9:00a.m - 11:30a.m & 1:30p.m - 2:00p.m & 3:30p.m-5:30p.m",
+            "- Thời gian phục vụ Buffet trưa: 11h00-14h30 tại nhà hàng Mango/Lunch buffet service time: 11a.m - 2:30p.m at Mango restaurant",
+          ];
+        }
         case "1F022C71-7F42-A5C5-5D1A-0197687B103E": {
           return [
             "- Combo bao gồm CÁP TREO KHỨ HỒI và BUFFET TRƯA dành cho khách cao trên 1m40/ROUND-WAY Cable Car and Lunch Buffet tickets for VISITORS over 1m40",
@@ -1903,14 +1919,19 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
             "- Vé cáp treo 1 CHIỀU đi tham quan Chùa Hang Áp dụng cho TRẺ EM 1m00-1m40/One-way ticket to Hang Pagoda for CHILD 1m00 1m40 tall",
           ];
         }
+        case "31B18F42-6E43-F020-1401-019AF172076E": {
+          return [
+            "- Vé cáp treo khứ hồi tham quan đỉnh Vân Sơn và Chùa Hang/ Round-trip Cable Car ticket to Hang Pagoda and Van Son Peak",
+            "- Áp dụng cho KHÁCH từ 1m-1m40 trở lên /  for VISITORS over 1m - 1m40 tall",
+          ];
+        }
 
-        case "31B18F42-6E43-F020-1401-019AF172076E":
         case "2F3A8F69-12B6-55D8-139F-019AF16E6C13":
         case "8B8FD9AA-5525-5FA1-1589-019AF174716F":
         case "4ED1901D-75F9-4593-7368-01930541D1B8": {
           return [
             "- Vé cáp treo khứ hồi tham quan đỉnh Vân Sơn và Chùa Hang/Round-trip Cable Car ticket to Hang Pagoda and Van Son Peak ",
-            " Áp dụng cho KHÁCH từ 1m40 trở lên/ VISITORS over 1m40 tall",
+            "- Áp dụng cho KHÁCH từ 1m40 trở lên/ VISITORS over 1m40 tall",
           ];
         }
 
@@ -2397,6 +2418,7 @@ export const getGuideByProductCode = (sideCode: string, productCode: string) => 
     case "SCB": {
       switch (productCode) {
         case "3AD34041-DD71-44E8-618E-01967B7F147E": {
+          return [];
         }
         case "5FCD884A-5EB7-E12E-24AB-019666F9502F": {
           return [

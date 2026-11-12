@@ -19,6 +19,8 @@ export const FULL_DATE_TIME_FORMAT = "YYYY-MM-DD hh:mm";
 
 export const BASIC_DATE_FORMAT = "DD-MM-YYYY";
 
+export const BASIC_TICKET_DATE_FORMAT = "DD/MM/YYYY";
+
 export const SERVER_DATE_FORMAT = "YYYY-MM-DD";
 
 export const fullDateTimeFormat = (date: string) => {

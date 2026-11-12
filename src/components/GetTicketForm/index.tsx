@@ -152,6 +152,8 @@ export default function GetTicketForm({
     setLoading(true);
     const products: ProductSubmitType[] = selectedLines.map((item) => {
       const priceSell = getPriceAgentAndMultiple(item, formType, mapAgentPrice, agentPriceDefault);
+      const publicPrice =
+        item.multiple > 1 ? Math.ceil(item.publicPrice / item.multiple) : item.publicPrice;
       return {
         productCode: item.code,
         siteCode: siteCode,
@@ -160,7 +162,7 @@ export default function GetTicketForm({
         usageDateTo: item?.pricePolicy?.validDateTo || "",
         performanceId: item?.performances?.[0]?.performanceId || "",
         productsName: item.name,
-        publicPrice: item.publicPrice,
+        publicPrice: publicPrice,
         unitPrice: priceSell,
         restaurantName: item?.restaurantName || "",
         siteName: item?.site?.name || siteCode,
