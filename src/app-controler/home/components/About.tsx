@@ -65,7 +65,7 @@ function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
   );
 }
 
-export default async function About({ lng }: { lng: string }) {
+export default async function About() {
   const { t } = useTranslation();
 
   return (

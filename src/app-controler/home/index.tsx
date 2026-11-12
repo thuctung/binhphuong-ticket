@@ -11,7 +11,7 @@ const HomeA = async ({ lng }: { lng: string }) => {
       <Locations lng={lng} />
       <Tours lng={lng} />
       <Consult />
-      <About lng={lng} />
+      <About />
     </main>
   );
 };
