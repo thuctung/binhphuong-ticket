@@ -5,6 +5,7 @@ import { getValidSunworldToken } from "@/helpers/getTokenSun";
 const sunWorldApi = axios.create({
   baseURL: SUN_GROUP.serviceURL,
   timeout: 500000,
+  withCredentials: true,
   headers: {
     "swg-subscription-key": SUN_GROUP.swgSubscriptionKey,
     "Content-Type": "application/json",

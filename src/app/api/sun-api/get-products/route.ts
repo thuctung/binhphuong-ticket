@@ -4,10 +4,12 @@ import sunWorldApi from "@/axios/sunworldApi";
 export async function POST(req: Request) {
   try {
     const body: any = await req.json();
+    const language = req.headers.get("accept-language");
+    const lang = language === "en" ? language : "vi";
     const { siteCodes, date } = body;
     const { data }: any = await sunWorldApi.get(`/ota/product/listing`, {
       params: {
-        lang: "vi",
+        lang,
         siteCodes,
         date,
         page: 1,

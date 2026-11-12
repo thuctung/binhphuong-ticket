@@ -49,6 +49,7 @@ export const places = [
     price: 900000,
     tag: "Cáp treo + Cầu Vàng",
     img: "/products/bana.webp",
+    code: "BNC",
   },
   {
     id: 2,
@@ -57,6 +58,7 @@ export const places = [
     price: 880000,
     tag: "Công viên giải trí",
     img: "/products/vinwonder.webp",
+    code: "BNC",
   },
   {
     id: 3,
@@ -65,6 +67,7 @@ export const places = [
     price: 30000,
     img: "/products/mikazuki.jpg",
     tag: "Khám phá văn Hóa Nhật",
+    code: "MIKAZUKI",
   },
   {
     id: 4,
@@ -73,6 +76,7 @@ export const places = [
     price: 200000,
     img: "/products/nuithantai.webp",
     tag: "Công viên nước",
+    code: "SPINGPARK",
   },
   {
     id: 5,
@@ -81,6 +85,7 @@ export const places = [
     price: 125000,
     img: "/products/kiuchoian.jpg",
     tag: "Di sản văn hóa",
+    code: "HOIANMEMORY",
   },
   {
     id: 6,
@@ -89,6 +94,7 @@ export const places = [
     price: 750000,
     img: "/products/fansipan.jpg",
     tag: "Cáp treo 3 dây",
+    code: "SWF",
   },
 ];
 

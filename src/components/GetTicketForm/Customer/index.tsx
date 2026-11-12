@@ -94,7 +94,7 @@ export default function CustomerForm({
         <main className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_360px]">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">Danh sách vé</h2>
+              <h2 className="text-2xl font-bold text-green-900">Danh sách vé</h2>
 
               <div className="mt-4">
                 <TicketTabs

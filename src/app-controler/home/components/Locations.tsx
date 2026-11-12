@@ -1,6 +1,7 @@
 import { places } from "@/lib/data";
 import { getTranslation } from "@/lib/i18n";
 import { formatVND } from "@/lib/money";
+import Link from "next/link";
 
 export default async function Locations({ lng }: { lng: string }) {
   const { t } = await getTranslation(lng);
@@ -63,9 +64,12 @@ export default async function Locations({ lng }: { lng: string }) {
                     {t(`homepage.tickets.items.${index}.price`)}
                   </p>
                 </div>
-                <button className="rounded-full bg-sun px-5 py-2 text-sm font-bold text-ink shadow-sm transition-all duration-300 hover:brightness-95 group-hover:bg-ocean group-hover:text-white group-hover:shadow-md">
+                <Link
+                  href="/buy-ticket"
+                  className="rounded-full bg-sun px-5 py-2 text-sm font-bold text-ink shadow-sm transition-all duration-300 hover:brightness-95 group-hover:bg-ocean group-hover:text-white group-hover:shadow-md"
+                >
                   {t("homepage.tickets.buy")}
-                </button>
+                </Link>
               </div>
             </article>
           ))}
