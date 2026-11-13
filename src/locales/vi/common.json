@@ -14,6 +14,9 @@
     "agent": "Đại lý"
   },
   "label": {
-    "all": "All"
+    "all": "Tất cả",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận",
+    "delete": "Xóa"
   }
 }

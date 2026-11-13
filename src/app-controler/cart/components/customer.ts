@@ -17,14 +17,13 @@ export function validateCustomer(c: Partial<CustomerInfo> | null | undefined): C
   // Bỏ khoảng trắng, dấu chấm, gạch ngang, ngoặc đơn
   const phone = (c?.phone ?? "").replace(/[\s.\-()]/g, "");
 
-  if (name.length < 2) errors.fullname = "Vui lòng nhập họ và tên.";
+  if (name.length < 2) errors.fullname = "cart.full_name_required";
 
-  if (!email) errors.email = "Vui lòng nhập email.";
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))
-    errors.email = "Email chưa đúng định dạng.";
+  if (!email) errors.email = "cart.email_required";
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) errors.email = "cart.invalid_email_format";
 
-  if (!phone) errors.phone = "Vui lòng nhập số điện thoại.";
+  if (!phone) errors.phone = "cart.phone_number_required";
   else if (!VN_PHONE_RE.test(phone) && !INTL_PHONE_RE.test(phone))
-    errors.phone = "ví dụ 0912345678 hoặc +14155552671).";
+    errors.phone = "cart.phone_number_example";
   return errors;
 }

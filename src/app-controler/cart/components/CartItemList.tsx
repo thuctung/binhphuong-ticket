@@ -7,6 +7,7 @@ import { formatVND } from "@/lib/money";
 import { useCartStore } from "@/stores/useCartStore";
 import { CommonType } from "@/types";
 import { useCommonStore } from "@/stores/useCommonStore";
+import { useTranslation } from "@/lib/i18n/client";
 
 const STUB_GRADIENTS = [
   "bg-gradient-to-br from-[#0f766e] to-[#34d399]",
@@ -26,6 +27,7 @@ const MAX = 99;
 const MIN = 0;
 
 const CartItem = ({ item, idx }: CartItemProps) => {
+  const { t } = useTranslation();
   const { product, quantity } = item;
   const step = Math.max(1, item.product.multiple || 1);
   const maxQty = Math.floor(MAX / step) * step;
@@ -50,8 +52,8 @@ const CartItem = ({ item, idx }: CartItemProps) => {
 
   const onRemove = () => {
     showConfirm({
-      message: `Bạn muốn xóa vé này!`,
-      textOk: "Xóa",
+      message: t("cart.confirm_delete_ticket"),
+      textOk: t("common.label.delete"),
       okFunc: () => removeItem(item.product.code),
     });
   };
@@ -119,7 +121,7 @@ const CartItem = ({ item, idx }: CartItemProps) => {
             </p>
             {item.quantity > 1 && (
               <p className="text-xs text-slate-400 tabular-nums">
-                {formatVND(item.product.pinalPrice || 0)} / vé
+                {formatVND(item.product.pinalPrice || 0)}/{t("cart.ticket")}
               </p>
             )}
           </div>
@@ -130,17 +132,18 @@ const CartItem = ({ item, idx }: CartItemProps) => {
 };
 
 export function CartItemList({ items }: Props) {
+  const { t } = useTranslation();
   if (items.length === 0) {
     return (
       <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
         <Ticket className="h-10 w-10 text-slate-300" />
-        <p className="font-semibold text-slate-700">Chưa có vé nào trong giỏ</p>
-        <p className="text-sm text-slate-500">Chọn vé bạn muốn mua để thêm vào giỏ hàng.</p>
+        <p className="font-semibold text-slate-700">{t("cart.empty_cart")}</p>
+        <p className="text-sm text-slate-500">{t("cart.empty_cart_description")}</p>
         <Link
           href="/buy-ticket"
           className="mt-2 rounded-full bg-[#1c5b41] px-5 py-2 text-sm font-semibold text-white hover:bg-[#164a35]"
         >
-          Mua vé ngay
+          {t("cart.buy_tickets_now")}
         </Link>
       </div>
     );

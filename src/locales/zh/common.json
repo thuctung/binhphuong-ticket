@@ -14,6 +14,9 @@
     "agent": "代理商"
   },
   "label": {
-    "all": "全部"
+    "all": "全部",
+    "cancel": "取消",
+    "confirm": "确认",
+    "delete": "删除"
   }
 }

@@ -2,14 +2,11 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { Plus } from "lucide-react";
+import dayjs from "dayjs";
 
-import { CartItemList } from "./components/CartItemList";
-import { OrderSummary } from "./components/OrderSummary";
-import { PaymentMethods } from "./components/PaymentMethods";
-import { RouteDecor } from "./components/RouteDecor";
-import { Coupon, PaymentMethodId, CreatedOrder } from "./types";
-import { CustomerForm } from "./components/CustomerForm";
-import { CustomerInfo, EMPTY_CUSTOMER, validateCustomer } from "./components/customer";
 import { useCartStore } from "@/stores/useCartStore";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType, QRBankResponseType } from "@/types";
@@ -18,8 +15,19 @@ import { useCommonStore } from "@/stores/useCommonStore";
 import { getCodeTopup } from "@/helpers/genCode";
 import { DB_TABLE_NAME, ERROR_MESSAGE, TYPE_TRANSFER } from "@/commons/constant";
 import { downloadTicketPDF, generateThirdPartyCode } from "@/helpers/ticket";
-import { getSideItem } from "../admin/product-mgt/contants";
 import { ProductSubmitType, TicketReponseType, TicketResultQRType } from "@/types/ticket";
+import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
+import { getBankInfo } from "@/helpers/getQRBank";
+import { useTranslation } from "@/lib/i18n/client";
+
+import { CartItemList } from "./components/CartItemList";
+import { OrderSummary } from "./components/OrderSummary";
+import { PaymentMethods } from "./components/PaymentMethods";
+import { RouteDecor } from "./components/RouteDecor";
+import { Coupon, PaymentMethodId, CreatedOrder } from "./types";
+import { CustomerForm } from "./components/CustomerForm";
+import { CustomerInfo, EMPTY_CUSTOMER, validateCustomer } from "./components/customer";
+import { getSideItem } from "../admin/product-mgt/contants";
 import {
   cancleBooking,
   customerCreateOrder,
@@ -32,14 +40,9 @@ import {
   CustomerOrderType,
   PayloadGetTicketSunType,
 } from "../checkout-client/type";
-import dayjs from "dayjs";
-import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
-import { getBankInfo } from "@/helpers/getQRBank";
+
 import BankTransferQR from "../affi/topup/components/qrToBank";
 import { KEY_MODIFY_DATA } from "../affi/stats/contants";
-import { toast } from "react-toastify";
-import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
-import { Plus } from "lucide-react";
 
 const initOrderData = {
   dateUse: "",
@@ -53,6 +56,7 @@ const initOrderData = {
 
 export default function CartController() {
   const clientSupbase = createSupabaseBrowserClient();
+  const { t } = useTranslation();
 
   const {
     items,
@@ -119,7 +123,7 @@ export default function CartController() {
     const found = false;
     if (!found) {
       setCoupon(null);
-      setCouponError("Mã không hợp lệ hoặc đã hết hạn.");
+      setCouponError(t("cart.invalid_or_expired_coupon"));
       return;
     }
     setCoupon(found);
@@ -155,7 +159,7 @@ export default function CartController() {
     setCurrentOrderData(initOrderData);
 
     if (showMesage) {
-      toast.error("Đơn hàng đã hủy do hết thời gian thanh toán");
+      toast.error("cart.order_cancelled_payment_timeout");
     }
     handleDoneQR();
   };
@@ -259,7 +263,7 @@ export default function CartController() {
     if (ticketCustomer?.length) {
       downloadTicketPDF(ticketCustomer, []);
       setCurrentOrderData(initOrderData);
-      toast.success(`Vé đã được gửi qua email: ${customer.email}`);
+      toast.success(`${t("cart.tickets_sent_to_email")}: ${customer.email}`);
     }
   };
 
@@ -290,9 +294,9 @@ export default function CartController() {
     }
 
     showConfirm({
-      message: "Thông tin mua vé đã đúng, xác nhận mua vé?",
+      message: t("cart.confirm_ticket_purchase"),
       okFunc: handleBuyTicket,
-      textOk: "Đồng ý",
+      textOk: t("cart.agree"),
     });
   };
 
@@ -320,11 +324,11 @@ export default function CartController() {
           },
           (payload) => {
             if (payload.new.status_payment === KEY_MODIFY_DATA.SUCCESS) {
-              toast.success("Thanh toán thành công!");
+              toast.success(t("cart.payment_success"));
               clientSupbase.removeChannel(chanenSupbase.current);
               getTicketSuccess();
             } else if (payload.new.status_payment === KEY_MODIFY_DATA.ERROR) {
-              toast.error("Thanh toán thất bại! Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ");
+              toast.error(t("cart.payment_failed"));
               handleDoneQR();
             }
           }
@@ -338,10 +342,10 @@ export default function CartController() {
   }, [qrPaymant?.code]);
 
   const buttonLabel = submitting
-    ? "Đang xử lý..."
+    ? t("cart.processing")
     : order
-      ? "Tôi đã chuyển khoản"
-      : `Thanh toán ${itemsCart.length > 0 ? formatVND(totalPayment) : ""}`;
+      ? t("cart.i_have_transferred")
+      : `${t("cart.payment")} ${itemsCart.length > 0 ? formatVND(totalPayment) : ""}`;
 
   return (
     <div className="min-h-screen bg-[#f3f6f4]">
@@ -352,11 +356,13 @@ export default function CartController() {
         />
         <RouteDecor className="pointer-events-none absolute right-0 top-0 h-full w-[300px] opacity-30 sm:w-[460px] sm:opacity-100" />
         <div className="relative mx-auto max-w-6xl px-4 md:px-6">
-          <h1 className="text-2xl font-extrabold text-white sm:text-3xl md:text-4xl">Giỏ hàng</h1>
+          <h1 className="text-2xl font-extrabold text-white sm:text-3xl md:text-4xl">
+            {t("cart.cart")}
+          </h1>
           <p className="mt-2 text-sm text-white/70 md:text-base">
             {itemsCart.length > 0
-              ? `${itemsCart.length} loại vé đang chờ bạn thanh toán`
-              : "Chưa có vé nào được chọn"}
+              ? `${itemsCart.length} ${t("cart.tickets_awaiting_payment")}`
+              : t("cart.no_tickets_selected")}
           </p>
         </div>
       </section>
@@ -381,7 +387,7 @@ export default function CartController() {
                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2"
                 >
                   <Plus className="h-4 w-4 transition-transform duration-200 group-hover:rotate-90" />
-                  Mua thêm vé
+                  {t("cart.buy_more_tickets")}
                 </button>
               </div>
             </section>
@@ -428,7 +434,7 @@ export default function CartController() {
           isOpen={openQR}
           onDone={handleDoneQR}
           onCancle={handleCancleBooking}
-          mesage="Vui lòng đợi khi thanh toán và không tắt trình duyệt"
+          mesage={t("cart.please_wait_during_payment")}
         />
       )}
     </div>

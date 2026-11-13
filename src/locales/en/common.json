@@ -7,13 +7,16 @@
     "ko": "Korean"
   },
   "header": {
-    "hompage": "Home page",
+    "hompage": "Homepage",
     "buyticket": "Buy Ticket",
     "about": "About",
     "question": "FAQ",
     "agent": "Agents"
   },
   "label": {
-    "all": "Tất cả"
+    "all": "All",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete"
   }
 }

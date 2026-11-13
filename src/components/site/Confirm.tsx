@@ -10,11 +10,13 @@ import {
   AlertDialogAction,
   AlertDialogDescription,
 } from "@/components/ui/alert-dialog";
+import { useTranslation } from "@/lib/i18n/client";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType, ConfirmType } from "@/types";
 import { isEmpty } from "lodash";
 
 export function ConfirmProvider() {
+  const { t } = useTranslation();
   const { confirm }: CommonType = useCommonStore((state: any) => state);
   const { showConfirm }: CommonType | any = useCommonStore.getState();
 
@@ -49,13 +51,15 @@ export function ConfirmProvider() {
     <AlertDialog open={!isEmpty(confirm.message)}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Xác nhận</AlertDialogTitle>
+          <AlertDialogTitle>{t("common.label.confirm")}</AlertDialogTitle>
           <AlertDialogDescription>{confirm.message}</AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={handleCancel}>Huỷ</AlertDialogCancel>
-          <AlertDialogAction onClick={handleOk}>{confirm.textOk}</AlertDialogAction>
+          <AlertDialogCancel onClick={handleCancel}>{t("common.label.cancel")}</AlertDialogCancel>
+          <AlertDialogAction onClick={handleOk}>
+            {confirm.textOk || t("common.label.confirm")}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

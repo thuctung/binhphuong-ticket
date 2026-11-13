@@ -3,6 +3,7 @@
 import { QrCode, CreditCard, ShieldCheck } from "lucide-react";
 import { CreatedOrder, PaymentMethodId } from "../types";
 import { formatVND } from "@/lib/money";
+import { useTranslation } from "@/lib/i18n/client";
 
 // Thay bằng tài khoản nhận tiền của bạn (hoặc đặt trong .env)
 const BANK = {
@@ -17,13 +18,13 @@ const CARD_ENABLED = process.env.NEXT_PUBLIC_ENABLE_CARD === "true";
 const METHODS: { id: PaymentMethodId; name: string; desc: string; icon: React.ReactNode }[] = [
   {
     id: "qr",
-    name: "Quét mã QR",
-    desc: "App ngân hàng, MoMo, ZaloPay",
+    name: "cart.qr_payment",
+    desc: "cart.supported_payment_apps",
     icon: <QrCode className="h-5 w-5" />,
   },
   {
     id: "card",
-    name: "Thẻ tín dụng / ghi nợ",
+    name: "cart.credit_debit_card",
     desc: "Visa, Mastercard, JCB",
     icon: <CreditCard className="h-5 w-5" />,
   },
@@ -36,6 +37,8 @@ type Props = {
 };
 
 export function PaymentMethods({ value, onChange, order }: Props) {
+  const { t } = useTranslation();
+
   const qrUrl = order
     ? `https://img.vietqr.io/image/${BANK.id}-${BANK.account}-compact2.png` +
       `?amount=${order.amount}&addInfo=${encodeURIComponent(order.orderCode)}` +
@@ -44,8 +47,8 @@ export function PaymentMethods({ value, onChange, order }: Props) {
 
   return (
     <fieldset className="space-y-3 rounded-2xl bg-white shadow-[0_12px_32px_-16px_rgba(28,91,65,0.35)] ring-1 ring-slate-900/5 p-5">
-      <legend className="sr-only">Phương thức thanh toán</legend>
-      <h2 className="text-base font-bold text-slate-900">Phương thức thanh toán</h2>
+      <legend className="sr-only">{t("cart.payment_method")}</legend>
+      <h2 className="text-base font-bold text-slate-900">{t("cart.payment_method")}</h2>
 
       <div className="space-y-2">
         {METHODS.map((m) => {
@@ -79,9 +82,9 @@ export function PaymentMethods({ value, onChange, order }: Props) {
                   {m.icon}
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block text-sm font-semibold text-slate-900">{m.name}</span>
+                  <span className="block text-sm font-semibold text-slate-900">{t(m.name)}</span>
                   <span className="block truncate text-xs text-slate-500">
-                    {disabled ? "Sắp ra mắt" : m.desc}
+                    {disabled ? t("cart.coming_soon") : t(m.desc)}
                   </span>
                 </span>
                 <span
@@ -107,27 +110,25 @@ export function PaymentMethods({ value, onChange, order }: Props) {
                       />
                       <dl className="space-y-1 text-sm text-slate-600">
                         <div>
-                          Ngân hàng: <b>{BANK.id}</b>
+                          {t("cart.bank")}: <b>{BANK.id}</b>
                         </div>
                         <div>
-                          Số tài khoản: <b>{BANK.account}</b>
+                          {t("cart.account_number")}: <b>{BANK.account}</b>
                         </div>
                         <div>
-                          Số tiền: <b>{formatVND(order.amount)}</b>
+                          {t("cart.amount")}: <b>{formatVND(order.amount)}</b>
                         </div>
                         <div>
-                          Nội dung: <b className="break-all text-[#1c5b41]">{order.orderCode}</b>
+                          {t("cart.transfer_description")}:
+                          <b className="break-all text-[#1c5b41]">{order.orderCode}</b>
                         </div>
                         <p className="pt-1 text-xs text-slate-500">
-                          Giữ nguyên nội dung chuyển khoản để chúng tôi biết bạn thanh toán đơn nào.
+                          {t("cart.keep_transfer_description")}
                         </p>
                       </dl>
                     </div>
                   ) : (
-                    <p className="text-sm text-slate-600">
-                      Bấm Thanh toán để nhận mã QR kèm nội dung chuyển khoản. Quét được bằng app
-                      ngân hàng, MoMo hoặc ZaloPay.
-                    </p>
+                    <p className="text-sm text-slate-600">{t("cart.qr_payment_instruction")}</p>
                   )}
                 </div>
               )}
@@ -136,7 +137,7 @@ export function PaymentMethods({ value, onChange, order }: Props) {
               {selected && m.id === "card" && (
                 <div className="mt-2 flex items-start gap-2 rounded-xl bg-slate-50 p-4 text-sm text-slate-600">
                   <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#1c5b41]" />
-                  Bạn sẽ được chuyển sang cổng thanh toán để nhập thông tin thẻ.
+                  {t("cart.redirect_to_payment_gateway")}
                 </div>
               )}
             </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CustomerErrors, CustomerInfo } from "./customer";
+import { useTranslation } from "@/lib/i18n/client";
 
 type Props = {
   value: CustomerInfo;
@@ -14,6 +15,7 @@ const inputBase =
   "w-full rounded-xl border bg-white px-3 py-2.5 text-sm outline-none transition focus:ring-2";
 
 export function CustomerForm({ value, onChange, errors, showAllErrors }: Props) {
+  const { t } = useTranslation();
   const [touched, setTouched] = useState<Partial<Record<keyof CustomerInfo, boolean>>>({});
 
   const fields: {
@@ -27,7 +29,7 @@ export function CustomerForm({ value, onChange, errors, showAllErrors }: Props) 
   }[] = [
     {
       key: "fullname",
-      label: "Họ và tên",
+      label: t("cart.full_name"),
       placeholder: "Nguyễn Văn A",
       type: "text",
       autoComplete: "fullname",
@@ -35,7 +37,7 @@ export function CustomerForm({ value, onChange, errors, showAllErrors }: Props) 
     },
     {
       key: "email",
-      label: "Email",
+      label: t("cart.email"),
       placeholder: "ban@email.com",
       type: "email",
       autoComplete: "email",
@@ -43,7 +45,7 @@ export function CustomerForm({ value, onChange, errors, showAllErrors }: Props) 
     },
     {
       key: "phone",
-      label: "Số điện thoại",
+      label: t("cart.phone_number"),
       placeholder: "0912 345 678",
       type: "tel",
       autoComplete: "tel",
@@ -53,8 +55,8 @@ export function CustomerForm({ value, onChange, errors, showAllErrors }: Props) 
 
   return (
     <div className="rounded-2xl bg-white shadow-[0_12px_32px_-16px_rgba(28,91,65,0.35)] ring-1 ring-slate-900/5 p-5">
-      <h2 className="text-base font-bold text-slate-900">Thông tin liên hệ</h2>
-      <p className="mt-1 text-sm text-slate-500">Vé sẽ được gửi qua email bạn nhập bên dưới.</p>
+      <h2 className="text-base font-bold text-slate-900">{t("cart.contact_information")}</h2>
+      <p className="mt-1 text-sm text-slate-500">{t("cart.ticket_delivery_notice")}</p>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         {fields.map((f) => {
@@ -85,7 +87,7 @@ export function CustomerForm({ value, onChange, errors, showAllErrors }: Props) 
               />
               {error && (
                 <p id={`${id}-error`} className="mt-1.5 text-sm text-red-500">
-                  {error}
+                  {t(error)}
                 </p>
               )}
             </div>
