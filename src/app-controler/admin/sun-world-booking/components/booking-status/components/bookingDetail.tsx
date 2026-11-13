@@ -401,7 +401,6 @@ export default function BookingDetailCard({
                     {tickets.map((t, tIndex) => {
                       const canSelect = Boolean(p.unitPrice);
                       const key = canSelect ? getTicketKey(t) : `${p.productCode}-${tIndex}`;
-                      console.log("canSelect", canSelect);
                       const content = (
                         <>
                           {canSelect && (

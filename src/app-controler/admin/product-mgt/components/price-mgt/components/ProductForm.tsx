@@ -50,7 +50,6 @@ export default function ProductForm({
     status: true,
     min_quantity: 1,
   };
-  console.log(product || intitValue);
   const [formData, setFormData] = useState<ProductBanaType>(product || intitValue);
   const [saving, setSaving] = useState(false);
 

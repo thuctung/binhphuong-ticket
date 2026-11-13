@@ -7,7 +7,12 @@ import { RefundHistorySubmit, SearchRefunType } from "../../type";
 import { SiteType } from "@/types/ticket";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { df_From, df_To } from "@/app-controler/admin/history/constant";
-import { getAffProductPriceOrder, getProfileByEmail, getRefundHistory, updateBalanceHistory } from "../../api";
+import {
+  getAffProductPriceOrder,
+  getProfileByEmail,
+  getRefundHistory,
+  updateBalanceHistory,
+} from "../../api";
 import SearchRefundForm from "./components/search-form";
 import { covertDateFormToServer } from "@/helpers/dateTime";
 import { formatVND } from "@/lib/money";
@@ -19,8 +24,8 @@ import { toast } from "react-toastify";
 const initParam = { site_code: "", email: "", from: df_From, to: df_To, third_party_number: "" };
 const initSearch = {
   searchValue: initParam,
-    currentPage: 1,
-}
+  currentPage: 1,
+};
 export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[] }) {
   const [totalPages, setTotalPage] = useState(0);
   const [params, setParams] = useState<SearchTableType<SearchRefunType>>(initSearch);
@@ -39,9 +44,9 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
     return 0;
   }, [currentData]);
 
-  const handleOpenDialog =async (row: RefundHistorySubmit) => {
-      const {data:price} = await getAffProductPriceOrder(row.third_party_number, row.product_code);
-      setPriceAffBuy(price)
+  const handleOpenDialog = async (row: RefundHistorySubmit) => {
+    const { data: price } = await getAffProductPriceOrder(row.third_party_number, row.product_code);
+    setPriceAffBuy(price);
     setCurrentData(row);
     setOpenDialog(true);
   };
@@ -61,9 +66,9 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
     }));
   };
 
-  const fetchListHistory = async (payload:SearchTableType<SearchRefunType>) => {
+  const fetchListHistory = async (payload: SearchTableType<SearchRefunType>) => {
     const data = await getRefundHistory({
-      currentPage:1,
+      currentPage: 1,
       searchValue: {
         ...payload.searchValue,
         from: covertDateFormToServer(payload.searchValue.from),
@@ -78,8 +83,8 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
   };
 
   const handleSearch = () => {
-    fetchListHistory(params)
-  }
+    fetchListHistory(params);
+  };
   const handleChangePage = (page: number) => {
     setParams((pre) => {
       const newValue = { ...pre, currentPage: page };
@@ -88,9 +93,8 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
     });
   };
 
-  const handleReturnMoneyAffilate = async (baseCharge: number, surcharge:number) => {
+  const handleReturnMoneyAffilate = async (baseCharge: number, surcharge: number) => {
     if (currentData) {
-      console.log(currentData,);
       const { data } = await getProfileByEmail(currentData.email_order);
       if (data) {
         const { role, agent_level, user_id } = data;
@@ -102,15 +106,15 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
           id: currentData.id || "",
           user_id,
           surcharge,
-          total_fee:surcharge + currentData.return_charge,
+          total_fee: surcharge + currentData.return_charge,
           amount: baseCharge - surcharge,
-          price_agent:priceAffBuy
+          price_agent: priceAffBuy,
         });
 
         if (resUpdate) {
           toast.success("Hoàn tiền thành công");
           onCloseDialog();
-          handleSearch  ();
+          handleSearch();
         }
       } else {
         toast.error("Không tìm thấy đại lý");
@@ -168,20 +172,20 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
       align: "center",
       render: (row) => formatVND(row.return_charge),
     },
-      {
+    {
       key: "surcharge",
       title: "Phụ phí",
       align: "center",
-      render: (row) => formatVND(row.surcharge ||0),
+      render: (row) => formatVND(row.surcharge || 0),
     },
 
-     {
+    {
       key: "total_fee",
       title: "Tổng phí",
       align: "center",
       render: (row) => formatVND(row?.total_fee || 0),
     },
-    
+
     {
       key: "get_price",
       title: "Thực nhận",
@@ -202,8 +206,8 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
   ];
 
   useEffect(() => {
-    fetchListHistory(initSearch)
-  },[])
+    fetchListHistory(initSearch);
+  }, []);
 
   return (
     <main className="mx-auto w-full  px-4 py-8 sm:px-6">
@@ -223,8 +227,7 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
           columns={columnAffStats}
           data={litsHistory}
           totalPages={totalPages}
-                      currentPage={params.currentPage}
-
+          currentPage={params.currentPage}
           onChangePage={(page) => handleChangePage(page)}
         />
       </section>
@@ -232,11 +235,11 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
       {currentData ? (
         <RefundAgentDialog
           open={openDialog}
-          unitPrice={currentData.unit_price*currentData.quantity}
+          unitPrice={currentData.unit_price * currentData.quantity}
           onClose={onCloseDialog}
           onSubmit={handleReturnMoneyAffilate}
           maxAmount={returnMoney}
-          priceAff = {priceAffBuy*currentData.quantity}
+          priceAff={priceAffBuy * currentData.quantity}
         />
       ) : null}
     </main>
