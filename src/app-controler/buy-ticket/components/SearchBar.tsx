@@ -7,6 +7,8 @@ import { Info, Search } from "lucide-react";
 import { useMemo } from "react";
 import { toDate } from "../contants";
 import { FormDataType } from "../type";
+import { useTranslation } from "@/lib/i18n/client";
+import { get } from "lodash";
 
 type SearchBarProp = {
   siteList: SiteType[];
@@ -21,8 +23,10 @@ export default function SearchBar({
   onChangeFormData,
   onSearch,
 }: SearchBarProp) {
+  const { t, lng } = useTranslation();
+
   const lisStateCover = useMemo(
-    () => siteList.map((item) => ({ value: item.code, label: item.name })),
+    () => siteList.map((item) => ({ value: item.code, label: get(item, lng, item.name) })),
     [siteList]
   );
 
@@ -31,18 +35,18 @@ export default function SearchBar({
       <div className="rounded-2xl bg-white p-6 shadow-xl ring-1 ring-black/5 sm:p-8">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-[1.4fr_1fr_1fr_auto] md:items-end">
           <div>
-            <label className="text-[11px] font-semibold">Chọn công viên</label>
+            <label className="text-[11px] font-semibold">{t("buyticket.select_park")}</label>
             <DropdownSearch
               options={lisStateCover}
               value={formData.site_code}
               onChange={(value: string) => onChangeFormData("site_code", value)}
-              placeholder="Chọn tên công viên"
-              searchPlaceholder="Nhập để tìm..."
+              placeholder={t("buyticket.select_park")}
+              searchPlaceholder={t("buyticket.search_placeholder")}
             />
           </div>
 
           <div>
-            <label className="text-[11px] font-semibold">Ngày sử dụng</label>
+            <label className="text-[11px] font-semibold">{t("buyticket.usage_date")}</label>
             <DatePickerCustom
               name="date_use"
               id="date_use"
@@ -57,7 +61,7 @@ export default function SearchBar({
             className=" flex items-center justify-center  gap-2 h-10 w-full rounded-lg bg-[#61a05e] text-xs font-semibold text-white transition-colors hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
           >
             <Search size={18} />
-            Tìm kiếm
+            {t("buyticket.search")}
           </button>
         </div>
 
@@ -70,9 +74,9 @@ export default function SearchBar({
               rel="noopener noreferrer"
               className="font-medium text-amber-600 underline"
             >
-              Đăng kí ngay
+              {t("buyticket.register_now")}
             </a>{" "}
-            để nhận ưu đãi
+            {t("buyticket.get_offers")}
           </span>
         </div>
       </div>

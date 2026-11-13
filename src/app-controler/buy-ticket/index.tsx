@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import dayjs from "dayjs";
+import { useTranslation } from "@/lib/i18n/client";
 
 import {
   AgentPriceType,
@@ -38,8 +39,10 @@ import { AlertCircle } from "lucide-react";
 import ProductCard from "./components/ProductCard";
 import SummaryCustomer from "./components/SumaryCustomer";
 import { getListCategory } from "../admin/product-mgt/api";
+import { get } from "lodash";
 
 export default function BuyTicketController() {
+  const { t, lng } = useTranslation();
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
 
   const searchParams = useSearchParams();
@@ -209,6 +212,7 @@ export default function BuyTicketController() {
                 <div>
                   <div className="mt-4">
                     <TicketTabs
+                      lisCategory={listCategory}
                       formType={CUSTOMER}
                       active={filter}
                       onChange={setFilter}
@@ -221,9 +225,7 @@ export default function BuyTicketController() {
                       <AlertCircle size={18} className="mt-0.5 shrink-0" />
                       <div>
                         <p className="font-medium">{geNoteSiteCode(siteCode)}</p>
-                        <p className="mt-0.5 text-amber-600/90">
-                          Vui lòng mang theo giấy tờ tuỳ thân để được kiểm tra khi cần thiết.
-                        </p>
+                        <p className="mt-0.5 text-amber-600/90">{t("buyticket.identity_notice")}</p>
                       </div>
                     </div>
                     {listProductFilter.map((ticket) => (
@@ -236,7 +238,7 @@ export default function BuyTicketController() {
                     ))}
                   </div>
                 </div>
-                <SummaryCustomer siteName={currentSite?.name || ""} />
+                <SummaryCustomer siteName={get(currentSite, lng, currentSite?.name) || ""} />
               </div>
             </main>
           )}

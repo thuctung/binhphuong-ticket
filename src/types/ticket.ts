@@ -47,6 +47,9 @@ export type AgentPriceType = {
 export type CategorySubmitType = {
   code: string;
   name: string;
+  en?: string;
+  zh?: string;
+  ko?: string;
 };
 
 export type ProductType = {

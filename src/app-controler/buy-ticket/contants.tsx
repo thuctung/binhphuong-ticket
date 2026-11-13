@@ -41,6 +41,9 @@ export const getImageProduct = (product: ProductBanaType) => {
       return "/ba-na/ve-thuong.png";
     }
     default:
+      if (product.restaurantName) {
+        return "/ba-na/buffet.png";
+      }
       return "/ba-na/ve-thuong.png";
   }
 };

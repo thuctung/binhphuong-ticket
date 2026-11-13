@@ -12,5 +12,8 @@
     "about": "Giới thiệu",
     "question": "Hỏi đáp",
     "agent": "Đại lý"
+  },
+  "label": {
+    "all": "All"
   }
 }

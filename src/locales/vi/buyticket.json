@@ -1,0 +1,28 @@
+{
+  "title": "Khám phá Du lịch Đà Nẵng cùng Moon Price",
+  "benefits": {
+    "fast_ticket": "Nhận vé nhanh chóng",
+    "member": "Đăng kí hội viên để nhận ưu đãi",
+    "payment": "Thanh toán dễ dàng"
+  },
+  "select_park": "Chọn công viên",
+  "usage_date": "Ngày sử dụng",
+  "register_now": "Đăng kí ngay",
+  "get_offers": "để nhận ưu đãi",
+  "search": "Tìm kiếm",
+  "identity_notice": "Vui lòng mang theo giấy tờ tuỳ thân để được kiểm tra khi cần thiết.",
+  "order_info": "Thông tin đơn hàng",
+  "destination": "Điểm đến",
+  "departure_date": "Ngày đi",
+  "empty_ticket": "Chưa có vé nào được chọn.",
+  "total": "Tổng cộng",
+  "create_order": "Tạo đơn",
+  "add_to_cart": "Thêm giỏ hàng",
+  "learn_more": "Tìm hiểu thêm",
+  "ticket_multiple": "Vé phải là bội của",
+  "search_placeholder": "Nhập để tìm...",
+  "quantity": "Số lượng",
+  "view_details": "Xem chi tiết",
+  "show_less": "Ẩn bớt",
+  "regular_ticket": "Vé thường"
+}

@@ -1,0 +1,28 @@
+{
+  "title": "与 Moon Price 一起探索岘港之旅",
+  "benefits": {
+    "fast_ticket": "快速获取门票",
+    "member": "注册会员，享受专属优惠",
+    "payment": "轻松便捷的支付"
+  },
+  "select_park": "选择主题公园",
+  "usage_date": "使用日期",
+  "register_now": "立即注册",
+  "get_offers": "享受专属优惠",
+  "search": "搜索",
+  "identity_notice": "请随身携带身份证件，以便在需要时进行核验。",
+  "order_info": "订单信息",
+  "destination": "目的地",
+  "departure_date": "游玩日期",
+  "empty_ticket": "尚未选择任何门票。",
+  "total": "总计",
+  "create_order": "创建订单",
+  "add_to_cart": "加入购物车",
+  "learn_more": "了解更多",
+  "ticket_multiple": "门票数量必须是以下数量的倍数",
+  "search_placeholder": "输入关键词搜索...",
+  "quantity": "数量",
+  "view_details": "查看详情",
+  "show_less": "收起",
+  "regular_ticket": "普通门票"
+}

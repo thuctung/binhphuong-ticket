@@ -1,0 +1,28 @@
+{
+  "title": "Explore Da Nang with Moon Price",
+  "benefits": {
+    "fast_ticket": "Get your tickets quickly",
+    "member": "Become a member to receive exclusive offers",
+    "payment": "Easy and convenient payment"
+  },
+  "select_park": "Select a park",
+  "usage_date": "Date of use",
+  "register_now": "Register now",
+  "get_offers": "to receive special offers",
+  "search": "Search",
+  "identity_notice": "Please bring your personal identification documents for verification when required.",
+  "order_info": "Order Information",
+  "destination": "Destination",
+  "departure_date": "Visit Date",
+  "empty_ticket": "No tickets have been selected.",
+  "total": "Total",
+  "create_order": "Create Order",
+  "add_to_cart": "Add to Cart",
+  "learn_more": "Learn More",
+  "ticket_multiple": "Tickets must be in multiples of",
+  "search_placeholder": "Enter to search...",
+  "quantity": "Quantity",
+  "view_details": "View details",
+  "show_less": "Show less",
+  "regular_ticket": "Regular Ticket"
+}

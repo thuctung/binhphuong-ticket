@@ -1,6 +1,10 @@
 import { Baby, PersonStanding, Ticket, Users } from "lucide-react";
 import { BEST_SELLER } from "@/commons/constant";
 import { BOOKING_FORM_TYPE, PRODUCT_TYPE } from "@/components/GetTicketForm/constants";
+import { useTranslation } from "@/lib/i18n/client";
+import { CategorySubmitType } from "@/types/ticket";
+import { getCategaryItem } from "../contants";
+import { get } from "lodash";
 
 const ICONS = {
   ["ADULT"]: Users,
@@ -13,18 +17,21 @@ interface Props {
   active: string;
   formType: string;
   listType: string[];
+  lisCategory: CategorySubmitType[];
   onChange: (key: string) => void;
 }
 
-export default function TicketTabs({ active, onChange, listType, formType }: Props) {
+export default function TicketTabs({ active, lisCategory, onChange, listType, formType }: Props) {
+  const { t, lng } = useTranslation();
   const listTab = [
     {
       key: "",
-      label: "Tất cả",
+      label: t("common.label.all"),
       icon: Ticket,
     },
   ];
   listType.forEach((item) => {
+    const getCategotyIem = getCategaryItem(item, lisCategory);
     if (item) {
       if (formType === BOOKING_FORM_TYPE.AFFILATE) {
         listTab.push({
@@ -35,7 +42,7 @@ export default function TicketTabs({ active, onChange, listType, formType }: Pro
       } else if (item !== BEST_SELLER) {
         listTab.push({
           key: item,
-          label: PRODUCT_TYPE[item as keyof typeof PRODUCT_TYPE] || item,
+          label: get(getCategotyIem, lng, item),
           icon: ICONS[item as keyof typeof ICONS] || Ticket,
         });
       }

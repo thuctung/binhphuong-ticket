@@ -9,6 +9,8 @@ import { useCartStore } from "@/stores/useCartStore";
 import { Soup } from "lucide-react";
 import { BADGE_STYLES, getCategaryItem, getImageProduct } from "../contants";
 import ProductDetailModal from "./ProdcutDetail";
+import { useTranslation } from "@/lib/i18n/client";
+import { get } from "lodash";
 
 type Props = {
   product: ProductBanaType;
@@ -18,6 +20,8 @@ type Props = {
 const MAX = 99;
 const MIN = 0;
 export default function ProductCard({ product, quantity, lisCategory }: Props) {
+  const { t, lng } = useTranslation();
+
   const setCartItems = useCartStore((s) => s.addItem);
   const [tampQty, setTempQty] = useState(quantity);
   const [openDetail, setOpenDetail] = useState(false);
@@ -60,7 +64,8 @@ export default function ProductCard({ product, quantity, lisCategory }: Props) {
         <span
           className={`absolute left-3 top-3 rounded-full px-3.5 py-1.5 font-display text-sm font-bold text-ink shadow ${BADGE_STYLES[product.personType] || BADGE_STYLES["DEFAULT"]}`}
         >
-          {getCategaryItem(product.personType, lisCategory)?.name}
+          {get(getCategaryItem(product.personType, lisCategory), lng) ||
+            getCategaryItem(product.personType, lisCategory)?.name}
         </span>
 
         <button
@@ -68,7 +73,7 @@ export default function ProductCard({ product, quantity, lisCategory }: Props) {
           onClick={() => setOpenDetail(true)}
           className="absolute inset-x-0 bottom-3 flex items-center justify-center gap-1 text-sm font-medium text-white hover:underline focus-visible:outline-none focus-visible:underline"
         >
-          Tìm hiểu thêm
+          {t("buyticket.learn_more")}
           <svg
             viewBox="0 0 24 24"
             className="size-4"
@@ -93,7 +98,9 @@ export default function ProductCard({ product, quantity, lisCategory }: Props) {
             <span className="text-sm font-semibold text-[#22acf9]">{product.restaurantName}</span>
           </p>
         ) : (
-          <span className="text-sm font-semibold text-[#5ae444]">Vé thường</span>
+          <span className="text-sm font-semibold text-[#5ae444]">
+            {t("buyticket.regular_ticket")}
+          </span>
         )}
 
         <div className="mt-auto">
@@ -142,7 +149,7 @@ export default function ProductCard({ product, quantity, lisCategory }: Props) {
           <div>
             {product.multiple > 1 ? (
               <p className="w-full  text-right text-[12px] text-[#ff006c]">
-                Vé phải là bội của: {product.multiple}
+                {t("buyticket.ticket_multiple")}: {product.multiple}
               </p>
             ) : null}
           </div>
@@ -155,7 +162,7 @@ export default function ProductCard({ product, quantity, lisCategory }: Props) {
               className="flex items-center justify-center gap-2 rounded-xl border border-[#f2a21d] bg-white px-3 py-3 font-semibold text-[#f26b1d] transition hover:bg-orange-50 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/50"
             >
               <CartIcon />
-              Thêm giỏ hàng
+              {t("buyticket.add_to_cart")}
             </button>
           </div>
         </div>

@@ -12,5 +12,8 @@
     "about": "About",
     "question": "FAQ",
     "agent": "Agents"
+  },
+  "label": {
+    "all": "Tất cả"
   }
 }
