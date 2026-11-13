@@ -3,12 +3,11 @@ import { supabaseAdmin } from "@/lib/supabase/server";
 import { DB_TABLE_NAME } from "@/commons/constant";
 
 export async function GET(request: Request) {
-  const url = new URL(request.url);
-  const limitRaw = url.searchParams.get("limit");
-  const limit = Math.min(24, Math.max(1, Number(limitRaw ?? 9) || 9));
-
-  const { data, error } = await supabaseAdmin.from(DB_TABLE_NAME.SITES).select("*").limit(limit);
-
+  const { data, error } = await supabaseAdmin
+    .from(DB_TABLE_NAME.SITES)
+    .select(`*,location:location(code,name,en,zh,ko)`)
+    .order("order", { ascending: true })
+    .limit(6);
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

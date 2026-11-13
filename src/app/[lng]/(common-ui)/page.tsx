@@ -1,9 +1,11 @@
 import HomeA from "@/app-controler/home";
+import FloatingContact from "@/components/site/FloatingContact";
+import { getSitesHomePage } from "@/lib/api-server/get-site";
 import { getTranslation } from "@/lib/i18n";
 import { buildAlternates } from "@/lib/seo";
 import { Metadata } from "next";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -22,6 +24,11 @@ export async function generateMetadata({
 
 export default async function HomePage({ params }: { params: Promise<{ lng: string }> }) {
   const { lng } = await params;
-
-  return <HomeA lng={lng} />;
+  const { data } = await getSitesHomePage();
+  return (
+    <>
+      <HomeA lng={lng} sites={data} />
+      <FloatingContact />
+    </>
+  );
 }

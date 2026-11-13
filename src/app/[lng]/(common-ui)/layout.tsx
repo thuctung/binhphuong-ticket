@@ -17,7 +17,6 @@ export default async function RootLayout({
       {children}
       <Footer lng={lng} />
       <ConfirmProvider />
-      <FloatingContact />
     </main>
   );
 }

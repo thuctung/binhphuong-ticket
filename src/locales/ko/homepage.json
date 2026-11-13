@@ -16,45 +16,7 @@
     "description": "여행지를 선택하고 입장용 QR 코드를 받으세요.",
     "view_more": "더 보기 →",
     "price_from": "최저가",
-    "buy": "티켓 구매",
-    "items": [
-      {
-        "location": "다낭",
-        "name": "선월드 바나힐",
-        "description": "케이블카 + 골든 브리지",
-        "price": "900,000 VND"
-      },
-      {
-        "location": "다낭",
-        "name": "빈원더스 남호이안",
-        "description": "테마파크",
-        "price": "880,000 VND"
-      },
-      {
-        "location": "다낭",
-        "name": "미카즈키",
-        "description": "일본 문화 체험",
-        "price": "30,000 VND"
-      },
-      {
-        "location": "다낭",
-        "name": "누이탄타이",
-        "description": "워터파크",
-        "price": "200,000 VND"
-      },
-      {
-        "location": "호이안",
-        "name": "호이안 메모리즈",
-        "description": "문화유산 공연",
-        "price": "125,000 VND"
-      },
-      {
-        "location": "라오까이",
-        "name": "판시판 레전드",
-        "description": "3선식 케이블카",
-        "price": "750,000 VND"
-      }
-    ]
+    "buy": "티켓 구매"
   },
   "tours": {
     "eyebrow": "여행 패키지 · 항공권",

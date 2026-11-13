@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import dayjs from "dayjs";
 
 import {
   AgentPriceType,
@@ -12,34 +14,36 @@ import {
 import { ProfileType } from "@/types";
 import { CUSTOMER, SITE_CODES } from "@/commons/constant";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
-import dayjs from "dayjs";
-import SearchBar from "./components/SearchBar";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { useCartStore } from "@/stores/useCartStore";
-import Hero from "./components/Hero";
-import { FormDataType } from "./type";
-
-import { getSideItem } from "../admin/product-mgt/contants";
 import {
   getListAgentPriceDefaultBySite,
   getPriceBuyAgentLevel,
   getProductBySiteSun,
   getProductionInSystem,
 } from "@/components/GetTicketForm/api";
-import TicketTabs from "./components/TicketTabs";
-import { getOrder } from "@/components/GetTicketForm/Affilate/constants";
-import { AlertCircle } from "lucide-react";
-import { geNoteSiteCode } from "@/components/GetTicketForm/Customer/constants";
-import ProductCard from "./components/ProductCard";
-import SummaryCustomer from "./components/SumaryCustomer";
 import {
   getPriceAgentAndMultiple,
   mapAgentPriceByProductCode,
 } from "@/components/GetTicketForm/constants";
+import { geNoteSiteCode } from "@/components/GetTicketForm/Customer/constants";
+import { getOrder } from "@/components/GetTicketForm/Affilate/constants";
+
+import Hero from "./components/Hero";
+import { FormDataType } from "./type";
+import SearchBar from "./components/SearchBar";
+import { getSideItem } from "../admin/product-mgt/contants";
+import TicketTabs from "./components/TicketTabs";
+import { AlertCircle } from "lucide-react";
+import ProductCard from "./components/ProductCard";
+import SummaryCustomer from "./components/SumaryCustomer";
 import { getListCategory } from "../admin/product-mgt/api";
 
 export default function BuyTicketController() {
   const profile: ProfileType = useProfileStore((state: any) => state.profile);
+
+  const searchParams = useSearchParams();
+  const siteURL = searchParams.get("site");
 
   const {
     siteList,
@@ -55,13 +59,22 @@ export default function BuyTicketController() {
   const [agentPriceDefault, setAgentPriceDefault] = useState(0);
   const [mapAgentPrice, setMapAgentPrice] = useState<Map<string, AgentPriceType>>(new Map());
   const [listCategory, setListCategory] = useState<CategorySubmitType[]>([]);
+  const [filter, setFilter] = useState("");
+
+  // true ngay nếu URL không có site; nếu có thì chờ áp xong mới cho phép fetch
+  const [urlApplied, setUrlApplied] = useState(!siteURL);
+  // chỉ nhận kết quả của request mới nhất
+  const productReqIdRef = useRef(0);
 
   const currentSite: SiteType | null = useMemo(
     () => getSideItem(formData.site_code, siteList),
     [siteList, formData.site_code]
   );
 
-  const [filter, setFilter] = useState("");
+  // Dùng giá trị nguyên thủy làm deps cho effect, tránh chạy lại vì đổi reference
+  const siteReady = !!currentSite;
+  const inSystem = currentSite?.in_system;
+  const priceLevel = profile?.email ? "register" : CUSTOMER;
 
   const [tickets, personTypes] = useMemo(() => {
     let listTicket: ProductBanaType[] = [];
@@ -75,7 +88,7 @@ export default function BuyTicketController() {
       pinalPrice: getPriceAgentAndMultiple(items, CUSTOMER, mapAgentPrice, agentPriceDefault),
     }));
     return [listTicket.sort((a, b) => (a.order ?? 1) - (b.order ?? 1)), listPersonType];
-  }, [listProduct]);
+  }, [listProduct, mapAgentPrice, agentPriceDefault]);
 
   const listProductFilter = useMemo(() => {
     let result: ProductBanaType[] = [];
@@ -85,52 +98,28 @@ export default function BuyTicketController() {
       result = tickets.filter((item) => item.personType === filter);
     }
     if (formData.site_code === SITE_CODES.BANAHILL) {
-      return result.sort((a, b) => getOrder(a?.id || 1) - getOrder(b?.id || 1));
+      return [...result].sort((a, b) => getOrder(a?.id || 1) - getOrder(b?.id || 1));
     }
     return result;
   }, [filter, tickets, formData.site_code]);
 
-  const onChangeFormData = (key: keyof FormDataType, value: string) => {
-    if (value !== formData.site_code) {
-      clearCart();
+  const fetchProductBySite = async (code: string) => {
+    if (!code) return;
+    const reqId = ++productReqIdRef.current;
+
+    let data: any = [];
+    if (currentSite && currentSite.company_code === "SUNWORLD") {
+      data = await getProductBySiteSun(
+        code,
+        dayjs(formData.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT)
+      );
+    } else {
+      data = await getProductionInSystem(code);
     }
-    const newData = { ...formData, [key]: value };
-    setFormData(newData);
-  };
 
-  const handleSearch = () => {
-    fetchProductBySite(formData.site_code);
-    clearCart();
-  };
-
-  const fetchProductBySite = async (siteCode: string) => {
-    if (siteCode) {
-      let data: any = [];
-      if (currentSite && !currentSite.in_system) {
-        data = await getProductBySiteSun(
-          siteCode,
-          dayjs(formData.date_use, BASIC_DATE_FORMAT).format(SERVER_DATE_FORMAT)
-        );
-      } else {
-        data = await getProductionInSystem(siteCode);
-      }
-      if (data) {
-        setListProductSun(data);
-      } else {
-        setListProductSun([]);
-      }
-    }
-  };
-
-  const fetchPriceAgentLevelAndProducts = async (sideCode: string, level: string) => {
-    const [priceDefault, agentPrice, product]: any = await Promise.all([
-      getListAgentPriceDefaultBySite(sideCode, level),
-      getPriceBuyAgentLevel(sideCode, level),
-      fetchProductBySite(formData.site_code),
-    ]);
-    const mapAgentPrice = mapAgentPriceByProductCode(agentPrice);
-    setMapAgentPrice(mapAgentPrice);
-    setAgentPriceDefault(priceDefault);
+    // Đã có request mới hơn thì bỏ kết quả cũ
+    if (reqId !== productReqIdRef.current) return;
+    setListProductSun(data || []);
   };
 
   const fetchCategory = async () => {
@@ -138,6 +127,20 @@ export default function BuyTicketController() {
     if (data?.data) {
       setListCategory(data.data);
     }
+  };
+
+  const onChangeFormData = (key: keyof FormDataType, value: string) => {
+    // Chỉ xoá giỏ hàng khi đổi site, không xoá khi đổi field khác (vd: ngày)
+    if (key === "site_code" && value !== formData.site_code) {
+      clearCart();
+    }
+    setFormData({ ...formData, [key]: value });
+  };
+
+  // Chỉ dùng cho nút "Tìm kiếm" (người dùng chủ động)
+  const handleSearch = () => {
+    fetchProductBySite(formData.site_code);
+    clearCart();
   };
 
   useEffect(() => {
@@ -148,15 +151,46 @@ export default function BuyTicketController() {
     getSites();
   }, [getSites]);
 
+  // 1. Áp site từ URL đúng 1 lần, không gọi API ở đây
   useEffect(() => {
-    if (formData.site_code) {
-      let level = CUSTOMER;
-      if (profile?.email) {
-        level = "register";
+    if (urlApplied || !siteList.length) return;
+
+    if (siteURL && getSideItem(siteURL, siteList)) {
+      if (siteURL !== formData.site_code) {
+        clearCart();
+        setFormData({ ...formData, site_code: siteURL });
       }
-      fetchPriceAgentLevelAndProducts(formData.site_code, level);
     }
-  }, [formData.site_code, profile.email]);
+    setUrlApplied(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlApplied, siteList, siteURL]);
+
+  // 2. Sản phẩm: chỉ phụ thuộc site (không phụ thuộc profile)
+  useEffect(() => {
+    if (!urlApplied || !formData.site_code || !siteReady) return;
+    fetchProductBySite(formData.site_code);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlApplied, formData.site_code, siteReady, inSystem]);
+
+  // 3. Giá: phụ thuộc site và level (đăng nhập hay chưa)
+  useEffect(() => {
+    if (!urlApplied || !formData.site_code) return;
+    let cancelled = false;
+
+    (async () => {
+      const [priceDefault, agentPrice]: any = await Promise.all([
+        getListAgentPriceDefaultBySite(formData.site_code, priceLevel),
+        getPriceBuyAgentLevel(formData.site_code, priceLevel),
+      ]);
+      if (cancelled) return;
+      setMapAgentPrice(mapAgentPriceByProductCode(agentPrice));
+      setAgentPriceDefault(priceDefault);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [urlApplied, formData.site_code, priceLevel]);
 
   return (
     <main className="min-h-screen flex flex-col text-foreground scene">

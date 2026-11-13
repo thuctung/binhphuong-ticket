@@ -8,7 +8,6 @@ import Image from "next/image";
 
 export function LoadingGlobal() {
   const { loadingGlobal }: CommonType = useCommonStore((state: any) => state);
-
   return (
     <Dialog open={loadingGlobal}>
       <DialogContent

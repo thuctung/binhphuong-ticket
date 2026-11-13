@@ -16,45 +16,7 @@
     "description": "选择目的地，获取入园二维码。",
     "view_more": "查看更多 →",
     "price_from": "起价",
-    "buy": "购买门票",
-    "items": [
-      {
-        "location": "岘港",
-        "name": "太阳世界巴拿山",
-        "description": "缆车 + 金桥",
-        "price": "900,000 越南盾"
-      },
-      {
-        "location": "岘港",
-        "name": "珍珠奇幻南会安",
-        "description": "主题乐园",
-        "price": "880,000 越南盾"
-      },
-      {
-        "location": "岘港",
-        "name": "Mikazuki 水上乐园",
-        "description": "探索日本文化",
-        "price": "30,000 越南盾"
-      },
-      {
-        "location": "岘港",
-        "name": "神 tài 山旅游区",
-        "description": "水上乐园",
-        "price": "200,000 越南盾"
-      },
-      {
-        "location": "会安",
-        "name": "会安印象",
-        "description": "文化遗产演出",
-        "price": "125,000 越南盾"
-      },
-      {
-        "location": "老街",
-        "name": "番西邦传奇",
-        "description": "三线缆车",
-        "price": "750,000 越南盾"
-      }
-    ]
+    "buy": "购买门票"
   },
   "tours": {
     "eyebrow": "旅游套餐 · 机票",

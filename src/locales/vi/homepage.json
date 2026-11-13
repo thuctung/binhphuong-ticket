@@ -11,50 +11,12 @@
     "search_button": "Tìm vé"
   },
   "tickets": {
-    "eyebrow": "VÉ DU LỊCH - VUI CHƠI",
-    "title": "VÉ DU LỊCH - VUI CHƠI",
+    "eyebrow": "VÉ DU LỊCH - KHU VUI CHƠI",
+    "title": "VÉ DU LỊCH - KHU VUI CHƠI",
     "description": "Chọn điểm đến, nhận mã QR vào cổng.",
     "view_more": "Xem thêm →",
     "price_from": "Giá từ",
-    "buy": "Mua vé",
-    "items": [
-      {
-        "location": "Đà Nẵng",
-        "name": "Sun World Bà Nà Hills",
-        "description": "Cáp treo + Cầu Vàng",
-        "price": "900.000 ₫"
-      },
-      {
-        "location": "Đà Nẵng",
-        "name": "VinWonders Nam Hội An",
-        "description": "Công viên giải trí",
-        "price": "880.000 ₫"
-      },
-      {
-        "location": "Đà Nẵng",
-        "name": "Mikazuki",
-        "description": "Khám phá văn hóa Nhật",
-        "price": "30.000 ₫"
-      },
-      {
-        "location": "Đà Nẵng",
-        "name": "Núi Thần Tài",
-        "description": "Công viên nước",
-        "price": "200.000 ₫"
-      },
-      {
-        "location": "Hội An",
-        "name": "Ký ức Hội An",
-        "description": "Di sản văn hóa",
-        "price": "125.000 ₫"
-      },
-      {
-        "location": "Lào Cai",
-        "name": "Fansipan Legend",
-        "description": "Cáp treo 3 dây",
-        "price": "750.000 ₫"
-      }
-    ]
+    "buy": "Mua vé"
   },
   "tours": {
     "eyebrow": "TOUR DU LỊCH - VÉ MÁY BAY",

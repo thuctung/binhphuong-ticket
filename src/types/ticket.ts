@@ -1,5 +1,13 @@
 import { number } from "zod";
 
+export type LanguageType = {
+  en: string;
+  ko: string;
+  vi: string;
+  zh: string;
+  name: string;
+};
+
 export interface SiteType {
   code: string;
   status: string;
@@ -9,6 +17,12 @@ export interface SiteType {
   exp?: string;
   price_agent_default?: number;
   percent_customer_default?: number;
+  en?: string;
+  ko?: string;
+  zh?: string;
+  location_code?: string;
+  location: LanguageType;
+  company_code?: string;
 }
 
 export type TicketType = {

@@ -1,5 +1,7 @@
-import { LoadingGlobal } from "@/components/ui/loading";
-
 export default function Loading() {
-  return <LoadingGlobal />;
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-300 border-t-ocean" />
+    </div>
+  );
 }

@@ -9,6 +9,8 @@ import { Suspense } from "react";
 import { Be_Vietnam_Pro, Bricolage_Grotesque } from "next/font/google";
 import { dir } from "i18next";
 import { languages } from "@/lib/i18n/settings";
+import NextTopLoader from "nextjs-toploader";
+import SplashRemover from "@/components/ui/SplashRemover";
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }));
@@ -37,10 +39,11 @@ export default async function RootLayout({
   return (
     <html lang={lng} dir={dir(lng)} className={`${body.variable} ${display.variable}`}>
       <body className={body.className}>
-        <Suspense fallback={<LoadingGlobal />}>{children}</Suspense>
+        <NextTopLoader color="#0ea5e9" showSpinner={false} />
+        <SplashRemover />
+        <Suspense fallback={<SplashRemover />}>{children}</Suspense>
         <div id="modal-root"></div>
         <ToastMessage />
-        <LoadingGlobal />
         <ToastContainer
           position="top-right"
           autoClose={3000}

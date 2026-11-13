@@ -16,45 +16,7 @@
     "description": "Choose your destination and receive a QR code for entry.",
     "view_more": "View more →",
     "price_from": "From",
-    "buy": "Buy tickets",
-    "items": [
-      {
-        "location": "Da Nang",
-        "name": "Sun World Ba Na Hills",
-        "description": "Cable car + Golden Bridge",
-        "price": "VND 900,000"
-      },
-      {
-        "location": "Da Nang",
-        "name": "VinWonders Nam Hoi An",
-        "description": "Theme park",
-        "price": "VND 880,000"
-      },
-      {
-        "location": "Da Nang",
-        "name": "Mikazuki",
-        "description": "Discover Japanese culture",
-        "price": "VND 30,000"
-      },
-      {
-        "location": "Da Nang",
-        "name": "Than Tai Mountain",
-        "description": "Water park",
-        "price": "VND 200,000"
-      },
-      {
-        "location": "Hoi An",
-        "name": "Hoi An Memories",
-        "description": "Cultural heritage",
-        "price": "VND 125,000"
-      },
-      {
-        "location": "Lao Cai",
-        "name": "Fansipan Legend",
-        "description": "Three-cable system",
-        "price": "VND 750,000"
-      }
-    ]
+    "buy": "Buy tickets"
   },
   "tours": {
     "eyebrow": "TOURS & FLIGHTS",

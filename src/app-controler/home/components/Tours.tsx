@@ -17,7 +17,7 @@ export default async function ({ lng }: { lng: string }) {
           {tours.map((tour, index) => (
             <article
               key={tour.id}
-              className="flex flex-col overflow-hidden rounded-2xl border border-ink/10 bg-white"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-ink/10 bg-white hover:animate-wiggle motion-reduce:hover:animate-none"
             >
               <div className={`relative h-44 w-full bg-gradient-to-br ${tour.tone}`}>
                 <Image
@@ -42,7 +42,7 @@ export default async function ({ lng }: { lng: string }) {
                   <p className="font-display text-xl font-extrabold text-ocean">
                     {t(`homepage.tours.items.${index}.price`)}
                   </p>
-                  <button className="mt-4 w-full rounded-xl  bg-sun  py-2.5 text-sm font-medium text-ink hover:brightness-95 group-hover:bg-ocean ">
+                  <button className="mt-4 w-full rounded-xl  bg-sun  py-2.5 text-sm font-medium text-ink hover:brightness-95 hover:bg-ocean hover:text-white ">
                     {t("homepage.tours.book")}
                   </button>
                 </div>
