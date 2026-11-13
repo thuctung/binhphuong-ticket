@@ -34,7 +34,7 @@ export const getBgImg = (siteCode: string) => {
 
 export default async function Locations({ lng, sites }: { lng: string; sites: SiteType[] }) {
   const { t } = await getTranslation(lng);
-  const listSite = sites || SitesDefault;
+  const listSite = sites || [];
 
   return (
     <section id="diem-ban-ve" className="scroll-mt-16 bg-ink/[0.04] py-20">
