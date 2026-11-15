@@ -1,5 +1,5 @@
 import api from "@/axios";
-import { GET_ALL_SITE, UPDATE_SITE } from "@/commons/apiURL";
+import { GET_ALL_SITE, REBUILD_SERVER, UPDATE_SITE } from "@/commons/apiURL";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { CommonType, SearchTableType } from "@/types";
 import { SearchSiteType, SiteType } from "./type";
@@ -22,6 +22,18 @@ export const updateSite = async (params: SiteType) => {
   try {
     setGlobalLoading(true);
     const { data } = await api.post(UPDATE_SITE, params);
+    return data;
+  } catch (error: any) {
+    setToastMessage(error.message || "Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const rebuildSerVer = async () => {
+  try {
+    setGlobalLoading(true);
+    const { data } = await api.post(REBUILD_SERVER, {});
     return data;
   } catch (error: any) {
     setToastMessage(error.message || "Có lỗi xảy ra");

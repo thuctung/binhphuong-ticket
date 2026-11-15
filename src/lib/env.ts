@@ -17,6 +17,7 @@ const schema = z.object({
   SUN_AUTHEN_URL: z.string().min(1),
   SUN_SCOPE: z.string().min(1),
   SEND_MAIL_ADMIN: z.string().min(1),
+  VERCEL_DEPLOY_HOOK: z.string().min(1),
 });
 
 export const env = schema.parse({
@@ -38,6 +39,7 @@ export const env = schema.parse({
 
   SEND_MAIL_KEY: process.env.SEND_MAIL_KEY,
   SEND_MAIL_ADMIN: process.env.SEND_MAIL_ADMIN,
+  VERCEL_DEPLOY_HOOK: process.env.VERCEL_DEPLOY_HOOK,
 });
 
 export const profileSchema = z.object({

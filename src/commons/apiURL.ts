@@ -77,6 +77,8 @@ export const GET_PRODUCT_IN_SYSTEM = "/api/auth/products";
 
 export const GET_SITE_BY_STATUS = "/api/auth/admin/sites/get-site-by-status";
 
+export const REBUILD_SERVER = "/api/auth/admin/sites/rebuild-server";
+
 export const GET_SITE_BY_FORM_TYPE = "/api/auth/admin/sites/get-site-by-form-type";
 
 export const GET_ALL_SITE = "/api/auth/admin/sites/get-all-site";

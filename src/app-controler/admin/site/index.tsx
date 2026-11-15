@@ -4,9 +4,13 @@ import { useEffect, useState } from "react";
 import { SearchSite } from "./components/search-site";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { SearchSiteType, SiteType } from "./type";
-import { getAllSiteMgt, updateSite } from "./api";
+import { getAllSiteMgt, rebuildSerVer, updateSite } from "./api";
 import FormSite from "./components/form-site";
 import { isEmpty } from "lodash";
+import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
+import { toast } from "react-toastify";
+import { useCommonStore } from "@/stores/useCommonStore";
+import { CommonType } from "@/types";
 
 const EMPTY_FORM: SiteType = {
   id: "",
@@ -26,6 +30,7 @@ const initValue = {
 
 export default function SitesPageController() {
   const [modalMode, setModalMode] = useState<"create" | "edit">("create");
+  const { showConfirm }: CommonType | any = useCommonStore.getState();
 
   const [listSite, setListSite] = useState<SiteType[]>([]);
   const [form, setForm] = useState<SiteType | null>(null);
@@ -141,6 +146,20 @@ export default function SitesPageController() {
     setForm(null);
   };
 
+  const handleBuilServer = () => {
+    showConfirm({
+      message: `Quá trình ước tính tầm 5 phút. Xác nhận build`,
+      okFunc: rebuildServer,
+    });
+  };
+
+  const rebuildServer = async () => {
+    const data = await rebuildSerVer();
+    if (data) {
+      toast.success("Server đang build lại!");
+    }
+  };
+
   useEffect(() => {
     getListSite();
   }, [params]);
@@ -157,6 +176,7 @@ export default function SitesPageController() {
             <PlusIcon />
             Tạo site mới
           </button>
+          <ButtonCommon title="Build lại server" onClick={handleBuilServer} />
         </div>
 
         <SearchSite searchValue={params} onReset={onReset} onChangeForm={handleChangeForm} />

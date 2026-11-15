@@ -90,7 +90,7 @@ export default function Header() {
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative transition-transform group-hover:scale-103 flex flex-col justify-center items-center">
                 <Image alt="" src="/moonlogo.png" width={52} height={44} />
-                <span className="text-[#fba405]">Hoàng Nguyệt</span>
+                <span className="hidden text-[#fba405] sm:inline">Hoàng Nguyệt</span>
               </div>
             </Link>
             <div className="ml-5">
