@@ -3,11 +3,11 @@ import { supabaseAdmin } from "@/lib/supabase/server";
 import { DB_TABLE_NAME } from "@/commons/constant";
 
 export async function POST(request: Request) {
-  const { orderCode }: any = await request.json();
+  const { thirdPartyCode }: any = await request.json();
   const { data, error } = await supabaseAdmin
     .from(DB_TABLE_NAME.VIEW_TICKET_SALE_SUMARY)
     .select("*")
-    .eq("order_code", orderCode)
+    .eq("third_party_number", thirdPartyCode)
     .eq("status", "success");
   if (error) {
     console.log("error", error);

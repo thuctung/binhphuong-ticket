@@ -51,5 +51,20 @@
   "payment_transferred": "Payment completed",
   "cancel_transaction": "Cancel Transaction",
   "ticket": "ticket",
-  "download_qr_code": "Download QR Code"
+  "download_qr_code": "Download QR Code",
+  "thank_you_booking": "Thank you for your booking!",
+  "booking_time": "Booking time",
+  "ticket_sent_to": "Your e-tickets have been sent to",
+  "check_spam": "If you can't find the email, please check your spam folder.",
+  "tickets_booked": "Booked tickets",
+  "usage_date": "Visit date",
+  "quantity": "Quantity",
+  "ticket_price": "Ticket price",
+  "total_amount": "Subtotal",
+  "total_payment": "Total payment",
+  "booking_wishes": "We hope you have a wonderful experience.",
+  "continue_exploring": "Continue exploring",
+  "order_code": "Order code",
+  "order_not_found": "Order not found",
+  "check_order_code_email": "Please check the order code in your confirmation email."
 }

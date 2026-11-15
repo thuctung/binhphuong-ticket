@@ -51,5 +51,20 @@
   "payment_transferred": "已完成转账",
   "cancel_transaction": "取消交易",
   "ticket": "门票",
-  "download_qr_code": "下载二维码"
+  "download_qr_code": "下载二维码",
+  "thank_you_booking": "感谢您的购票！",
+  "booking_time": "预订时间",
+  "ticket_sent_to": "电子门票已发送至",
+  "check_spam": "如果没有收到邮件，请检查垃圾邮件文件夹。",
+  "tickets_booked": "已预订门票",
+  "usage_date": "使用日期",
+  "quantity": "数量",
+  "ticket_price": "门票价格",
+  "total_amount": "总金额",
+  "total_payment": "应付总额",
+  "booking_wishes": "祝您拥有一段美好的旅程！",
+  "continue_exploring": "继续探索",
+  "order_code": "订单编号",
+  "order_not_found": "未找到订单",
+  "check_order_code_email": "请检查确认邮件中的订单编号是否正确。"
 }

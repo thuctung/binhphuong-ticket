@@ -51,5 +51,20 @@
   "payment_transferred": "Đã chuyển khoản",
   "cancel_transaction": "Hủy giao dịch",
   "ticket": "vé",
-  "download_qr_code": " Tải mã QR"
+  "download_qr_code": "Tải mã QR",
+  "thank_you_booking": "Cảm ơn bạn đã đặt vé!",
+  "booking_time": "Thời gian đặt vé",
+  "ticket_sent_to": "Vé điện tử đã được gửi đến",
+  "check_spam": "Nếu chưa thấy email, hãy kiểm tra thư mục spam.",
+  "tickets_booked": "Vé đã đặt",
+  "usage_date": "Ngày sử dụng",
+  "quantity": "Số lượng",
+  "ticket_price": "Giá vé",
+  "total_amount": "Tổng tiền",
+  "total_payment": "Tổng thanh toán",
+  "booking_wishes": "Chúc bạn có một trải nghiệm thật trọn vẹn.",
+  "continue_exploring": "Tiếp tục khám phá",
+  "order_code": "Mã đơn hàng",
+  "order_not_found": "Không tìm thấy đơn hàng",
+  "check_order_code_email": "Hãy kiểm tra lại mã đơn hàng trong email xác nhận."
 }

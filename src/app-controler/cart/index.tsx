@@ -261,9 +261,9 @@ export default function CartController() {
 
     const ticketCustomer: TicketResultQRType[] = await getTicketSunWorld(paramGetTicket);
     if (ticketCustomer?.length) {
-      downloadTicketPDF(ticketCustomer, []);
+      await downloadTicketPDF(ticketCustomer, []);
       setCurrentOrderData(initOrderData);
-      toast.success(`${t("cart.tickets_sent_to_email")}: ${customer.email}`);
+      route.push(`/order-success/${currentOrderData.thirdPartyNum}`);
     }
   };
 
