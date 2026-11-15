@@ -1,5 +1,5 @@
 import apiServer from "@/axios/apiServer";
-import { GET_HOME_HIGHLIGHTS } from "@/commons/apiURL";
+import { GET_HOME_HIGHLIGHTS, GET_ORDER_DETAIL_BY_CODE } from "@/commons/apiURL";
 
 export const getSitesHomePage = async () => {
   try {

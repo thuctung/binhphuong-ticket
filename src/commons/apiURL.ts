@@ -39,13 +39,15 @@ export const UPDATE_AGENT_PRICE = "/api/auth/admin/price/update";
 
 export const GET_HOME_HIGHLIGHTS = "/api/public/home/highlights";
 
+export const GET_ORDER_DETAIL_BY_CODE = "/api/public/order-success/get-order-detail";
+
 export const CLIENT_CREATE_ORDER_TICKET = "/api/public/checkout";
 
 export const CLIENT_UPDATE_STATUS_ORDER_ERROR = "/api/public/update-status-order";
 
 export const SEND_MAIL_TICKET_IN_SYSTEM = "/api/public/send-mail-ticket-in-system";
 
-export const GET_REFUND_SUMMARY_AFF = '/api/auth/affiliate/stats/get-refund-ticket'
+export const GET_REFUND_SUMMARY_AFF = "/api/auth/affiliate/stats/get-refund-ticket";
 
 export const COUNT_TICKET_SALE = "/api/auth/affiliate/stats/count-ticket";
 
@@ -114,8 +116,7 @@ export const RH_UPDAE_BALANCE_HISTORY = "/api/auth/admin/refun-ticket/return-mon
 
 export const RH_UPDATE_ORDER_ITEM_CANCLE = "/api/auth/admin/refun-ticket/update-oder-item-cancel";
 
-export const RH_GET_PRICE_ORDER_ITEM = "/api/auth/admin/refun-ticket/get-price-order-item"
-
+export const RH_GET_PRICE_ORDER_ITEM = "/api/auth/admin/refun-ticket/get-price-order-item";
 
 // Sun API
 export const LOGIN_SUN_SYSTEM = "/api/auth/affiliate/get-ticket/login-sun-system";

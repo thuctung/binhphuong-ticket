@@ -5,15 +5,16 @@ import { getOrder, type Order, type Ticket } from "./api";
 import dayjs from "dayjs";
 import { FULL_DATE_FORMAT } from "@/helpers/dateTime";
 import { formatVND } from "@/lib/money";
+import { OrderHistory } from "./type";
 
-export default function OrderSuccessController({ code }: { code: string }) {
+export default function OrderSuccessController({
+  code,
+  order,
+}: {
+  code: string;
+  order: OrderHistory[];
+}) {
   const orderCode = "12122";
-  const order: any = {
-    customer: {
-      email: "",
-    },
-    tickets: [],
-  };
 
   return (
     <main className="min-h-screen bg-stone-100 px-4 py-10 text-slate-900 sm:py-16">
@@ -56,7 +57,7 @@ function NotFound({ code }: { code?: string }) {
   );
 }
 
-function Success({ order }: { order: Order }) {
+function Success({ order }: { order: OrderHistory[] }) {
   return (
     <>
       <header className="text-center">
@@ -77,10 +78,10 @@ function Success({ order }: { order: Order }) {
           Cảm ơn bạn đã đặt vé!
         </h1>
         <p className="mt-2 text-slate-600">
-          Thanh toán thành công lúc {dayjs(order.paidAt).format(FULL_DATE_FORMAT)}.
+          Thanh toán thành công lúc {dayjs(order[0].created_at).format(FULL_DATE_FORMAT)}.
         </p>
         <p className="mt-4 inline-block rounded-full bg-white px-4 py-1.5 text-sm ring-1 ring-slate-200">
-          Mã đơn hàng: <span className="font-mono font-semibold">{order.code}</span>
+          Mã đơn hàng: <span className="font-mono font-semibold">{order[0].order_code}</span>
         </p>
       </header>
 
@@ -101,23 +102,23 @@ function Success({ order }: { order: Order }) {
           <path d="m3 7 9 6 9-6" />
         </svg>
         <p className="text-sm leading-relaxed">
-          Vé điện tử sẽ được gửi đến <strong>{order.customer.email}</strong> trong ít phút. Nếu chưa
+          Vé điện tử sẽ được gửi đến <strong>{order[0].user_email}</strong> trong ít phút. Nếu chưa
           thấy email, hãy kiểm tra thư mục spam.
         </p>
       </section>
 
       <section className="mt-10" aria-labelledby="tickets-title">
         <h2 id="tickets-title" className="text-lg font-semibold">
-          Vé đã đặt ({order.tickets.length})
+          Vé đã đặt ({order.length})
         </h2>
-        <ul className="mt-4 space-y-4">
-          {order.tickets.map((t) => (
-            <TicketCard key={t.id} ticket={t} />
+        {/* <ul className="mt-4 space-y-4">
+          {order?.map((t, index) => (
+            <TicketCard key={index} ticket={t} />
           ))}
-        </ul>
+        </ul> */}
         <div className="mt-5 flex items-center justify-between rounded-xl bg-white px-5 py-4 ring-1 ring-slate-200">
           <span className="text-slate-600">Tổng thanh toán</span>
-          <span className="text-xl font-semibold">{formatVND(order.total)}</span>
+          <span className="text-xl font-semibold">{formatVND(10000)}</span>
         </div>
       </section>
 
@@ -126,9 +127,9 @@ function Success({ order }: { order: Order }) {
           Thông tin khách hàng
         </h2>
         <dl className="mt-4 grid gap-x-6 gap-y-4 rounded-xl bg-white p-5 ring-1 ring-slate-200 sm:grid-cols-2">
-          <Info label="Họ và tên" value={order.customer.name} />
-          <Info label="Email nhận vé" value={order.customer.email} />
-          {order.customer.phone && <Info label="Số điện thoại" value={order.customer.phone} />}
+          {/* <Info label="Họ và tên" value={order.customer?.name} />
+          <Info label="Email nhận vé" value={order.customer?.email} />
+          {order.customer?.phone && <Info label="Số điện thoại" value={order?.customer?.phone} />} */}
         </dl>
       </section>
 
