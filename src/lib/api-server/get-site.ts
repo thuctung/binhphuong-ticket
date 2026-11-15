@@ -1,11 +1,17 @@
-import apiServer from "@/axios/apiServer";
-import { GET_HOME_HIGHLIGHTS, GET_ORDER_DETAIL_BY_CODE } from "@/commons/apiURL";
+import { supabaseAdmin } from "@/lib/supabase/server";
+import { DB_TABLE_NAME } from "@/commons/constant";
 
 export const getSitesHomePage = async () => {
-  try {
-    const { data } = await apiServer.get(GET_HOME_HIGHLIGHTS);
-    return data || [];
-  } catch (error) {
-    return [];
+  const { data, error } = await supabaseAdmin
+    .from(DB_TABLE_NAME.SITES)
+    .select(`*,location:location(code,name,en,zh,ko)`)
+    .eq("status", true)
+    .order("order", { ascending: true });
+
+  if (error) {
+    console.error("[getSitesHomePage] failed:", error.message);
+    throw new Error(error.message); // để build fail thay vì cache trang rỗng
   }
+
+  return { data: data ?? [] };
 };

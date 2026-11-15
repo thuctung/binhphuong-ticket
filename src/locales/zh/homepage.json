@@ -8,7 +8,12 @@
     "description": "覆盖越南60多个省市的景点门票、缆车、主题乐园及旅游套餐。付款后即可立即获取电子票。",
     "search_location": "搜索目的地",
     "search_placeholder": "您想去哪里？",
-    "search_button": "搜索门票"
+    "search_button": "搜索门票",
+    "location_found": "我找到了您想购买门票的公园。您想前往该公园的购票页面吗？",
+    "location_not_found": "未找到地点",
+    "location_not_found_description": "我们找不到符合条件的地点。您想前往购票页面查看所有门票吗？",
+    "stay": "留在此页",
+    "go_to_ticket_page": "前往购票页面"
   },
   "tickets": {
     "eyebrow": "旅游及娱乐门票",

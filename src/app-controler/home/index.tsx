@@ -8,7 +8,7 @@ import { SiteType } from "@/types/ticket";
 const HomeA = async ({ lng, sites }: { lng: string; sites: SiteType[] }) => {
   return (
     <main>
-      <Banner lng={lng} />
+      <Banner lng={lng} sites={sites} />
       <Locations lng={lng} sites={sites} />
       <Tours lng={lng} />
       <Consult />

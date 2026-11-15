@@ -8,7 +8,12 @@
     "description": "Attraction tickets, cable cars, theme parks, and package tours across more than 60 provinces and cities. Get your e-ticket immediately after payment.",
     "search_location": "Find a destination",
     "search_placeholder": "Where would you like to go?",
-    "search_button": "Find tickets"
+    "search_button": "Find tickets",
+    "location_found": "I found the park you're looking for. Would you like to visit its ticket page?",
+    "location_not_found": "Location not found",
+    "location_not_found_description": "We couldn't find a matching location. Would you like to go to the ticket page to browse all available tickets?",
+    "stay": "Stay",
+    "go_to_ticket_page": "Go to ticket page"
   },
   "tickets": {
     "eyebrow": "TRAVEL & ATTRACTION TICKETS",

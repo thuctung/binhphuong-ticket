@@ -8,7 +8,12 @@
     "description": "Vé tham quan, cáp treo, công viên giải trí và tour trọn gói ở hơn 60 tỉnh thành. Nhận vé điện tử ngay sau khi thanh toán.",
     "search_location": "Tìm địa điểm",
     "search_placeholder": "Bạn muốn đi đâu?",
-    "search_button": "Tìm vé"
+    "search_button": "Tìm vé",
+    "location_found": "Tôi đã tìm thấy công viên bạn muốn mua vé. Bạn có muốn đến trang mua vé cho công viên này không?",
+    "location_not_found": "Không tìm thấy địa điểm",
+    "location_not_found_description": "Chúng tôi không tìm thấy địa điểm phù hợp. Bạn có muốn chuyển đến trang mua vé để xem tất cả vé không?",
+    "stay": "Ở lại",
+    "go_to_ticket_page": "Đến trang mua vé"
   },
   "tickets": {
     "eyebrow": "VÉ DU LỊCH - KHU VUI CHƠI",
