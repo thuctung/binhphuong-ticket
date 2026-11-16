@@ -27,7 +27,9 @@ export const sv_Login = async ({ email, password }: LoginParamType) => {
         return;
       }
       setProfile(profile);
+      return profile;
     }
+    return;
   } finally {
     setLoading(false);
   }

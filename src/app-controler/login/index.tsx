@@ -20,32 +20,27 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [openForgotPass, setOpenForgotpass] = useState(false);
   const { setErrorMessage }: any = useProfileStore.getState();
+  const [loading, setLoading] = useState(false);
 
-  const { profile, errorMessage, isLogin }: ProfileStoteType = useProfileStore(
-    (state: any) => state
-  );
-
-  const handleAfterLogin = () => {
-    if (profile.role === ROLES.ADMIN) {
-      router.push("/admin");
-    } else if (profile.status === ACC_STATUS.APPROVED) {
-      router.push("/affiliate");
-    }
-  };
-
-  useEffect(() => {
-    if (profile.role) {
-      handleAfterLogin();
-    }
-  }, [profile]);
+  const { errorMessage, isLogin }: ProfileStoteType = useProfileStore((state: any) => state);
 
   const signIn = async (e?: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
     if (isLogin) return;
-    sv_Login({
+    setLoading(true);
+    const user: any = await sv_Login({
       email,
       password,
     });
+    if (user) {
+      if (user.role === ROLES.ADMIN) {
+        router.push("/admin");
+      } else if (user.status === ACC_STATUS.APPROVED) {
+        router.push("/affiliate");
+      }
+    } else {
+      setLoading(false);
+    }
   };
 
   const closeDialog = (value: boolean) => {
@@ -53,7 +48,7 @@ export default function Login() {
   };
   useEffect(() => {
     setErrorMessage("");
-  }, []);
+  }, [email, password]);
 
   return (
     <main className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#0b1020] px-4 py-10 text-neutral-100 antialiased [background-image:radial-gradient(circle_at_50%_-5%,rgba(250,204,21,0.35)_0%,rgba(250,204,21,0.1)_30%,transparent_60%),radial-gradient(rgba(253,230,138,0.35)_1px,transparent_1px)] [background-size:100%_100%,28px_28px] before:pointer-events-none before:absolute before:left-1/2 before:top-8 before:-z-10 before:h-24 before:w-24 before:-translate-x-1/2 before:rounded-full before:bg-[radial-gradient(circle_at_35%_35%,#fffbeb,#fde68a_55%,#facc15)] before:shadow-[0_0_100px_40px_rgba(250,204,21,0.4)] before:content-['']">
@@ -116,7 +111,7 @@ export default function Login() {
           Quên mật khẩu?
         </button> */}
             </div>
-            <div  className="relative">
+            <div className="relative">
               <LockIcon
                 size={16}
                 className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
@@ -158,7 +153,7 @@ export default function Login() {
             type="submit"
             className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-[#6cae69] to-[#559652] text-sm font-semibold text-white shadow-[0_4px_12px_-2px_rgba(97,160,94,0.5)] transition-all hover:brightness-105 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#61a05e]/30 disabled:cursor-not-allowed disabled:opacity-70"
           >
-            {isLogin ? (
+            {loading ? (
               <>
                 <Loader2Icon size={16} className="animate-spin" />
                 Đang đăng nhập...
