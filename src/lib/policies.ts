@@ -17,7 +17,7 @@ export const policies: Policy[] = [
     sections: [
       {
         heading: "privacy.sections.0.heading",
-        paragraphs: ["privacy.sections.0.paragraphs.0", "privacy.sections.0.paragraphs.0"],
+        paragraphs: ["privacy.sections.0.paragraphs.0", "privacy.sections.0.paragraphs.1"],
       },
       {
         heading: "privacy.sections.1.heading",
