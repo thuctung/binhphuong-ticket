@@ -14,12 +14,13 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, lng } = await params;
+  const { t } = await getTranslation(lng);
   const policy = getPolicy(slug);
   if (!policy) return { title: "Không tìm thấy chính sách | MoonPrice" };
 
   return {
-    title: `${policy.title} | MoonPrice`,
+    title: `${t(policy.title)} | MoonPrice`,
     description: policy.summary,
   };
 }
@@ -38,13 +39,15 @@ export default async function PolicyDetailPage({ params }: Props) {
             href="/chinh-sach"
             className="inline-flex items-center gap-2 text-sm font-semibold text-amber-600 hover:text-amber-700"
           >
-            <span aria-hidden="true">←</span> Tất cả chính sách
+            <span aria-hidden="true">←</span> {t("privacy.breadcrumb")}
           </Link>
           <h1 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             {t(policy.title)}
           </h1>
-          <p className="mt-4 max-w-3xl leading-7 text-slate-600">{policy.summary}</p>
-          <p className="mt-5 text-xs text-slate-400">Cập nhật: {policy.updatedAt}</p>
+          <p className="mt-4 max-w-3xl leading-7 text-slate-600">{t(policy.summary)}</p>
+          <p className="mt-5 text-xs text-slate-400">
+            {t("privacy.update")}: {policy.updatedAt}
+          </p>
         </div>
       </section>
 
@@ -53,16 +56,25 @@ export default async function PolicyDetailPage({ params }: Props) {
           <div className="space-y-8">
             {policy.sections.map((section) => (
               <section key={section.heading}>
-                <h2 className="text-lg font-bold leading-7 text-slate-900">{section.heading}</h2>
+                <h2 className="text-lg font-bold leading-7 text-slate-900">{t(section.heading)}</h2>
                 {section.paragraphs?.map((paragraph) => (
                   <p key={paragraph} className="mt-3 text-sm leading-7 text-slate-600">
-                    {paragraph}
+                    {t(paragraph, { email: COMPANY_INFO.email, phone: COMPANY_INFO.hotline })}
                   </p>
                 ))}
                 {section.bullets && (
                   <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-600 marker:text-amber-500">
                     {section.bullets.map((bullet) => (
-                      <li key={bullet}>{bullet}</li>
+                      <li key={bullet}>
+                        {t(bullet, {
+                          email: COMPANY_INFO.email,
+                          phone: COMPANY_INFO.hotline,
+                          brand: COMPANY_INFO.brand,
+                          taxCode: COMPANY_INFO.taxCode,
+                          personHost: COMPANY_INFO.personHost,
+                          domain: COMPANY_INFO.domain,
+                        })}
+                      </li>
                     ))}
                   </ul>
                 )}
@@ -71,15 +83,18 @@ export default async function PolicyDetailPage({ params }: Props) {
           </div>
 
           <div className="mt-10 rounded-xl bg-slate-50 p-4">
-            <p className="text-sm font-semibold text-slate-900">Bạn cần hỗ trợ thêm?</p>
+            <p className="text-sm font-semibold text-slate-900">{t("privacy.support.title")}</p>
             <p className="mt-1 text-sm leading-6 text-slate-600">
-              Liên hệ {COMPANY_INFO.brand} qua {COMPANY_INFO.hotline} hoặc {COMPANY_INFO.email}.
+              {t("privacy.support.description", {
+                phone: COMPANY_INFO.hotline,
+                email: COMPANY_INFO.email,
+              })}
             </p>
           </div>
         </article>
 
         <aside className="h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h2 className="font-bold text-slate-900">Chính sách khác</h2>
+          <h2 className="font-bold text-slate-900">{t("privacy.support.title")}</h2>
           <nav aria-label="Danh sách chính sách" className="mt-3 space-y-1">
             {policies
               .filter((item) => item.slug !== policy.slug)
@@ -97,7 +112,7 @@ export default async function PolicyDetailPage({ params }: Props) {
             href="/chinh-sach"
             className="mt-4 inline-flex text-sm font-semibold text-amber-600 hover:text-amber-700"
           >
-            Xem tất cả chính sách →
+            {t("privacy.breadcrumb")} →
           </Link>
         </aside>
       </div>
