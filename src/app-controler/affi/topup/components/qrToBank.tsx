@@ -88,7 +88,7 @@ export default function BankTransferQR({
               value={BANK_INFO.bankNum}
               onCopy={() => copy(BANK_INFO.bankNum)}
             />
-            <Row label={t("cart.recipient")} value="Moon Price" />
+            <Row label={t("cart.recipient")} value="CONG TY CP DA NANG TOURIST" />
             <Row label={t("cart.amount")} value={formatVND(dataQR.amount)} />
             <Row
               label={t("cart.transfer_description")}

@@ -1,5 +1,6 @@
 import { ConfirmProvider } from "@/components/site/Confirm";
 import FloatingContact from "@/components/site/FloatingContact";
+import CookieConsent from "@/components/site/CookieConsent";
 import Footer from "@/components/site/Footer";
 import Header from "@/components/site/Header";
 
@@ -17,6 +18,7 @@ export default async function RootLayout({
       {children}
       <Footer lng={lng} />
       <ConfirmProvider />
+      <CookieConsent privacyUrl="/privacy" />
     </main>
   );
 }

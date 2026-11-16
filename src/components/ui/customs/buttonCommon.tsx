@@ -1,11 +1,12 @@
 import { ButtonProp } from "@/types";
 
-export function ButtonCommon({ title, onClick, ...prop }: ButtonProp) {
+export function ButtonCommon(props: ButtonProp) {
+  const { title, onClick } = props;
   return (
     <button
-      {...prop}
+      {...props}
       onClick={onClick}
-      className={`h-10 rounded-md bg-teal-700 px-5 text-sm font-medium text-white hover:bg-teal-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 ${prop.className || ""}`}
+      className={`h-10 rounded-md bg-teal-700 px-5 text-sm font-medium text-white hover:bg-teal-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 ${props.className || ""}`}
     >
       {title}
     </button>

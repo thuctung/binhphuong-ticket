@@ -60,6 +60,7 @@ export type ButtonProp = {
   title?: string;
   disabled?: boolean;
   className?: string;
+  type?: any;
 };
 
 export type SelectBoxProps = {

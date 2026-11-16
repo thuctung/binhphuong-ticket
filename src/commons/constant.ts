@@ -296,7 +296,7 @@ export const COMPANY_INFO = {
   workingHours: process.env.NEXT_PUBLIC_WORKING_HOUR,
   zaloUrl: process.env.NEXT_PUBLIC_ZALO_URL,
   facebookUrl: process.env.NEXT_PUBLIC_FACEBOOK_URL,
-  updatedAt: "20/11/2026",
+  updatedAt: "15/11/2026",
   personHost: process.env.NEXT_PUBLIC_PERSON_HOST,
   personRole: process.env.NEXT_PUBLIC_PERSON_ROLE,
   domain: process.env.NEXT_PUBLIC_APP_URL,

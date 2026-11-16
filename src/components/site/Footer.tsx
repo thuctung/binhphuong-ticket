@@ -1,38 +1,35 @@
 import { getTranslation } from "@/lib/i18n";
 import Link from "next/link";
 
-const policies = [
-  { title: "Điều khoản sử dụng", href: "/chinh-sach/dieu-khoan-su-dung" },
-  { title: "Chính sách bảo mật", href: "/chinh-sach/chinh-sach-bao-mat" },
+const policies1 = [
+  { title: "homepage.footer.privacy", href: "/chinh-sach/bao-mat" },
   {
-    title: "Bảo vệ dữ liệu cá nhân",
-    href: "/chinh-sach/chinh-sach-bao-ve-du-lieu-ca-nhan",
+    title: "homepage.footer.pricing",
+    href: "/chinh-sach/gia",
   },
   {
-    title: "Chính sách thanh toán",
-    href: "/chinh-sach/chinh-sach-thanh-toan",
+    title: "homepage.footer.serviceConditions",
+    href: "/chinh-sach/dieu-kien-dich-vu",
   },
-  { title: "Giao nhận vé", href: "/chinh-sach/chinh-sach-giao-nhan-ve" },
+
+  { title: "homepage.footer.payment", href: "/chinh-sach/thanh-toan" },
   {
-    title: "Đổi vé và hoàn tiền",
-    href: "/chinh-sach/chinh-sach-doi-tra-hoan-tien",
+    title: "homepage.footer.refund",
+    href: "/chinh-sach/doi-tra-hoan-tien",
   },
-  { title: "Chính sách hủy vé", href: "/chinh-sach/chinh-sach-huy-ve" },
+];
+
+const policies2 = [
   {
-    title: "Giá và khuyến mại",
-    href: "/chinh-sach/chinh-sach-gia-ca-khuyen-mai",
-  },
-  { title: "Quy trình đặt vé", href: "/chinh-sach/quy-trinh-dat-ve" },
-  {
-    title: "Giải quyết khiếu nại",
-    href: "/chinh-sach/quy-trinh-khieu-nai",
+    title: "homepage.footer.complaints",
+    href: "/chinh-sach/giai-quyet-khieu-nai",
   },
   {
-    title: "Quy chế hoạt động website",
-    href: "/chinh-sach/quy-che-hoat-dong",
+    title: "homepage.footer.support",
+    href: "/chinh-sach/ho-tro",
   },
   {
-    title: "Thông tin chủ sở hữu",
+    title: "homepage.footer.ownership",
     href: "/chinh-sach/thong-tin-chu-so-huu",
   },
 ];
@@ -65,19 +62,18 @@ export default async function Footer({ lng }: { lng: string }) {
           {/* Chính sách */}
           <div>
             <h3 className="mb-5 text-base font-bold text-white">
-              {" "}
               {t("homepage.footer.policies_title")}
             </h3>
 
             <ul className="space-y-3">
-              {policies.slice(0, 6).map((item, index) => (
+              {policies1.map((item, index) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
                     className="group inline-flex items-center gap-2 text-sm text-emerald-50/70 transition-colors duration-200 hover:text-amber-300"
                   >
                     <span className="h-1 w-1 shrink-0 rounded-full bg-emerald-300/50 transition-colors group-hover:bg-amber-300" />
-                    {t(`homepage.footer.links_police.${index}`)}
+                    {t(item.title)}
                   </Link>
                 </li>
               ))}
@@ -91,14 +87,14 @@ export default async function Footer({ lng }: { lng: string }) {
             </h3>
 
             <ul className="space-y-3">
-              {policies.slice(6).map((item, index) => (
+              {policies2.map((item, index) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
                     className="group inline-flex items-center gap-2 text-sm text-emerald-50/70 transition-colors duration-200 hover:text-amber-300"
                   >
                     <span className="h-1 w-1 shrink-0 rounded-full bg-emerald-300/50 transition-colors group-hover:bg-amber-300" />
-                    {t(`homepage.footer.links_support.${index}`)}
+                    {t(item.title)}
                   </Link>
                 </li>
               ))}
@@ -106,7 +102,6 @@ export default async function Footer({ lng }: { lng: string }) {
           </div>
         </div>
 
-        {/* Copyright */}
         <div className="mt-10 border-t border-white/15 pt-6 md:mt-12">
           <div className="flex flex-col items-center justify-between gap-3 text-center text-xs text-emerald-50/55 sm:flex-row sm:text-left">
             <p>{t("homepage.footer.copyright")}</p>

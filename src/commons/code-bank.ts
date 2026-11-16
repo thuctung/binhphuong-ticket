@@ -1,4 +1,4 @@
-export const CODE_BANK:any  = {
+export const CODE_BANK: any = {
   tcb: "Ngân hàng TMCP Kỹ thương Việt Nam (Techcombank)",
   coopbank: "Ngân hàng Hợp tác xã Việt Nam (COOPBANK)",
   acb: "Ngân hàng TMCP Á Châu (ACB)",
@@ -64,5 +64,5 @@ export const CODE_BANK:any  = {
   eib: "Ngân hàng TMCP Xuất Nhập khẩu Việt Nam (Eximbank)",
   scvn: "Ngân hàng TNHH MTV Standard Chartered Việt Nam",
   mbv: "Ngân hàng Thương mại TNHH MTV Đại Dương (OceanBank)",
-  kebhn: "Ngân hàng KEB Hana - Chi nhánh Hà Nội"
+  kebhn: "Ngân hàng KEB Hana - Chi nhánh Hà Nội",
 };

@@ -11,7 +11,7 @@ export type Policy = {
 export const policies: Policy[] = [
   {
     slug: "bao-mat",
-    title: "Chính sách bảo mật",
+    title: "homepage.footer.privacy",
     summary:
       "Quy định về việc thu thập, sử dụng, lưu trữ và bảo vệ thông tin của khách hàng khi sử dụng website MoonPrice.",
     updatedAt: COMPANY_INFO.updatedAt,
@@ -80,7 +80,7 @@ export const policies: Policy[] = [
   },
   {
     slug: "giai-quyet-khieu-nai",
-    title: "Phương thức tiếp nhận và giải quyết phản ánh, yêu cầu, khiếu nại",
+    title: "homepage.footer.complaints",
     summary:
       "Hướng dẫn gửi phản ánh và quy trình MoonPrice tiếp nhận, kiểm tra, phản hồi và xử lý khiếu nại.",
     updatedAt: COMPANY_INFO.updatedAt,
@@ -112,7 +112,7 @@ export const policies: Policy[] = [
       {
         heading: "4. Thời gian xử lý",
         paragraphs: [
-          "MoonPrice cố gắng xác nhận đã nhận yêu cầu trong vòng [THỜI GIAN XÁC NHẬN] và phản hồi kết quả trong vòng [THỜI GIAN XỬ LÝ] kể từ khi nhận đủ thông tin. Trường hợp cần xác minh với bên thứ ba hoặc nhà cung cấp, thời gian xử lý có thể kéo dài; MoonPrice sẽ thông báo lý do và tiến độ dự kiến.",
+          `MoonPrice cố gắng xác nhận đã nhận yêu cầu trong vòng ${COMPANY_INFO.workingHours} và phản hồi kết quả trong vòng 24h kể từ khi nhận đủ thông tin. Trường hợp cần xác minh với bên thứ ba hoặc nhà cung cấp, thời gian xử lý có thể kéo dài; MoonPrice sẽ thông báo lý do và tiến độ dự kiến.`,
         ],
       },
       {
@@ -126,7 +126,7 @@ export const policies: Policy[] = [
   },
   {
     slug: "gia",
-    title: "Chính sách giá",
+    title: "homepage.footer.pricing",
     summary:
       "Thông tin về giá vé, đối tượng áp dụng, phụ thu, ưu đãi và nguyên tắc hiển thị giá trên MoonPrice.",
     updatedAt: COMPANY_INFO.updatedAt,
@@ -163,7 +163,7 @@ export const policies: Policy[] = [
   },
   {
     slug: "thanh-toan",
-    title: "Chính sách thanh toán",
+    title: "homepage.footer.payment",
     summary:
       "Các phương thức thanh toán, quy trình xác nhận giao dịch và hướng dẫn xử lý khi thanh toán chưa thành công.",
     updatedAt: COMPANY_INFO.updatedAt,
@@ -196,7 +196,7 @@ export const policies: Policy[] = [
       {
         heading: "4. Thanh toán chưa được ghi nhận",
         paragraphs: [
-          "Nếu tài khoản đã bị trừ tiền nhưng đơn hàng vẫn hiển thị chưa thanh toán, khách hàng không nên thanh toán lặp lại ngay. Vui lòng liên hệ [HOTLINE] hoặc [EMAIL HỖ TRỢ], cung cấp mã đơn hàng và chứng từ giao dịch để MoonPrice kiểm tra với ngân hàng/đơn vị thanh toán.",
+          `Nếu tài khoản đã bị trừ tiền nhưng đơn hàng vẫn hiển thị chưa thanh toán, khách hàng không nên thanh toán lặp lại ngay. Vui lòng liên hệ ${COMPANY_INFO.hotline} hoặc ${COMPANY_INFO.email}, cung cấp mã đơn hàng và chứng từ giao dịch để MoonPrice kiểm tra với ngân hàng/đơn vị thanh toán.`,
           "Thời gian đối soát và hoàn trả (nếu phát sinh giao dịch trùng, sai hoặc không hoàn tất) phụ thuộc vào ngân hàng, đơn vị thanh toán và kết quả xác minh.",
         ],
       },
@@ -210,7 +210,7 @@ export const policies: Policy[] = [
   },
   {
     slug: "dieu-kien-dich-vu",
-    title: "Các điều kiện hoặc hạn chế trong việc cung cấp dịch vụ",
+    title: "homepage.footer.serviceConditions",
     summary:
       "Các điều kiện đặt vé, nhận vé, sử dụng vé và những giới hạn khách hàng cần lưu ý trước khi giao dịch.",
     updatedAt: COMPANY_INFO.updatedAt,
@@ -259,7 +259,7 @@ export const policies: Policy[] = [
   },
   {
     slug: "doi-tra-hoan-tien",
-    title: "Chính sách giao vé, đổi trả và hoàn tiền",
+    title: "homepage.footer.refund",
     summary:
       "Quy định về phương thức cung cấp vé điện tử, yêu cầu đổi/hủy và xử lý hoàn tiền đối với dịch vụ du lịch.",
     updatedAt: COMPANY_INFO.updatedAt,
@@ -324,7 +324,7 @@ export const policies: Policy[] = [
   },
   {
     slug: "ho-tro",
-    title: "Hình thức hỗ trợ trực tuyến",
+    title: "homepage.footer.support",
     summary:
       "Các kênh liên hệ chính thức để được hỗ trợ trong quá trình tìm kiếm, đặt mua và sử dụng vé.",
     updatedAt: COMPANY_INFO.updatedAt,
@@ -361,7 +361,7 @@ export const policies: Policy[] = [
 
   {
     slug: "thong-tin-chu-so-huu",
-    title: "Thông tin chủ sở hữu",
+    title: "homepage.footer.ownership",
     summary:
       "Thông tin về đơn vị sở hữu, quản lý và chịu trách nhiệm vận hành website MoonPrice, cùng các thông tin liên hệ chính thức.",
     updatedAt: COMPANY_INFO.updatedAt,
@@ -398,8 +398,6 @@ export const policies: Policy[] = [
         bullets: [
           `Hotline: ${COMPANY_INFO.hotline}`,
           `Email: ${COMPANY_INFO.email}`,
-          `Zalo: ${COMPANY_INFO.zaloUrl}`,
-          `Facebook: ${COMPANY_INFO.facebookUrl}`,
           `Địa chỉ văn phòng: ${COMPANY_INFO.address}`,
         ],
       },

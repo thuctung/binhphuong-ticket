@@ -19,7 +19,7 @@ import { CUSTOMER, getStatusName, listAccStatus, statusClass } from "./constants
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { formatVND } from "@/helpers/money";
 import { Button } from "@/components/ui/button";
-import { ACC_STATUS, AGENT_CODE, TYPE_TRANSFER } from "@/commons/constant";
+import { ACC_STATUS, TYPE_TRANSFER } from "@/commons/constant";
 import { getListAgent } from "../agent-mgt/api";
 import EditUserLevelDialog from "./components/edit-level";
 import AddMoneyDialog from "./components/add-moeny";
@@ -143,15 +143,15 @@ export default function AffiliateMgt() {
       key: "phone",
       title: "Phone",
     },
-    // {
-    //   key: "agent_level",
-    //   title: "Đại lý",
-    //   render: (row) => (
-    //     <span>
-    //       {agentList.find((item) => item.code === row.agent_level)?.name || row.agent_level}
-    //     </span>
-    //   ),
-    // },
+    {
+      key: "agent_level",
+      title: "Đại lý",
+      render: (row) => (
+        <span>
+          {agentList.find((item) => item.code === row.agent_level)?.name || row.agent_level}
+        </span>
+      ),
+    },
     {
       key: "status",
       title: "Trạng thái",
@@ -199,25 +199,24 @@ export default function AffiliateMgt() {
         </div>
       ),
     },
-    // {
-    //   key: "actionss",
-    //   title: "",
-    //   render: (row) => (
-    //     <Button onClick={() => openEditLevel(row)} size="sm" variant="default">
-    //       Sửa level
-    //     </Button>
-    //   ),
-    // },
+    {
+      key: "actionss",
+      title: "",
+      render: (row) => (
+        <Button onClick={() => openEditLevel(row)} size="sm" variant="default">
+          Sửa level
+        </Button>
+      ),
+    },
     {
       key: "action",
       title: "",
       align: "center",
-      render: (row) =>
-        row.agent_level === AGENT_CODE.LEVEL_1 ? (
-          <Button size="sm" onClick={() => openAddMoney(row)}>
-            Nạp tiền
-          </Button>
-        ) : null,
+      render: (row) => (
+        <Button size="sm" onClick={() => openAddMoney(row)}>
+          Nạp tiền
+        </Button>
+      ),
     },
   ];
 

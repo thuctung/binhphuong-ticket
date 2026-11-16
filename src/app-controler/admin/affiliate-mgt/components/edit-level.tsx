@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, X } from "lucide-react";
 import { AgentType } from "@/types";
+import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
 
 export interface EditUserLevelDialogProps {
   open: boolean;
@@ -79,7 +80,7 @@ export default function EditUserLevelDialog({
         className="w-full max-w-sm overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-black/5"
       >
         {/* Header */}
-        <div className="relative bg-gradient-to-r from-[#C81418] to-[#8C0E11] px-6 py-4">
+        <div className="relative bg-gradient-to-r from-[#f9a606] to-[#f9a60696] px-6 py-4">
           <button
             onClick={onClose}
             disabled={loading}
@@ -122,13 +123,11 @@ export default function EditUserLevelDialog({
             >
               Đóng
             </button>
-            <button
-              type="submit"
+            <ButtonCommon
+              onClick={handleSubmit}
+              title={loading ? "Đang lưu..." : "Submit"}
               disabled={loading}
-              className="rounded-lg bg-gradient-to-r from-[#C81418] to-[#8C0E11] px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
-            >
-              {loading ? "Đang lưu..." : "Submit"}
-            </button>
+            />
           </div>
         </form>
       </div>

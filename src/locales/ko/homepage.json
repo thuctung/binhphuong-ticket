@@ -108,22 +108,14 @@
     "description": "관광지 입장권과 여행 서비스를 온라인으로 예약하는 플랫폼입니다. 새로운 여행을 떠나는 모든 순간을 함께합니다.",
     "policies_title": "정책 및 약관",
     "customer_support": "고객 지원",
-    "links_police": [
-      "이용약관",
-      "개인정보 처리방침",
-      "개인정보 보호",
-      "결제 정책",
-      "티켓 전달 안내",
-      "티켓 변경 및 환불"
-    ],
-    "links_support": [
-      "티켓 취소 정책",
-      "가격 및 프로모션",
-      "예약 절차",
-      "불만 및 분쟁 해결",
-      "웹사이트 운영 규정",
-      "사업자 정보"
-    ],
+    "privacy": "개인정보 처리방침",
+    "pricing": "가격 정책",
+    "serviceConditions": "서비스 제공 조건 및 제한 사항",
+    "payment": "결제 정책",
+    "refund": "티켓 발송, 교환, 반품 및 환불 정책",
+    "complaints": "의견, 요청 및 불만 사항 접수 및 처리 절차",
+    "support": "온라인 고객 지원",
+    "ownership": "소유자 정보",
     "owner_info": "사업자 정보",
     "copyright": "© 2026 Moon Price. All rights reserved.",
     "tagline": "여정을 발견하고 · 추억을 간직하세요"

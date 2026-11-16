@@ -3,8 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPolicy, policies } from "@/lib/policies";
 import { COMPANY_INFO } from "@/commons/constant";
+import { getTranslation } from "@/lib/i18n";
 
-type Props = { params: Promise<{ slug: string }> };
+type Props = { params: Promise<{ slug: string; lng: string }> };
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return policies.map((policy) => ({ slug: policy.slug }));
@@ -22,7 +25,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function PolicyDetailPage({ params }: Props) {
-  const { slug } = await params;
+  const { slug, lng } = await params;
+  const { t } = await getTranslation(lng);
   const policy = getPolicy(slug);
   if (!policy) notFound();
 
@@ -37,7 +41,7 @@ export default async function PolicyDetailPage({ params }: Props) {
             <span aria-hidden="true">←</span> Tất cả chính sách
           </Link>
           <h1 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            {policy.title}
+            {t(policy.title)}
           </h1>
           <p className="mt-4 max-w-3xl leading-7 text-slate-600">{policy.summary}</p>
           <p className="mt-5 text-xs text-slate-400">Cập nhật: {policy.updatedAt}</p>
@@ -85,7 +89,7 @@ export default async function PolicyDetailPage({ params }: Props) {
                   href={`/chinh-sach/${item.slug}`}
                   className="block rounded-lg px-3 py-2 text-sm leading-6 text-slate-600 transition hover:bg-rose-50 hover:text-amber-700"
                 >
-                  {item.title}
+                  {t(item.title)}
                 </Link>
               ))}
           </nav>

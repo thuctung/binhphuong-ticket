@@ -112,22 +112,14 @@
     "description": "Hệ thống đặt vé tham quan và du lịch trực tuyến. Đồng hành cùng bạn trên mỗi hành trình khám phá.",
     "policies_title": "Chính sách & điều khoản",
     "customer_support": "Hỗ trợ khách hàng",
-    "links_police": [
-      "Điều khoản sử dụng",
-      "Chính sách bảo mật",
-      "Bảo vệ dữ liệu cá nhân",
-      "Chính sách thanh toán",
-      "Giao nhận vé",
-      "Đổi vé và hoàn tiền"
-    ],
-    "links_support": [
-      "Chính sách hủy vé",
-      "Giá và khuyến mại",
-      "Quy trình đặt vé",
-      "Giải quyết khiếu nại",
-      "Quy chế hoạt động website",
-      "Thông tin chủ sở hữu"
-    ],
+    "privacy": "Chính sách bảo mật",
+    "pricing": "Chính sách giá",
+    "serviceConditions": "Các điều kiện hoặc hạn chế trong việc cung cấp dịch vụ",
+    "payment": "Chính sách thanh toán",
+    "refund": "Chính sách giao vé, đổi trả và hoàn tiền",
+    "complaints": "Phương thức tiếp nhận và giải quyết phản ánh, yêu cầu, khiếu nại",
+    "support": "Hình thức hỗ trợ trực tuyến",
+    "ownership": "Thông tin chủ sở hữu",
     "copyright": "© 2026 Moon Price. All rights reserved.",
     "tagline": "Khám phá hành trình · Lưu giữ trải nghiệm"
   }

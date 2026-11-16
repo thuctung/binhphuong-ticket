@@ -108,22 +108,14 @@
     "description": "在线景点门票及旅游服务预订平台。陪伴您探索每一段精彩旅程。",
     "policies_title": "政策与条款",
     "customer_support": "客户服务",
-    "links_police": [
-      "使用条款",
-      "隐私政策",
-      "个人信息保护",
-      "支付政策",
-      "门票交付",
-      "门票更改与退款"
-    ],
-    "links_support": [
-      "门票取消政策",
-      "价格与优惠",
-      "预订流程",
-      "投诉处理",
-      "网站运营规则",
-      "所有者信息"
-    ],
+    "privacy": "隐私政策",
+    "pricing": "价格政策",
+    "serviceConditions": "服务提供条件及限制",
+    "payment": "支付政策",
+    "refund": "门票交付、更换、退货及退款政策",
+    "complaints": "意见、请求及投诉的受理与处理方式",
+    "support": "在线客服支持",
+    "ownership": "所有者信息",
     "owner_info": "所有者信息",
     "copyright": "© 2026 Moon Price. All rights reserved.",
     "tagline": "探索旅程 · 珍藏体验"

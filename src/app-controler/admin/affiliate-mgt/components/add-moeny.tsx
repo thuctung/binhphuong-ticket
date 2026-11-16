@@ -5,6 +5,7 @@ import { X } from "lucide-react";
 import { ProfileType } from "@/types";
 import { Input } from "@/components/ui/input";
 import { formatVND } from "@/lib/money";
+import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
 
 export interface AddMoneyDialogProps {
   open: boolean;
@@ -73,7 +74,7 @@ export default function AddMoneyDialog({
         className="w-full max-w-sm overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-black/5"
       >
         {/* Header */}
-        <div className="relative bg-gradient-to-r from-[#178c0e] to-[#178c0e] px-6 py-4">
+        <div className="relative bg-gradient-to-r from-[#f9a606] to-[#f9a60696] px-6 py-4">
           <button
             onClick={onClose}
             disabled={loading}
@@ -111,13 +112,11 @@ export default function AddMoneyDialog({
             >
               Đóng
             </button>
-            <button
-              type="submit"
+            <ButtonCommon
+              onClick={handleSubmit}
+              title={loading ? "Đang lưu..." : "Submit"}
               disabled={loading}
-              className="rounded-lg bg-gradient-to-r from-[#178c0e] to-[#178c0e] px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
-            >
-              {loading ? "Đang lưu..." : "Submit"}
-            </button>
+            />
           </div>
         </form>
       </div>

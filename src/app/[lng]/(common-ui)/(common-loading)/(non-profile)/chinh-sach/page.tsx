@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { policies } from "@/lib/policies";
 import { COMPANY_INFO } from "@/commons/constant";
+import { getTranslation } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Chính sách & Điều khoản | MoonPrice",
@@ -16,7 +17,9 @@ const supportItems = [
   { label: "Facebook", value: "Nhắn tin Facebook", href: COMPANY_INFO.facebookUrl, icon: "f" },
 ];
 
-export default function PolicyIndexPage() {
+export default async function PolicyIndexPage({ params }: { params: Promise<{ lng: string }> }) {
+  const { lng } = await params;
+  const { t } = await getTranslation(lng);
   return (
     <main className="min-h-screen bg-stone-50" style={pageDots}>
       <section className="relative overflow-hidden bg-stone-900" style={heroDots}>
@@ -66,7 +69,7 @@ export default function PolicyIndexPage() {
 
                 <span className="min-w-0 flex-1 border-l-2 border-dashed border-stone-200 p-5">
                   <span className="block font-semibold leading-6 text-stone-900">
-                    {policy.title}
+                    {t(policy.title)}
                   </span>
                   <span className="mt-2 block text-sm leading-6 text-stone-500">
                     {policy.summary}
