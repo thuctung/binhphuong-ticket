@@ -132,7 +132,7 @@ export default async function OrderSuccessController({
             </>
           ) : (
             <section className="rounded-2xl bg-white p-8 text-center shadow-sm ring-1 ring-slate-200 sm:p-12">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-rose-50 text-rose-600">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-rose-50 text-amber-600">
                 <svg
                   viewBox="0 0 24 24"
                   className="h-7 w-7"

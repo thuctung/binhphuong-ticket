@@ -26,16 +26,16 @@ export const KEY_STATUS_TICKET = {
   ["Used"]: "Used",
   ["Unused"]: "Unused",
   ["Expired"]: "Expired",
-  ["Void"]:"Void",
-  ["Active"]:"Active",
+  ["Void"]: "Void",
+  ["Active"]: "Active",
 };
 
 export const StatusData = {
   [KEY_STATUS_TICKET.Used]: "Đã sử dụng",
   [KEY_STATUS_TICKET.Unused]: "Chưa sử dụng",
   [KEY_STATUS_TICKET.Expired]: "Hết hạn",
-  [KEY_STATUS_TICKET.Void]:'Đã hủy',
-  [KEY_STATUS_TICKET.Active]:'Active',
+  [KEY_STATUS_TICKET.Void]: "Đã hủy",
+  [KEY_STATUS_TICKET.Active]: "Active",
 };
 
 export const statusClass: Record<string, string> = {
@@ -43,15 +43,14 @@ export const statusClass: Record<string, string> = {
   [KEY_STATUS_TICKET.Unused]: "text-green-600 bg-green-100 ",
   [KEY_STATUS_TICKET.Active]: "text-green-600 bg-green-100 ",
   [KEY_STATUS_TICKET.Expired]: "text-red-600 bg-red-100 ",
-  [KEY_STATUS_TICKET.Void]:"text-red-600 bg-red-100 ",
-
+  [KEY_STATUS_TICKET.Void]: "text-red-600 bg-red-100 ",
 };
 
 export const STATUS_MAP = {
   cancelled: {
     label: "Đã huỷ",
     dot: "bg-rose-500",
-    text: "text-rose-700",
+    text: "text-amber-700",
     bg: "bg-rose-50",
     ring: "ring-rose-200",
   },

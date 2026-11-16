@@ -105,7 +105,7 @@ export default function Languages() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-slate-100 dark:bg-slate-800" />
 
-        {i18nConfig.locales.map((key) => {
+        {i18nConfig.locales.map((key: any) => {
           const meta = LANG_META[key as LangKey];
           if (!meta) return null;
           const active = lang === key;

@@ -103,7 +103,7 @@ function Field({
       <label className="mb-1 block text-sm font-medium ">{label}</label>
       {children}
       {error ? (
-        <p className="mt-1 text-xs text-rose-400">{error}</p>
+        <p className="mt-1 text-xs text-amber-400">{error}</p>
       ) : hint ? (
         <p className="mt-1 text-xs text-slate-500">{hint}</p>
       ) : null}

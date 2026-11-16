@@ -97,7 +97,7 @@ export default function SitesPageController() {
           </button>
           {/* <button
               onClick={() => setDeleteTarget(row)}
-              className="rounded-md border border-slate-700 px-2.5 py-1.5 text-xs font-medium text-red-500 transition hover:border-rose-500 hover:text-rose-400"
+              className="rounded-md border border-slate-700 px-2.5 py-1.5 text-xs font-medium text-red-500 transition hover:border-rose-500 hover:text-amber-400"
             >
               Xóa
             </button> */}

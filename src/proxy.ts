@@ -8,13 +8,10 @@ import { DB_TABLE_NAME } from "./commons/constant";
 const isUnder = (path: string, base: string) => path === base || path.startsWith(`${base}/`);
 
 export async function proxy(req: NextRequest) {
-  // 1.Handle i18 first
   const res = i18nRouter(req, i18nConfig);
 
-  // Nếu i18n yêu cầu redirect (vd: "/" -> "/vi") thì trả về luôn
   if (res.headers.get("location")) return res;
 
-  // 2. Tách locale khỏi pathname
   const { pathname } = req.nextUrl;
   const segments = pathname.split("/");
   const hasLocale = i18nConfig.locales.includes(segments[1]);
@@ -24,10 +21,8 @@ export async function proxy(req: NextRequest) {
   const isAdminPath = isUnder(path, "/admin");
   const isAffiliatePath = isUnder(path, "/affiliate");
 
-  // Route không cần bảo vệ thì bỏ qua, không gọi Supabase
   if (!isAdminPath && !isAffiliatePath) return res;
 
-  // 3. Kiểm tra auth + role
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
