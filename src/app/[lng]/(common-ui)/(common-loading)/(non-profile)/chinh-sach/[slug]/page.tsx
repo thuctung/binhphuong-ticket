@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPolicy, policies, policyConfig } from "@/lib/policies";
+import { getPolicy, policies } from "@/lib/policies";
+import { COMPANY_INFO } from "@/commons/constant";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -68,7 +69,7 @@ export default async function PolicyDetailPage({ params }: Props) {
           <div className="mt-10 rounded-xl bg-slate-50 p-4">
             <p className="text-sm font-semibold text-slate-900">Bạn cần hỗ trợ thêm?</p>
             <p className="mt-1 text-sm leading-6 text-slate-600">
-              Liên hệ {policyConfig.brand} qua {policyConfig.hotline} hoặc {policyConfig.email}.
+              Liên hệ {COMPANY_INFO.brand} qua {COMPANY_INFO.hotline} hoặc {COMPANY_INFO.email}.
             </p>
           </div>
         </article>

@@ -1,3 +1,5 @@
+import { COMPANY_INFO } from "@/commons/constant";
+
 export type Policy = {
   slug: string;
   title: string;
@@ -6,27 +8,13 @@ export type Policy = {
   sections: { heading: string; paragraphs?: string[]; bullets?: string[] }[];
 };
 
-export const policyConfig = {
-  brand: "MoonPrice",
-  legalName: "CÔNG TY CỔ PHẦN ĐÀ NẴNG TOURIST",
-  taxCode: "0402141272",
-  address: "04 Hoàng Văn Thải, Phường Hòà Minh, Quận Liên Chiều, Thành phố Đà Nẵng, Việt Nam",
-  hotline: "0938367886",
-  email: "hoangnguyettravel84@gmail.com",
-  workingHours: "24/7",
-  zaloUrl: "https://zalo.me/0938367886",
-  facebookUrl: "https://www.facebook.com/",
-  // Điền ngày cập nhật thực tế trước khi đưa nội dung lên website.
-  updatedAt: "16/11/2026",
-};
-
 export const policies: Policy[] = [
   {
     slug: "bao-mat",
     title: "Chính sách bảo mật",
     summary:
       "Quy định về việc thu thập, sử dụng, lưu trữ và bảo vệ thông tin của khách hàng khi sử dụng website MoonPrice.",
-    updatedAt: policyConfig.updatedAt,
+    updatedAt: COMPANY_INFO.updatedAt,
     sections: [
       {
         heading: "1. Phạm vi áp dụng",
@@ -72,7 +60,7 @@ export const policies: Policy[] = [
         heading: "6. Quyền và yêu cầu của khách hàng",
         paragraphs: [
           "Theo quy định pháp luật hiện hành, khách hàng có thể gửi yêu cầu liên quan đến việc truy cập, cập nhật, chỉnh sửa, rút lại sự đồng ý, hạn chế hoặc phản đối việc xử lý, xóa dữ liệu cá nhân và các quyền khác (nếu áp dụng). MoonPrice có thể cần xác minh danh tính và có thể từ chối hoặc giới hạn yêu cầu trong trường hợp pháp luật cho phép hoặc yêu cầu lưu trữ bắt buộc.",
-          "Gửi yêu cầu qua email [EMAIL HỖ TRỢ] với tiêu đề “Yêu cầu về dữ liệu cá nhân”, kèm thông tin đủ để xác định đơn hàng hoặc yêu cầu. Không gửi mật khẩu, mã OTP hoặc thông tin bảo mật ngân hàng.",
+          `Gửi yêu cầu qua email ${COMPANY_INFO.email} với tiêu đề “Yêu cầu về dữ liệu cá nhân”, kèm thông tin đủ để xác định đơn hàng hoặc yêu cầu. Không gửi mật khẩu, mã OTP hoặc thông tin bảo mật ngân hàng.`,
         ],
       },
       {
@@ -85,7 +73,7 @@ export const policies: Policy[] = [
         heading: "8. Thay đổi chính sách và liên hệ",
         paragraphs: [
           "MoonPrice có thể cập nhật chính sách để phù hợp với hoạt động hoặc quy định pháp luật. Phiên bản mới sẽ được đăng trên website cùng ngày cập nhật.",
-          "Đơn vị phụ trách: CÔNG TY CỔ PHẦN ĐÀ NẴNG TOURIST. Địa chỉ: 04 Hoàng Văn Thải, Phường Hòà Minh, Quận Liên Chiều, Thành phố Đà Nẵng, Việt Nam. Email: hoangnguyettravel84@gmail.com. Hotline: 0938367886.",
+          `Đơn vị phụ trách: ${COMPANY_INFO.legalName}. Địa chỉ: ${COMPANY_INFO.address}. Email: ${COMPANY_INFO.email}. Hotline: ${COMPANY_INFO.hotline}`,
         ],
       },
     ],
@@ -95,12 +83,12 @@ export const policies: Policy[] = [
     title: "Phương thức tiếp nhận và giải quyết phản ánh, yêu cầu, khiếu nại",
     summary:
       "Hướng dẫn gửi phản ánh và quy trình MoonPrice tiếp nhận, kiểm tra, phản hồi và xử lý khiếu nại.",
-    updatedAt: policyConfig.updatedAt,
+    updatedAt: COMPANY_INFO.updatedAt,
     sections: [
       {
         heading: "1. Kênh tiếp nhận",
         paragraphs: [
-          "Khách hàng có thể gửi phản ánh, yêu cầu hỗ trợ hoặc khiếu nại qua hotline 0938367886, email hoangnguyettravel84@gmail.com, Zalo https://zalo.me/0938367886, Facebook  hoặc các kênh hỗ trợ trực tuyến được công bố trên website.",
+          "Khách hàng có thể gửi phản ánh, yêu cầu hỗ trợ hoặc khiếu nại qua hotline 0938367886, email hoangnguyettravel84@gmail.com hoặc các kênh hỗ trợ trực tuyến được công bố trên website.",
         ],
       },
       {
@@ -141,7 +129,7 @@ export const policies: Policy[] = [
     title: "Chính sách giá",
     summary:
       "Thông tin về giá vé, đối tượng áp dụng, phụ thu, ưu đãi và nguyên tắc hiển thị giá trên MoonPrice.",
-    updatedAt: policyConfig.updatedAt,
+    updatedAt: COMPANY_INFO.updatedAt,
     sections: [
       {
         heading: "1. Giá vé niêm yết",
@@ -178,7 +166,7 @@ export const policies: Policy[] = [
     title: "Chính sách thanh toán",
     summary:
       "Các phương thức thanh toán, quy trình xác nhận giao dịch và hướng dẫn xử lý khi thanh toán chưa thành công.",
-    updatedAt: policyConfig.updatedAt,
+    updatedAt: COMPANY_INFO.updatedAt,
     sections: [
       {
         heading: "1. Phương thức thanh toán",
@@ -225,7 +213,7 @@ export const policies: Policy[] = [
     title: "Các điều kiện hoặc hạn chế trong việc cung cấp dịch vụ",
     summary:
       "Các điều kiện đặt vé, nhận vé, sử dụng vé và những giới hạn khách hàng cần lưu ý trước khi giao dịch.",
-    updatedAt: policyConfig.updatedAt,
+    updatedAt: COMPANY_INFO.updatedAt,
     sections: [
       {
         heading: "1. Điều kiện đặt vé",
@@ -274,7 +262,7 @@ export const policies: Policy[] = [
     title: "Chính sách giao vé, đổi trả và hoàn tiền",
     summary:
       "Quy định về phương thức cung cấp vé điện tử, yêu cầu đổi/hủy và xử lý hoàn tiền đối với dịch vụ du lịch.",
-    updatedAt: policyConfig.updatedAt,
+    updatedAt: COMPANY_INFO.updatedAt,
     sections: [
       {
         heading: "1. Phương thức cung cấp vé",
@@ -295,7 +283,7 @@ export const policies: Policy[] = [
         heading: "3. Điều kiện đổi vé hoặc thay đổi ngày sử dụng",
         paragraphs: [
           "Việc đổi vé, đổi ngày, đổi loại vé hoặc thay đổi thông tin phụ thuộc vào điều kiện của từng sản phẩm và nhà cung cấp. Một số loại vé có thể không hỗ trợ đổi sau khi phát hành hoặc sau khi đã sử dụng.",
-          "Khách hàng cần gửi yêu cầu qua [HOTLINE] hoặc [EMAIL HỖ TRỢ] trước ngày sử dụng, cung cấp mã đơn hàng và nội dung cần thay đổi. MoonPrice sẽ kiểm tra điều kiện với nhà cung cấp và thông báo phí phát sinh (nếu có) trước khi thực hiện.",
+          `Khách hàng cần gửi yêu cầu qua ${COMPANY_INFO.hotline} hoặc ${COMPANY_INFO.email}  trước ngày sử dụng, cung cấp mã đơn hàng và nội dung cần thay đổi. MoonPrice sẽ kiểm tra điều kiện với nhà cung cấp và thông báo phí phát sinh (nếu có) trước khi thực hiện.`,
           "Yêu cầu chỉ được xem là chấp thuận khi MoonPrice xác nhận bằng văn bản/tin nhắn qua kênh liên hệ chính thức.",
         ],
       },
@@ -320,7 +308,7 @@ export const policies: Policy[] = [
         heading: "6. Phương thức và thời gian hoàn tiền",
         paragraphs: [
           "Tiền được hoàn về phương thức thanh toán ban đầu hoặc tài khoản hợp lệ do các bên thống nhất, tùy khả năng của ngân hàng/đơn vị thanh toán và quy định áp dụng. MoonPrice không yêu cầu khách hàng cung cấp mật khẩu hoặc mã OTP để nhận tiền hoàn.",
-          "Thời gian xử lý dự kiến: [SỐ NGÀY LÀM VIỆC] kể từ khi yêu cầu được duyệt và MoonPrice có đủ thông tin. Thời gian tiền hiển thị trong tài khoản có thể phụ thuộc vào ngân hàng hoặc đơn vị thanh toán.",
+          `Thời gian xử lý dự kiến: ${COMPANY_INFO.workingHours} kể từ khi yêu cầu được duyệt và MoonPrice có đủ thông tin. Thời gian tiền hiển thị trong tài khoản có thể phụ thuộc vào ngân hàng hoặc đơn vị thanh toán.`,
         ],
       },
       {
@@ -339,12 +327,12 @@ export const policies: Policy[] = [
     title: "Hình thức hỗ trợ trực tuyến",
     summary:
       "Các kênh liên hệ chính thức để được hỗ trợ trong quá trình tìm kiếm, đặt mua và sử dụng vé.",
-    updatedAt: policyConfig.updatedAt,
+    updatedAt: COMPANY_INFO.updatedAt,
     sections: [
       {
         heading: "1. Các kênh hỗ trợ",
         paragraphs: [
-          "Khách hàng có thể liên hệ MoonPrice qua hotline, email, Zalo, Facebook hoặc tính năng chat trực tuyến (nếu đang được kích hoạt trên website). Thông tin liên hệ chính thức được công bố tại trang này và chân trang website.",
+          "Khách hàng có thể liên hệ MoonPrice qua hotline, email, Zalo, Facebook . Thông tin liên hệ chính thức được công bố tại trang này và chân trang website.",
         ],
       },
       {
@@ -359,7 +347,7 @@ export const policies: Policy[] = [
       {
         heading: "3. Thời gian hỗ trợ",
         paragraphs: [
-          "Thời gian hỗ trợ: 24/7. Các yêu cầu ngoài giờ sẽ được tiếp nhận và phản hồi trong thời gian làm việc gần nhất. Thời gian xử lý thực tế có thể phụ thuộc vào phản hồi của nhà cung cấp hoặc đơn vị thanh toán.",
+          `Thời gian hỗ trợ: ${COMPANY_INFO.workingHours}. Các yêu cầu ngoài giờ sẽ được tiếp nhận và phản hồi trong thời gian làm việc gần nhất. Thời gian xử lý thực tế có thể phụ thuộc vào phản hồi của nhà cung cấp hoặc đơn vị thanh toán.`,
         ],
       },
       {
@@ -376,7 +364,7 @@ export const policies: Policy[] = [
     title: "Thông tin chủ sở hữu",
     summary:
       "Thông tin về đơn vị sở hữu, quản lý và chịu trách nhiệm vận hành website MoonPrice, cùng các thông tin liên hệ chính thức.",
-    updatedAt: policyConfig.updatedAt,
+    updatedAt: COMPANY_INFO.updatedAt,
     sections: [
       {
         heading: "1. Thông tin đơn vị sở hữu website",
@@ -385,21 +373,21 @@ export const policies: Policy[] = [
           "Website MoonPrice được quản lý và vận hành bởi đơn vị sở hữu được công bố dưới đây:",
         ],
         bullets: [
-          "Tên đơn vị: CÔNG TY CỔ PHẦN ĐÀ NẴNG TOURIST",
-          "Tên thương hiệu: MoonPrice",
-          "Mã số thuế: 0402141272",
-          "Địa chỉ đăng ký kinh doanh: 04 Hoàng Văn Thải, Phường Hòà Minh, Quận Liên Chiều, Thành phố Đà Nẵng, Việt Nam",
-          "Người đại diện: HOÀNG THỊ MỸ",
-          "Chức vụ: Giám đốc",
+          `Tên đơn vị: ${COMPANY_INFO.legalName}`,
+          `Tên thương hiệu:${COMPANY_INFO.brand}`,
+          `Mã số thuế: ${COMPANY_INFO.taxCode}`,
+          `Địa chỉ đăng ký kinh doanh: ${COMPANY_INFO.address}`,
+          `Người đại diện: ${COMPANY_INFO.personHost}`,
+          `Chức vụ:  ${COMPANY_INFO.personHost}`,
         ],
       },
       {
         heading: "2. Thông tin website",
         bullets: [
-          "Tên website: MoonPrice",
-          "Địa chỉ website: [Tên miền chính thức]",
-          "Lĩnh vực hoạt động: Du lịch, dịch vụ đặt vé tham quan và vui chơi giải trí.",
-          "Phạm vi cung cấp dịch vụ: Khách hàng trong nước và quốc tế.",
+          `Tên website: MoonPrice`,
+          `Địa chỉ website: ${COMPANY_INFO.domain}`,
+          `Lĩnh vực hoạt động: Du lịch, dịch vụ đặt vé tham quan và vui chơi giải trí.`,
+          `Phạm vi cung cấp dịch vụ: Khách hàng trong nước và quốc tế.`,
         ],
       },
       {
@@ -408,11 +396,11 @@ export const policies: Policy[] = [
           "Khách hàng có thể liên hệ với MoonPrice thông qua các kênh chính thức dưới đây để được tư vấn, hỗ trợ đặt vé, thanh toán và giải quyết các vấn đề liên quan đến dịch vụ.",
         ],
         bullets: [
-          "Hotline: [Số điện thoại]",
-          "Email: [Địa chỉ email]",
-          "Zalo: [Đường dẫn Zalo]",
-          "Facebook: [Đường dẫn Fanpage]",
-          "Địa chỉ văn phòng: [Địa chỉ liên hệ]",
+          `Hotline: ${COMPANY_INFO.hotline}`,
+          `Email: ${COMPANY_INFO.email}`,
+          `Zalo: ${COMPANY_INFO.zaloUrl}`,
+          `Facebook: ${COMPANY_INFO.facebookUrl}`,
+          `Địa chỉ văn phòng: ${COMPANY_INFO.address}`,
         ],
       },
       {

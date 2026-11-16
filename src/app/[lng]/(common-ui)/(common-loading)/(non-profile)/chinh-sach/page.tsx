@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { policies, policyConfig } from "@/lib/policies";
+import { policies } from "@/lib/policies";
+import { COMPANY_INFO } from "@/commons/constant";
 
 export const metadata: Metadata = {
   title: "Chính sách & Điều khoản | MoonPrice",
@@ -9,10 +10,10 @@ export const metadata: Metadata = {
 };
 
 const supportItems = [
-  { label: "Hotline", value: policyConfig.hotline, href: null, icon: "☎" },
-  { label: "Email", value: policyConfig.email, href: null, icon: "✉" },
-  { label: "Zalo", value: "Chat với MoonPrice", href: policyConfig.zaloUrl, icon: "Z" },
-  { label: "Facebook", value: "Nhắn tin Facebook", href: policyConfig.facebookUrl, icon: "f" },
+  { label: "Hotline", value: COMPANY_INFO.hotline, href: null, icon: "☎" },
+  { label: "Email", value: COMPANY_INFO.email, href: null, icon: "✉" },
+  { label: "Zalo", value: "Chat với MoonPrice", href: COMPANY_INFO.zaloUrl, icon: "Z" },
+  { label: "Facebook", value: "Nhắn tin Facebook", href: COMPANY_INFO.facebookUrl, icon: "f" },
 ];
 
 export default function PolicyIndexPage() {
