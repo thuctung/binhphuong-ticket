@@ -27,31 +27,33 @@
     "eyebrow": "旅游套餐 · 机票",
     "title": "旅游套餐 · 机票",
     "description": "套餐包含门票、接送交通及酒店住宿。",
-    "book": "预订行程",
+    "book": "联系我们",
+    "message": "提交成功！我们会尽快与您联系",
+    "success": "请求提交成功！",
     "items": [
       {
         "name": "下龙湾 2天1夜",
         "departure": "河内出发 · 2天1夜",
-        "original_price": "2,300,000 越南盾",
-        "price": "1,890,000 越南盾"
+        "original_price": "4,300,000 越南盾",
+        "price": "3,890,000 越南盾"
       },
       {
         "name": "富国岛度假之旅",
         "departure": "胡志明市出发 · 3天2夜",
-        "original_price": "3,900,000 越南盾",
-        "price": "3,290,000 越南盾"
+        "original_price": "13,900,000 越南盾",
+        "price": "10,290,000 越南盾"
       },
       {
         "name": "岘港 – 会安 – 巴拿山",
         "departure": "岘港出发 · 4天3夜",
-        "original_price": "4,800,000 越南盾",
-        "price": "4,150,000 越南盾"
+        "original_price": "7,800,000 越南盾",
+        "price": "6,150,000 越南盾"
       },
       {
         "name": "沙坝 – 番西邦",
         "departure": "河内出发 · 3天2夜",
-        "original_price": "3,200,000 越南盾",
-        "price": "2,750,000 越南盾"
+        "original_price": "5,200,000 越南盾",
+        "price": "4,750,000 越南盾"
       }
     ]
   },

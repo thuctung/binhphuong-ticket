@@ -27,31 +27,33 @@
     "eyebrow": "여행 패키지 · 항공권",
     "title": "여행 패키지 · 항공권",
     "description": "입장권, 픽업·샌딩 차량 및 호텔이 포함된 패키지입니다.",
-    "book": "투어 예약",
+    "book": "문의하기",
+    "message": "성공적으로 전송되었습니다! 곧 연락드리겠습니다.",
+    "success": "요청이 성공적으로 제출되었습니다!",
     "items": [
       {
         "name": "하롱베이 2일 1박",
         "departure": "하노이 출발 · 2일 1박",
-        "original_price": "2,300,000 VND",
-        "price": "1,890,000 VND"
+        "original_price": "4,300,000 VND",
+        "price": "3,890,000 VND"
       },
       {
         "name": "푸꾸옥 휴양 여행",
         "departure": "호찌민 출발 · 3일 2박",
-        "original_price": "3,900,000 VND",
-        "price": "3,290,000 VND"
+        "original_price": "13,900,000 VND",
+        "price": "10,290,000 VND"
       },
       {
         "name": "다낭 – 호이안 – 바나힐",
         "departure": "다낭 출발 · 4일 3박",
-        "original_price": "4,800,000 VND",
-        "price": "4,150,000 VND"
+        "original_price": "7,800,000 VND",
+        "price": "6,150,000 VND"
       },
       {
         "name": "사파 – 판시판",
         "departure": "하노이 출발 · 3일 2박",
-        "original_price": "3,200,000 VND",
-        "price": "2,750,000 VND"
+        "original_price": "5,200,000 VND",
+        "price": "4,750,000 VND"
       }
     ]
   },

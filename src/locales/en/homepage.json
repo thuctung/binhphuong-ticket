@@ -27,31 +27,33 @@
     "eyebrow": "TOURS & FLIGHTS",
     "title": "TOURS & FLIGHTS",
     "description": "Packages include tickets, transfers, and accommodation.",
-    "book": "Book tour",
+    "book": "Contact Us",
+    "message": "Sent successfully! We will contact you soon.",
+    "success": "Request submitted successfully!",
     "items": [
       {
         "name": "Ha Long Bay · 2D1N",
         "departure": "Departing from Hanoi · 2 days, 1 night",
-        "original_price": "VND 2,300,000",
-        "price": "VND 1,890,000"
+        "original_price": "VND 4,300,000",
+        "price": "VND 3,890,000"
       },
       {
         "name": "Phu Quoc Getaway",
         "departure": "Departing from Ho Chi Minh City · 3 days, 2 nights",
-        "original_price": "VND 3,900,000",
-        "price": "VND 3,290,000"
+        "original_price": "VND 13,900,000",
+        "price": "VND 10,290,000"
       },
       {
         "name": "Da Nang – Hoi An – Ba Na Hills",
         "departure": "Departing from Da Nang · 4 days, 3 nights",
-        "original_price": "VND 4,800,000",
-        "price": "VND 4,150,000"
+        "original_price": "VND 7,800,000",
+        "price": "VND 6,150,000"
       },
       {
         "name": "Sa Pa – Fansipan",
         "departure": "Departing from Hanoi · 3 days, 2 nights",
-        "original_price": "VND 3,200,000",
-        "price": "VND 2,750,000"
+        "original_price": "VND 5,200,000",
+        "price": "VND 4,750,000"
       }
     ]
   },
