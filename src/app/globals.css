@@ -180,6 +180,12 @@ tbody {
 }
 
 @theme {
+  --color-sea: #0a3d4a;
+  --color-lagoon: #14a3a0;
+  --color-mist: #eaf5f4;
+  --color-sun: #f5b820;
+  --color-ink: #12262b;
+  --font-sans: var(--font-main), ui-sans-serif, system-ui, sans-serif;
   --color-paper: #f4f8f9;
   --color-ocean: #0b3c5d;
   --color-lagoon: #14a3a0;

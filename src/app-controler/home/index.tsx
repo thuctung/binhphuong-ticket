@@ -4,6 +4,7 @@ import Locations from "./components/Locations";
 import About from "./components/About";
 import Consult from "./components/Consult";
 import { SiteType } from "@/types/ticket";
+import CompanyInfo from "./components/CompanyInfo.";
 
 const HomeA = async ({ lng, sites }: { lng: string; sites: SiteType[] }) => {
   return (
@@ -13,6 +14,7 @@ const HomeA = async ({ lng, sites }: { lng: string; sites: SiteType[] }) => {
       <Tours lng={lng} />
       <Consult />
       <About />
+      <CompanyInfo lng={lng} />
     </main>
   );
 };

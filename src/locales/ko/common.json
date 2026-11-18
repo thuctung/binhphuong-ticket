@@ -11,7 +11,8 @@
     "buyticket": "티켓 구매",
     "about": "회사 소개",
     "question": "자주 묻는 질문",
-    "agent": "대리점"
+    "agent": "대리점",
+    "owner": "소유자 정보"
   },
   "label": {
     "all": "전체",

@@ -216,7 +216,7 @@ export const MENUS = [
   },
 
   {
-    link: "/#",
+    link: "/gioi-thieu",
     name: "header.about",
     icon: Award,
     iconBg: "bg-yellow-50",
@@ -224,8 +224,8 @@ export const MENUS = [
   },
 
   {
-    link: "/#",
-    name: "header.question",
+    link: "/chinh-sach/thong-tin-chu-so-huu",
+    name: "header.owner",
     icon: HelpCircle,
     iconBg: "bg-gray-50",
     iconColor: "text-gray-600",
