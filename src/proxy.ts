@@ -13,6 +13,11 @@ export async function proxy(req: NextRequest) {
   if (res.headers.get("location")) return res;
 
   const { pathname } = req.nextUrl;
+  // Không xử lý API
+  if (pathname.startsWith("/api/")) {
+    return NextResponse.next();
+  }
+
   const segments = pathname.split("/");
   const hasLocale = i18nConfig.locales.includes(segments[1]);
   const locale = hasLocale ? segments[1] : i18nConfig.defaultLocale;
