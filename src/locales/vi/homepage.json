@@ -27,31 +27,33 @@
     "eyebrow": "TOUR DU LỊCH - VÉ MÁY BAY",
     "title": "TOUR DU LỊCH - VÉ MÁY BAY",
     "description": "Trọn gói vé, xe đưa đón và khách sạn.",
-    "book": "Đặt tour",
+    "book": "Liên hệ",
+    "message": "Đã gửi thành công! Chúng tôi sẽ liên hệ bạn sớm.",
+    "success": "Gửi yêu cầu thành công",
     "items": [
       {
         "name": "Vịnh Hạ Long 2N1Đ",
         "departure": "Khởi hành từ Hà Nội · 2 ngày 1 đêm",
-        "original_price": "2.300.000 ₫",
-        "price": "1.890.000 ₫"
+        "original_price": "4.300.000 ₫",
+        "price": "3.890.000 ₫"
       },
       {
         "name": "Phú Quốc nghỉ dưỡng",
         "departure": "Khởi hành từ TP.HCM · 3 ngày 2 đêm",
-        "original_price": "3.900.000 ₫",
-        "price": "3.290.000 ₫"
+        "original_price": "13.900.000 ₫",
+        "price": "10.290.000 ₫"
       },
       {
         "name": "Đà Nẵng – Hội An – Bà Nà",
         "departure": "Khởi hành từ Đà Nẵng · 4 ngày 3 đêm",
-        "original_price": "4.800.000 ₫",
-        "price": "4.150.000 ₫"
+        "original_price": "7.800.000 ₫",
+        "price": "6.150.000 ₫"
       },
       {
         "name": "Sa Pa – Fansipan",
         "departure": "Khởi hành từ Hà Nội · 3 ngày 2 đêm",
-        "original_price": "3.200.000 ₫",
-        "price": "2.750.000 ₫"
+        "original_price": "5.200.000 ₫",
+        "price": "4.750.000 ₫"
       }
     ]
   },

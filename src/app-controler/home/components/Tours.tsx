@@ -1,7 +1,9 @@
+import { COMPANY_INFO } from "@/commons/constant";
 import { tours } from "@/lib/data";
 import { getTranslation } from "@/lib/i18n";
 import { formatVND } from "@/lib/money";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function ({ lng }: { lng: string }) {
   const { t } = await getTranslation(lng);
@@ -42,9 +44,12 @@ export default async function ({ lng }: { lng: string }) {
                   <p className="font-display text-xl font-extrabold text-ocean">
                     {t(`homepage.tours.items.${index}.price`)}
                   </p>
-                  <button className="mt-4 w-full rounded-xl  bg-sun  py-2.5 text-sm font-medium text-ink hover:brightness-95 hover:bg-ocean hover:text-white ">
+                  <Link
+                    href={`tel:${COMPANY_INFO.hotline}`}
+                    className="mt-4 w-full rounded-xl w-full inline-block text-center  bg-sun  py-2.5 text-sm font-medium text-ink hover:brightness-95 hover:bg-ocean hover:text-white "
+                  >
                     {t("homepage.tours.book")}
-                  </button>
+                  </Link>
                 </div>
               </div>
             </article>

@@ -4,6 +4,7 @@ import { useState, FormEvent } from "react";
 import { places } from "@/lib/data";
 import { getTranslation } from "@/lib/i18n";
 import { useTranslation } from "@/lib/i18n/client";
+import { toast } from "react-toastify";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -22,22 +23,26 @@ export default function Consult() {
     setStatus("loading");
     setError("");
 
-    const data = Object.fromEntries(new FormData(form).entries());
+    toast.success(t("homepage.tours.success"));
+    form.reset();
+    setStatus("success");
 
-    try {
-      const res = await fetch("/api/consult", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || "Có lỗi xảy ra");
-      form.reset();
-      setStatus("success");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Có lỗi xảy ra");
-      setStatus("error");
-    }
+    // const data = Object.fromEntries(new FormData(form).entries());
+
+    // try {
+    //   const res = await fetch("/api/consult", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(data),
+    //   });
+    //   const json = await res.json();
+    //   if (!res.ok) throw new Error(json.error || "Có lỗi xảy ra");
+    //   form.reset();
+    //   setStatus("success");
+    // } catch (err) {
+    //   setError(err instanceof Error ? err.message : "Có lỗi xảy ra");
+    //   setStatus("error");
+    // }
   }
 
   return (
@@ -155,7 +160,7 @@ export default function Consult() {
           <div aria-live="polite" className="mt-4 text-sm">
             {status === "success" && (
               <p className="rounded-xl bg-green-50 px-4 py-3 text-green-700">
-                Đã gửi thành công! Chúng tôi sẽ liên hệ bạn sớm.
+                {t("homepage.tours.message")}
               </p>
             )}
             {status === "error" && (

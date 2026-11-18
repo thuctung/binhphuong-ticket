@@ -194,6 +194,13 @@ tbody {
   --font-sans: var(--font-body), system-ui, sans-serif;
   --font-display: var(--font-head), system-ui, sans-serif;
 
+  --color-sea: #0a3d4a;
+  --color-lagoon: #14a3a0;
+  --color-mist: #eaf5f4;
+  --color-sun: #f5b820;
+  --color-ink: #12262b;
+  --font-sans: var(--font-main), ui-sans-serif, system-ui, sans-serif;
+
   --animate-wiggle: wiggle 0.6s ease-in-out;
 
   @keyframes wiggle {
