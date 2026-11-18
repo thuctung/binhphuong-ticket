@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       thirdPartyNumber,
       products,
       email,
-      phone, 
+      phone,
       fullname,
     });
     const { result, messages, success } = dataSunworld;
@@ -45,27 +45,17 @@ export async function POST(req: Request) {
         const siteName: any = get(ticketBuild, [0, "siteName"]);
         await Promise.allSettled([
           supabaseAdmin.from(DB_TABLE_NAME.TICKETS).insert(ticketBuild).select(),
-          // supabaseAdmin.from(DB_TABLE_NAME.EMAIL_QUEUE).insert({
-          //   email: email,
-          //   order_id: order_id,
-          //   site_name: siteName || "",
-          //   order_code: result.orderCode,
-          //   status: KEY_MODIFY_DATA.PENDING,
-          //   is_send_foc: haveFOC,
-          // }),
+          supabaseAdmin.from(DB_TABLE_NAME.EMAIL_QUEUE).insert({
+            email: email,
+            order_id: order_id,
+            site_name: siteName || "",
+            order_code: result.orderCode,
+            status: KEY_MODIFY_DATA.PENDING,
+            is_send_foc: haveFOC,
+          }),
         ]);
 
         const { focTickets, customerTickets } = getTicketFOCAndCutomer(ticketBuild);
-
-        // const pdfBuffer = await downloadTicketPDFServer(customerTickets, haveFOC ? focTickets : []);
-
-        // Send Resend
-        // await sendMailTicketBaNa({
-        //   mail: email,
-        //   siteName: siteName,
-        //   orderCode: result.orderCode,
-        //   fileAttch: pdfBuffer,
-        // });
 
         return NextResponse.json(
           { data: { focTickets, customerTickets, data: dataSunworld }, messages: "" },
