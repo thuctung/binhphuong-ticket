@@ -49,7 +49,7 @@ export default async function Footer({ lng }: { lng: string }) {
               href="/"
               className="inline-block text-2xl font-bold tracking-tight text-white transition hover:text-amber-300"
             >
-              <span className="text-amber-300">Moon Price</span>
+              <span className="text-amber-300">Moon Prince</span>
             </Link>
 
             <p className="mt-4 max-w-sm text-sm leading-7 text-emerald-50/70">

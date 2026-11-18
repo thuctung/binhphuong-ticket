@@ -1,5 +1,5 @@
 {
-  "summary": "Thông tin về giá vé, đối tượng áp dụng, phụ thu, ưu đãi và nguyên tắc hiển thị giá trên MoonPrice.",
+  "summary": "Thông tin về giá vé, đối tượng áp dụng, phụ thu, ưu đãi và nguyên tắc hiển thị giá trên Moon Prince.",
   "sections": [
     {
       "heading": "1. Giá vé niêm yết",
@@ -11,7 +11,7 @@
     {
       "heading": "2. Thành phần giá và phụ phí",
       "paragraphs": [
-        "Giá hiển thị sẽ nêu rõ các dịch vụ đã bao gồm và chưa bao gồm trong phạm vi thông tin MoonPrice nhận được từ nhà cung cấp. Các khoản phụ thu, dịch vụ tùy chọn hoặc chi phí phát sinh (nếu có) sẽ được thông báo trước khi khách hàng xác nhận thanh toán.",
+        "Giá hiển thị sẽ nêu rõ các dịch vụ đã bao gồm và chưa bao gồm trong phạm vi thông tin Moon Prince nhận được từ nhà cung cấp. Các khoản phụ thu, dịch vụ tùy chọn hoặc chi phí phát sinh (nếu có) sẽ được thông báo trước khi khách hàng xác nhận thanh toán.",
         "Khách hàng nên kiểm tra kỹ ngày sử dụng, loại vé, số lượng, đối tượng áp dụng và quyền lợi của combo trước khi đặt hàng."
       ]
     },
@@ -25,8 +25,8 @@
     {
       "heading": "4. Điều chỉnh giá và sai sót hiển thị",
       "paragraphs": [
-        "Giá vé có thể thay đổi theo chính sách của nhà cung cấp, mùa cao điểm, ngày sử dụng hoặc chương trình ưu đãi. Việc thay đổi giá không ảnh hưởng đến đơn hàng đã được MoonPrice xác nhận hợp lệ, trừ trường hợp có sai sót rõ ràng hoặc trường hợp pháp luật/điều kiện giao dịch có quy định khác.",
-        "Nếu phát hiện giá hiển thị có sai sót, MoonPrice sẽ liên hệ khách hàng để xác minh và thống nhất phương án phù hợp trước khi thu thêm khoản tiền hoặc hủy giao dịch. MoonPrice không tự ý thu thêm tiền khi chưa có thông báo và căn cứ phù hợp."
+        "Giá vé có thể thay đổi theo chính sách của nhà cung cấp, mùa cao điểm, ngày sử dụng hoặc chương trình ưu đãi. Việc thay đổi giá không ảnh hưởng đến đơn hàng đã được Moon Prince xác nhận hợp lệ, trừ trường hợp có sai sót rõ ràng hoặc trường hợp pháp luật/điều kiện giao dịch có quy định khác.",
+        "Nếu phát hiện giá hiển thị có sai sót, Moon Prince sẽ liên hệ khách hàng để xác minh và thống nhất phương án phù hợp trước khi thu thêm khoản tiền hoặc hủy giao dịch. Moon Prince không tự ý thu thêm tiền khi chưa có thông báo và căn cứ phù hợp."
       ]
     }
   ]

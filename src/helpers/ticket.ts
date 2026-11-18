@@ -300,7 +300,7 @@ export const downloadTicketPDF = async (
     pdf.setTextColor(0, 0, 0);
     pdf.setFont("Roboto", "normal");
     pdf.setFontSize(12);
-    pdf.text("Moon Price", PAGE_W / 2 - 28, PAGE_H - 22, { align: "center" });
+    pdf.text("Moon Prince", PAGE_W / 2 - 28, PAGE_H - 22, { align: "center" });
 
     pdf.setFont("Roboto", "normal");
     pdf.setFontSize(9);

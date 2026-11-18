@@ -1,5 +1,5 @@
 {
-  "summary": "Hướng dẫn gửi phản ánh và quy trình MoonPrice tiếp nhận, kiểm tra, phản hồi và xử lý khiếu nại.",
+  "summary": "Hướng dẫn gửi phản ánh và quy trình Moon Prince tiếp nhận, kiểm tra, phản hồi và xử lý khiếu nại.",
   "sections": [
     {
       "heading": "1. Kênh tiếp nhận",
@@ -19,7 +19,7 @@
     {
       "heading": "3. Quy trình xử lý",
       "items": [
-        "Bước 1 – Tiếp nhận: MoonPrice ghi nhận nội dung và thông tin liên hệ của khách hàng.",
+        "Bước 1 – Tiếp nhận: Moon Prince ghi nhận nội dung và thông tin liên hệ của khách hàng.",
         "Bước 2 – Xác minh: kiểm tra đơn hàng, trạng thái thanh toán, thông tin vé và làm việc với nhà cung cấp hoặc đơn vị thanh toán khi cần.",
         "Bước 3 – Phản hồi: thông báo kết quả xác minh, phương án xử lý hoặc thông tin cần bổ sung.",
         "Bước 4 – Hoàn tất: thực hiện phương án đã thống nhất và thông báo kết quả cho khách hàng."
@@ -28,19 +28,19 @@
     {
       "heading": "4. Thời gian xử lý",
       "paragraphs": [
-        "MoonPrice cố gắng xác nhận đã nhận yêu cầu trong vòng 6:00-16:00 và phản hồi kết quả trong vòng 24h kể từ khi nhận đủ thông tin. Trường hợp cần xác minh với bên thứ ba hoặc nhà cung cấp, thời gian xử lý có thể kéo dài; MoonPrice sẽ thông báo lý do và tiến độ dự kiến."
+        "Moon Prince cố gắng xác nhận đã nhận yêu cầu trong vòng 6:00-16:00 và phản hồi kết quả trong vòng 24h kể từ khi nhận đủ thông tin. Trường hợp cần xác minh với bên thứ ba hoặc nhà cung cấp, thời gian xử lý có thể kéo dài; Moon Prince sẽ thông báo lý do và tiến độ dự kiến."
       ]
     },
     {
       "heading": "5. Nguyên tắc giải quyết",
       "paragraphs": [
-        "Khiếu nại được xem xét trên cơ sở thông tin đơn hàng, chứng từ, điều kiện vé tại thời điểm mua và quy định của nhà cung cấp. MoonPrice ưu tiên giải quyết thiện chí, minh bạch và bảo vệ quyền lợi hợp pháp của khách hàng.",
-        "Nếu không đồng ý với kết quả xử lý, khách hàng có thể phản hồi lại MoonPrice hoặc gửi yêu cầu đến cơ quan nhà nước có thẩm quyền theo quy định pháp luật."
+        "Khiếu nại được xem xét trên cơ sở thông tin đơn hàng, chứng từ, điều kiện vé tại thời điểm mua và quy định của nhà cung cấp. Moon Prince ưu tiên giải quyết thiện chí, minh bạch và bảo vệ quyền lợi hợp pháp của khách hàng.",
+        "Nếu không đồng ý với kết quả xử lý, khách hàng có thể phản hồi lại Moon Prince hoặc gửi yêu cầu đến cơ quan nhà nước có thẩm quyền theo quy định pháp luật."
       ]
     }
   ],
   "support": {
     "title": "Bạn cần hỗ trợ thêm?",
-    "description": "Liên hệ với MoonPrice để được hỗ trợ và giải đáp các thắc mắc của bạn."
+    "description": "Liên hệ với Moon Prince để được hỗ trợ và giải đáp các thắc mắc của bạn."
   }
 }

@@ -58,7 +58,7 @@ export default function Login() {
         <div className="flex flex-col items-center text-center">
           <Image
             src="/moonlogo.png"
-            alt="Moon Price"
+            alt="Moon Prince"
             width={56}
             height={56}
             className="object-contain mix-blend-multiply"

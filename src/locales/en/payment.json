@@ -4,8 +4,8 @@
     {
       "heading": "1. Payment Methods",
       "paragraphs": [
-        "MoonPrice provides payment methods displayed at the order checkout stage. These may include bank transfers, QR payments, or online payment methods integrated at the time of the transaction.",
-        "Customers should only make payments using information provided through the official MoonPrice website or official communication channels. Do not transfer money to any unverified personal account."
+        "Moon Prince provides payment methods displayed at the order checkout stage. These may include bank transfers, QR payments, or online payment methods integrated at the time of the transaction.",
+        "Customers should only make payments using information provided through the official Moon Prince website or official communication channels. Do not transfer money to any unverified personal account."
       ]
     },
     {
@@ -13,8 +13,8 @@
       "bullets": [
         "Customers should check their ticket details, date of use, quantity, recipient information, and total amount.",
         "Select an available payment method and follow the provided instructions.",
-        "The system or MoonPrice staff will verify the transaction. An order is only confirmed as paid after MoonPrice receives a successful transaction notification or verifies that the funds have been credited to the account.",
-        "Once payment is confirmed and the tickets are issued, MoonPrice will send the ticket information using the contact details provided by the customer."
+        "The system or Moon Prince staff will verify the transaction. An order is only confirmed as paid after Moon Prince receives a successful transaction notification or verifies that the funds have been credited to the account.",
+        "Once payment is confirmed and the tickets are issued, Moon Prince will send the ticket information using the contact details provided by the customer."
       ]
     },
     {
@@ -29,7 +29,7 @@
     {
       "heading": "4. Payment Not Yet Recorded",
       "paragraphs": [
-        "If money has been deducted from your account but the order is still displayed as unpaid, do not immediately make another payment. Please contact {{phone}} or {{email}} and provide your order code and transaction receipt so MoonPrice can verify the transaction with the bank or payment provider.",
+        "If money has been deducted from your account but the order is still displayed as unpaid, do not immediately make another payment. Please contact {{phone}} or {{email}} and provide your order code and transaction receipt so Moon Prince can verify the transaction with the bank or payment provider.",
         "The time required for transaction reconciliation and refunds (if duplicate, incorrect, or incomplete transactions occur) depends on the bank, payment provider, and verification results."
       ]
     },

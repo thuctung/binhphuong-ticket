@@ -116,7 +116,7 @@ export default function Home() {
           <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 md:grid-cols-[1.15fr_1fr] md:gap-14">
             <div className="min-w-0">
               <h1 className="text-3xl font-extrabold leading-[1.2] tracking-tight sm:text-5xl md:text-6xl">
-                Đến Đà Nẵng, vé và lịch trình đã có MoonPrince lo.
+                Đến Đà Nẵng, vé và lịch trình đã có Moon Prince lo.
               </h1>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
                 Đà Nẵng Tourist bán vé tham quan, vé di chuyển và hỗ trợ du khách suốt chuyến đi tại

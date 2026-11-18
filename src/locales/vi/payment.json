@@ -4,8 +4,8 @@
     {
       "heading": "1. Phương thức thanh toán",
       "paragraphs": [
-        "MoonPrice cung cấp các phương thức thanh toán được hiển thị tại bước thanh toán của đơn hàng, có thể bao gồm chuyển khoản ngân hàng/QR thanh toán hoặc phương thức trực tuyến được tích hợp tại thời điểm giao dịch.",
-        "Khách hàng chỉ thực hiện thanh toán theo thông tin do website hoặc nhân viên MoonPrice cung cấp qua kênh chính thức. Không chuyển tiền vào tài khoản cá nhân không được xác nhận."
+        "Moon Prince cung cấp các phương thức thanh toán được hiển thị tại bước thanh toán của đơn hàng, có thể bao gồm chuyển khoản ngân hàng/QR thanh toán hoặc phương thức trực tuyến được tích hợp tại thời điểm giao dịch.",
+        "Khách hàng chỉ thực hiện thanh toán theo thông tin do website hoặc nhân viên Moon Prince cung cấp qua kênh chính thức. Không chuyển tiền vào tài khoản cá nhân không được xác nhận."
       ]
     },
     {
@@ -13,8 +13,8 @@
       "bullets": [
         "Khách hàng kiểm tra thông tin vé, ngày sử dụng, số lượng, thông tin người nhận và tổng tiền.",
         "Chọn phương thức thanh toán được hỗ trợ và thực hiện theo hướng dẫn.",
-        "Hệ thống/nhân viên đối soát giao dịch. Đơn hàng chỉ được xác nhận thanh toán khi MoonPrice nhận được thông báo giao dịch thành công hoặc xác minh được tiền đã vào tài khoản.",
-        "Sau khi thanh toán được xác nhận và vé được phát hành, MoonPrice gửi thông tin vé theo thông tin liên hệ khách hàng đã cung cấp."
+        "Hệ thống/nhân viên đối soát giao dịch. Đơn hàng chỉ được xác nhận thanh toán khi Moon Prince nhận được thông báo giao dịch thành công hoặc xác minh được tiền đã vào tài khoản.",
+        "Sau khi thanh toán được xác nhận và vé được phát hành, Moon Prince gửi thông tin vé theo thông tin liên hệ khách hàng đã cung cấp."
       ]
     },
     {
@@ -29,7 +29,7 @@
     {
       "heading": "4. Thanh toán chưa được ghi nhận",
       "paragraphs": [
-        "Nếu tài khoản đã bị trừ tiền nhưng đơn hàng vẫn hiển thị chưa thanh toán, khách hàng không nên thanh toán lặp lại ngay. Vui lòng liên hệ {{phone}} hoặc {{email}}, cung cấp mã đơn hàng và chứng từ giao dịch để MoonPrice kiểm tra với ngân hàng/đơn vị thanh toán.",
+        "Nếu tài khoản đã bị trừ tiền nhưng đơn hàng vẫn hiển thị chưa thanh toán, khách hàng không nên thanh toán lặp lại ngay. Vui lòng liên hệ {{phone}} hoặc {{email}}, cung cấp mã đơn hàng và chứng từ giao dịch để Moon Prince kiểm tra với ngân hàng/đơn vị thanh toán.",
         "Thời gian đối soát và hoàn trả (nếu phát sinh giao dịch trùng, sai hoặc không hoàn tất) phụ thuộc vào ngân hàng, đơn vị thanh toán và kết quả xác minh."
       ]
     },

@@ -17,10 +17,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, lng } = await params;
   const { t } = await getTranslation(lng);
   const policy = getPolicy(slug);
-  if (!policy) return { title: "Không tìm thấy chính sách | MoonPrice" };
+  if (!policy) return { title: "Không tìm thấy chính sách | Moon Prince" };
 
   return {
-    title: `${t(policy.title)} | MoonPrice`,
+    title: `${t(policy.title)} | Moon Prince`,
     description: policy.summary,
   };
 }

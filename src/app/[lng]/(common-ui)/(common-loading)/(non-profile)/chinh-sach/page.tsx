@@ -5,15 +5,15 @@ import { COMPANY_INFO } from "@/commons/constant";
 import { getTranslation } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Chính sách & Điều khoản | MoonPrice",
+  title: "Chính sách & Điều khoản | Moon Prince",
   description:
-    "Các chính sách bảo mật, giá vé, thanh toán, cung cấp dịch vụ, đổi trả, hoàn tiền và hỗ trợ khách hàng tại MoonPrice.",
+    "Các chính sách bảo mật, giá vé, thanh toán, cung cấp dịch vụ, đổi trả, hoàn tiền và hỗ trợ khách hàng tại Moon Prince.",
 };
 
 const supportItems = [
   { label: "Hotline", value: COMPANY_INFO.hotline, href: null, icon: "☎" },
   { label: "Email", value: COMPANY_INFO.email, href: null, icon: "✉" },
-  { label: "Zalo", value: "Chat với MoonPrice", href: COMPANY_INFO.zaloUrl, icon: "Z" },
+  { label: "Zalo", value: "Chat với Moon Prince", href: COMPANY_INFO.zaloUrl, icon: "Z" },
   { label: "Facebook", value: "Nhắn tin Facebook", href: COMPANY_INFO.facebookUrl, icon: "f" },
 ];
 
@@ -33,7 +33,7 @@ export default async function PolicyIndexPage({ params }: { params: Promise<{ ln
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-7 text-stone-300">
             Các thông tin và quy định áp dụng khi khách hàng tìm kiếm, đặt mua và sử dụng vé du lịch
-            tại MoonPrice. Vui lòng đọc kỹ trước khi thực hiện giao dịch.
+            tại Moon Prince. Vui lòng đọc kỹ trước khi thực hiện giao dịch.
           </p>
         </div>
         <div className="absolute inset-x-0 bottom-0 h-3" style={tearEdge} aria-hidden="true" />
@@ -91,7 +91,7 @@ export default async function PolicyIndexPage({ params }: { params: Promise<{ ln
               </span>
               <div>
                 <h2 className="font-bold text-stone-900">Hỗ trợ trực tuyến</h2>
-                <p className="text-sm text-stone-500">MoonPrice luôn sẵn sàng hỗ trợ</p>
+                <p className="text-sm text-stone-500">Moon Prince luôn sẵn sàng hỗ trợ</p>
               </div>
             </div>
             <div className="mt-5 space-y-3">
@@ -139,7 +139,7 @@ export default async function PolicyIndexPage({ params }: { params: Promise<{ ln
             <div className="relative rounded-xl border border-dashed border-yellow-400/70 px-4 py-4">
               <p className="text-base font-bold text-stone-900">Cần hỗ trợ đơn hàng?</p>
               <p className="mt-2 text-sm leading-6 text-stone-600">
-                Chuẩn bị mã đơn hàng và thông tin đặt vé để MoonPrice hỗ trợ nhanh hơn.
+                Chuẩn bị mã đơn hàng và thông tin đặt vé để Moon Prince hỗ trợ nhanh hơn.
               </p>
               <Link
                 href="/chinh-sach/giai-quyet-khieu-nai"

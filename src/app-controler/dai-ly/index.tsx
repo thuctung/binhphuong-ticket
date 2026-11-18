@@ -124,7 +124,7 @@ export default function DaiLyController() {
         <div className="flex flex-col items-center text-center my-4">
           <Image
             src="/moonlogo.png"
-            alt="Moon Price"
+            alt="Moon Prince"
             width={48}
             height={48}
             className="object-contain mix-blend-multiply"
