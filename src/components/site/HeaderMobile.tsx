@@ -20,14 +20,14 @@ export function HeaderMobile({ pathname, t }: { pathname: string; t: Function })
           <div className="flex items-center">
             <Image
               src="/moonlogo.png"
-              alt="Moon Price"
+              alt="Moon Prince"
               width={48}
               height={48}
               className="object-contain mix-blend-multiply"
               sizes="(max-width: 768px) 100vw, 33vw"
               priority
             />
-            <span className="text-xl font-black text-red-500 leading-none">Moon Price</span>
+            <span className="text-xl font-black text-red-500 leading-none">Moon Prince</span>
           </div>
         </div>
 

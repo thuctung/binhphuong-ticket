@@ -7,7 +7,7 @@ const MARGIN = 6;
 
 const NOTES = [
   "Quý khách vui lòng bảo mật vé.Vé đã mua không thể hoàn hủy và chỉ có giá trị sử dụng 1 lần.",
-  "Mẫu e-voucher phải giữ nguyên định dạng của Moon Price. Mọi thay đổi và chỉnh sửa đều không được chấp nhận để sử dụng dịch vụ.",
+  "Mẫu e-voucher phải giữ nguyên định dạng của Moon Prince. Mọi thay đổi và chỉnh sửa đều không được chấp nhận để sử dụng dịch vụ.",
   "Vui lòng đến quầy vé Công viên và trình vé điện tử đã mua để đổi vé vào cửa.",
 ];
 
@@ -182,7 +182,7 @@ export const generateBookingVoucher = async (data: SendTicketInSystemMailType) =
   pdf.setTextColor(0, 0, 0);
   pdf.setFont("Roboto", "normal");
   pdf.setFontSize(12);
-  pdf.text("Moon Price", PAGE_W / 2 - 28, PAGE_H - 22, { align: "center" });
+  pdf.text("Moon Prince", PAGE_W / 2 - 28, PAGE_H - 22, { align: "center" });
 
   pdf.setFont("Roboto", "normal");
   pdf.setFontSize(9);

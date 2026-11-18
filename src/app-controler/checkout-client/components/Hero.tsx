@@ -10,7 +10,7 @@ export default function Hero() {
     <section className="relative h-[340px] w-full overflow-hidden sm:h-[380px]">
       <Image
         src="/banner-moonprice.png"
-        alt="Moon Price"
+        alt="Moon Prince"
         width={900}
         height={400}
         className="absolute inset-0 h-full w-full object-cover"
@@ -19,7 +19,7 @@ export default function Hero() {
 
       <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-center px-4 sm:px-6 lg:px-8">
         <h1 className="max-w-xl text-4xl font-extrabold leading-tight text-white sm:text-5xl">
-          Khám phá Du lịch Đà Nẵng cùng Moon Price
+          Khám phá Du lịch Đà Nẵng cùng Moon Prince
         </h1>
 
         <div className="mt-6 flex flex-wrap gap-3">

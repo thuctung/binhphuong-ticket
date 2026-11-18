@@ -1,13 +1,13 @@
 {
   "breadcrumb": "All Policies",
   "title": "Privacy Policy",
-  "summary": "This policy explains how MoonPrice collects, uses, stores, and protects customer information when using the MoonPrice website.",
+  "summary": "This policy explains how Moon Prince collects, uses, stores, and protects customer information when using the Moon Prince website.",
   "sections": [
     {
       "heading": "1. Scope of Application",
       "paragraphs": [
-        "This policy applies to customers who visit the website, search for information, purchase tickets, or contact MoonPrice.",
-        "By using the website or providing information to MoonPrice, customers confirm that they have read and understood this policy. Where applicable law requires separate consent for a specific data processing activity, MoonPrice will obtain such consent in accordance with the law."
+        "This policy applies to customers who visit the website, search for information, purchase tickets, or contact Moon Prince.",
+        "By using the website or providing information to Moon Prince, customers confirm that they have read and understood this policy. Where applicable law requires separate consent for a specific data processing activity, Moon Prince will obtain such consent in accordance with the law."
       ]
     },
     {
@@ -15,7 +15,7 @@
       "items": [
         "Contact and ticket delivery information: full name, phone number, email address, and recipient information provided by the customer.",
         "Booking information: selected products or tickets, quantity, date of use, order number, and support requests.",
-        "Transaction information: payment method, transaction reference, payment status, and information necessary for reconciliation. MoonPrice will never proactively request customers' banking passwords or OTP codes.",
+        "Transaction information: payment method, transaction reference, payment status, and information necessary for reconciliation. Moon Prince will never proactively request customers' banking passwords or OTP codes.",
         "Technical information: IP address, browser type, device information, access timestamps, and cookies necessary for website operations."
       ]
     },
@@ -32,21 +32,21 @@
     {
       "heading": "4. Information Sharing",
       "paragraphs": [
-        "MoonPrice only shares information to the extent necessary with ticket issuers or attraction operators to verify bookings or provide tickets; payment service providers or banks to process and reconcile transactions; technology infrastructure providers to operate the website; or competent authorities upon lawful request.",
-        "MoonPrice does not sell customers' personal data. Recipients of such information are responsible for using it only for the intended purposes and applying appropriate protection measures in accordance with agreements and applicable laws."
+        "Moon Prince only shares information to the extent necessary with ticket issuers or attraction operators to verify bookings or provide tickets; payment service providers or banks to process and reconcile transactions; technology infrastructure providers to operate the website; or competent authorities upon lawful request.",
+        "Moon Prince does not sell customers' personal data. Recipients of such information are responsible for using it only for the intended purposes and applying appropriate protection measures in accordance with agreements and applicable laws."
       ]
     },
     {
       "heading": "5. Information Retention and Protection",
       "paragraphs": [
         "Information is retained for as long as necessary to fulfill the stated purposes, resolve disputes, reconcile transactions, and comply with statutory retention obligations. When the information is no longer necessary and no retention obligation applies, it will be deleted, destroyed, or otherwise processed in accordance with applicable regulations.",
-        "MoonPrice applies appropriate administrative and technical measures to prevent unauthorized access, use, disclosure, or alteration of information. However, no electronic transmission or storage method can guarantee absolute security."
+        "Moon Prince applies appropriate administrative and technical measures to prevent unauthorized access, use, disclosure, or alteration of information. However, no electronic transmission or storage method can guarantee absolute security."
       ]
     },
     {
       "heading": "6. Customer Rights and Requests",
       "paragraphs": [
-        "Under applicable laws, customers may submit requests to access, update, correct, withdraw consent, restrict or object to processing, delete personal data, and exercise other applicable rights. MoonPrice may need to verify the customer's identity and may refuse or limit a request where permitted by law or where mandatory retention requirements apply.",
+        "Under applicable laws, customers may submit requests to access, update, correct, withdraw consent, restrict or object to processing, delete personal data, and exercise other applicable rights. Moon Prince may need to verify the customer's identity and may refuse or limit a request where permitted by law or where mandatory retention requirements apply.",
         "Please send requests to {{email}} with the subject line “Personal Data Request”, together with sufficient information to identify the relevant order or request. Do not send passwords, OTP codes, or banking security information."
       ]
     },
@@ -59,7 +59,7 @@
     {
       "heading": "8. Policy Changes and Contact Information",
       "paragraphs": [
-        "MoonPrice may update this policy to reflect changes in its operations or applicable laws. The latest version will be published on the website together with its update date."
+        "Moon Prince may update this policy to reflect changes in its operations or applicable laws. The latest version will be published on the website together with its update date."
       ],
       "company": "Responsible entity: DA NANG TOURIST JOINT STOCK COMPANY.",
       "address": "04 Hoang Van Thai Street, Hoa Minh Ward, Lien Chieu District, Da Nang City, Vietnam.",
@@ -69,7 +69,7 @@
   ],
   "support": {
     "title": "Need further assistance?",
-    "description": "Contact MoonPrice at 0938367886 or hoangnguyettravel84@gmail.com."
+    "description": "Contact Moon Prince at 0938367886 or hoangnguyettravel84@gmail.com."
   },
   "update": "Updated"
 }

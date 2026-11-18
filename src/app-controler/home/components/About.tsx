@@ -76,7 +76,7 @@ export default function About() {
             {t("homepage.about.eyebrow")}
           </p>
           <h2 className="font-display mt-4 text-3xl font-extrabold sm:text-4xl">
-            <span className="text-sun">Moon Price</span> - {t("homepage.about.title")}
+            <span className="text-sun">Moon Prince</span> - {t("homepage.about.title")}
           </h2>
           <p className="mt-4 max-w-lg text-white/80">{t("homepage.about.description")}</p>
 
