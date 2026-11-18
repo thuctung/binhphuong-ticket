@@ -11,7 +11,8 @@
     "buyticket": "购买门票",
     "about": "关于我们",
     "question": "常见问题",
-    "agent": "代理商"
+    "agent": "代理商",
+    "owner": "所有者信息"
   },
   "label": {
     "all": "全部",

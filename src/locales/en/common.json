@@ -11,7 +11,8 @@
     "buyticket": "Buy Ticket",
     "about": "About",
     "question": "FAQ",
-    "agent": "Agents"
+    "agent": "Agents",
+    "owner": "Owner Information"
   },
   "label": {
     "all": "All",
