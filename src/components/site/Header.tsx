@@ -175,7 +175,7 @@ export default function Header() {
             )}
 
             {/* Mobile menu */}
-            <HeaderMobile pathname={pathname} />
+            <HeaderMobile pathname={pathname} t={t} />
           </div>
         </div>
       </header>

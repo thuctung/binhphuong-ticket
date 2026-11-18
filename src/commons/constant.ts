@@ -216,7 +216,7 @@ export const MENUS = [
   },
 
   {
-    link: "/#",
+    link: "/gioi-thieu",
     name: "header.about",
     icon: Award,
     iconBg: "bg-yellow-50",
