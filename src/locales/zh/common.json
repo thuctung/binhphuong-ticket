@@ -19,5 +19,26 @@
     "cancel": "取消",
     "confirm": "确认",
     "delete": "删除"
+  },
+  "cookie": {
+    "title": "我们使用 Cookie",
+    "description": "Cookie 有助于网站正常运行，并帮助我们了解您如何使用网站。您可以接受所有 Cookie、拒绝非必要 Cookie，或自行设置偏好。",
+    "privacyPolicy": "隐私政策",
+    "acceptAll": "接受全部",
+    "necessaryOnly": "仅接受必要 Cookie",
+    "customize": "自定义设置",
+    "savePreferences": "保存设置",
+    "necessary": {
+      "title": "必要 Cookie",
+      "description": "确保网站正常运行，包括登录、购物车和安全功能。始终启用。"
+    },
+    "analytics": {
+      "title": "分析 Cookie",
+      "description": "帮助我们了解哪些页面浏览量较高，以便改进网站内容和用户体验。"
+    },
+    "advertising": {
+      "title": "广告 Cookie",
+      "description": "帮助我们在其他网站上向您展示更符合您兴趣的广告。"
+    }
   }
 }

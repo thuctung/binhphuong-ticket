@@ -19,5 +19,26 @@
     "cancel": "Hủy",
     "confirm": "Xác nhận",
     "delete": "Xóa"
+  },
+  "cookie": {
+    "title": "Chúng tôi dùng cookie",
+    "description": "Cookie giúp trang web hoạt động đúng và cho chúng tôi hiểu cách bạn sử dụng nó. Bạn có thể chấp nhận tất cả, từ chối loại không cần thiết, hoặc tự chọn.",
+    "privacyPolicy": "Chính sách bảo mật",
+    "acceptAll": "Chấp nhận tất cả",
+    "necessaryOnly": "Chỉ cookie cần thiết",
+    "customize": "Tùy chỉnh",
+    "savePreferences": "Lưu lựa chọn",
+    "necessary": {
+      "title": "Cần thiết",
+      "description": "Giữ cho trang web hoạt động ổn định: đăng nhập, giỏ hàng và bảo mật. Luôn bật."
+    },
+    "analytics": {
+      "title": "Phân tích",
+      "description": "Giúp chúng tôi biết những trang nào được xem nhiều để cải thiện nội dung và trải nghiệm người dùng."
+    },
+    "advertising": {
+      "title": "Quảng cáo",
+      "description": "Giúp hiển thị quảng cáo phù hợp hơn với bạn trên các trang web khác."
+    }
   }
 }
