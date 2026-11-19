@@ -19,5 +19,26 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "delete": "Delete"
+  },
+  "cookie": {
+    "title": "We use cookies",
+    "description": "Cookies help our website function properly and allow us to understand how you use it. You can accept all cookies, reject non-essential cookies, or customize your preferences.",
+    "privacyPolicy": "Privacy Policy",
+    "acceptAll": "Accept All",
+    "necessaryOnly": "Necessary Cookies Only",
+    "customize": "Customize",
+    "savePreferences": "Save Preferences",
+    "necessary": {
+      "title": "Necessary",
+      "description": "Keep the website running properly: login, shopping cart, and security. Always enabled."
+    },
+    "analytics": {
+      "title": "Analytics",
+      "description": "Help us understand which pages are viewed most often so we can improve our content and user experience."
+    },
+    "advertising": {
+      "title": "Advertising",
+      "description": "Help display more relevant advertisements to you on other websites."
+    }
   }
 }

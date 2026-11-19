@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/lib/i18n/client";
 import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "cookie-consent-v1";
@@ -24,23 +25,24 @@ function saveConsent(choice) {
 const CATEGORIES = [
   {
     key: "necessary",
-    title: "Cần thiết",
-    desc: "Giữ cho trang hoạt động: đăng nhập, giỏ hàng, bảo mật. Luôn bật.",
+    title: "common.cookie.necessary.title",
+    desc: "common.cookie.necessary.description",
     locked: true,
   },
   {
     key: "analytics",
-    title: "Phân tích",
-    desc: "Cho chúng tôi biết trang nào được xem nhiều để cải thiện nội dung.",
+    title: "common.cookie.analytics.title",
+    desc: "common.cookie.analytics.description",
   },
   {
     key: "marketing",
-    title: "Quảng cáo",
-    desc: "Hiển thị quảng cáo phù hợp hơn với bạn trên các trang khác.",
+    title: "common.cookie.advertising.title",
+    desc: "common.cookie.advertising.description",
   },
 ];
 
 export default function CookieConsent({ privacyUrl = "/privacy" }) {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [prefs, setPrefs] = useState({ analytics: false, marketing: false });
@@ -67,11 +69,10 @@ export default function CookieConsent({ privacyUrl = "/privacy" }) {
         aria-describedby="cc-desc"
       >
         <div className="cc-text">
-          <h2 id="cc-title">Chúng tôi dùng cookie</h2>
+          <h2 id="cc-title">{t("common.cookie.title")}</h2>
           <p id="cc-desc">
-            Cookie giúp trang web hoạt động đúng và cho chúng tôi hiểu cách bạn sử dụng nó. Bạn có
-            thể chấp nhận tất cả, từ chối loại không cần thiết, hoặc tự chọn.{" "}
-            <a href="/chinh-sach/bao-mat">Chính sách bảo mật</a>
+            {t("common.cookie.description")}
+            <a href="/chinh-sach/bao-mat">{t("common.cookie.privacyPolicy")}</a>
           </p>
 
           {showSettings && (
@@ -86,8 +87,8 @@ export default function CookieConsent({ privacyUrl = "/privacy" }) {
                       onChange={(e) => setPrefs((p) => ({ ...p, [c.key]: e.target.checked }))}
                     />
                     <span>
-                      <strong>{c.title}</strong>
-                      <small>{c.desc}</small>
+                      <strong>{t(c.title)}</strong>
+                      <small>{t(c.desc)}</small>
                     </span>
                   </label>
                 </li>
@@ -106,11 +107,11 @@ export default function CookieConsent({ privacyUrl = "/privacy" }) {
               className="cc-btn cc-primary"
               onClick={() => close({ analytics: true, marketing: true })}
             >
-              Chấp nhận tất cả
+              {t("common.cookie.acceptAll")}
             </button>
           )}
           <button className="cc-btn" onClick={() => close({ analytics: false, marketing: false })}>
-            Chỉ cookie cần thiết
+            {t("common.cookie.necessaryOnly")}
           </button>
           {!showSettings && (
             <button
@@ -118,7 +119,7 @@ export default function CookieConsent({ privacyUrl = "/privacy" }) {
               onClick={() => setShowSettings(true)}
               aria-expanded={showSettings}
             >
-              Tùy chỉnh
+              {t("common.cookie.customize")}
             </button>
           )}
         </div>
