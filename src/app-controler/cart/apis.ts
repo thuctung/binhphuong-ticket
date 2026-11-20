@@ -1,0 +1,18 @@
+import api from "@/axios";
+import { CREATE_PAYMENT_WITH_MOMO } from "@/commons/apiURL";
+import { useCommonStore } from "@/stores/useCommonStore";
+import { CommonType } from "@/types";
+
+const { setGlobalLoading, setToastMessage }: CommonType | any = useCommonStore.getState();
+
+export const paymentMomo = async (orderCode: string) => {
+  try {
+    setGlobalLoading(true);
+    const { data }: any = await api.post(CREATE_PAYMENT_WITH_MOMO, { orderCode });
+    return data;
+  } catch (err: any) {
+    setToastMessage(err.response?.data?.error || err.message || "Lỗi khi tải danh sách");
+  } finally {
+    setGlobalLoading(false);
+  }
+};

@@ -1,5 +1,3 @@
-
-
 export type Coupon = {
   code: string;
   type: "percent" | "fixed";
@@ -7,8 +5,7 @@ export type Coupon = {
   label: string;
 };
 
-export type PaymentMethodId = "qr" | "card";
-
+export type PaymentMethodId = "qr" | "card" | "momo";
 
 // Kết quả server trả về sau khi tạo đơn
 export type CreatedOrder = {

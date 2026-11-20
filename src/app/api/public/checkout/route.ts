@@ -15,6 +15,7 @@ export async function POST(request: Request) {
     siteCode,
     paymentCode,
     orderCode,
+    paymentType,
   }: ClientOrderItem = await request.json();
 
   const { data, error } = await supabaseAdmin.rpc(DB_TABLE_NAME.FUC_CUSTOMER_BUY_TICKET, {
@@ -28,6 +29,7 @@ export async function POST(request: Request) {
     c_date_use: dateUse,
     c_order_code: orderCode,
     list_ticket_submit: listTicketSubmit,
+    c_payment_type: paymentType,
   });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
