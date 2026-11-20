@@ -11,6 +11,7 @@ import { BADGE_STYLES, getCategaryItem, getImageProduct } from "../contants";
 import ProductDetailModal from "./ProdcutDetail";
 import { useTranslation } from "@/lib/i18n/client";
 import { get } from "lodash";
+import ImageWithFallback from "@/components/ui/ImageFallback";
 
 type Props = {
   product: ProductBanaType;
@@ -49,15 +50,16 @@ export default function ProductCard({ product, quantity, lisCategory }: Props) {
     setTempQty(Number.isNaN(value) ? 0 : Math.min(MAX, Math.max(MIN, value)));
   };
   const handleInputBlur = () => setTempQty((prev) => normalize(prev));
-
   return (
-    <article className="flex flex-col overflow-hidden rounded-3xl bg-white p-3 shadow-lg shadow-ink/10 md:flex-row md:gap-5 md:p-4">
+    <article className="group flex flex-col overflow-hidden rounded-3xl bg-white p-3 shadow-lg shadow-ink/10 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-ink/20 md:flex-row md:gap-5 md:p-4">
       <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden rounded-2xl md:aspect-auto md:min-h-[240px] md:w-72 lg:w-80">
-        <img
-          src={`/buy-ticket-image/${getImageProduct(product)}`}
+        <ImageWithFallback
+          width={330}
+          height={240}
           alt={product.name}
-          className="absolute inset-0 size-full object-cover"
+          className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           loading="lazy"
+          src={`/buy-ticket-image${getImageProduct(product)}`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-transparent" />
 
