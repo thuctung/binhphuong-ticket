@@ -103,13 +103,6 @@ export default function Login() {
               <label htmlFor="password" className="text-xs font-semibold text-slate-700">
                 Mật khẩu
               </label>
-              {/* <button
-          type="button"
-          onClick={() => setOpenForgotpass(true)}
-          className="text-xs font-medium text-[#61a05e] hover:underline"
-        >
-          Quên mật khẩu?
-        </button> */}
             </div>
             <div className="relative">
               <LockIcon
@@ -132,6 +125,15 @@ export default function Login() {
                 className="absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-r-xl text-slate-400 transition-colors hover:text-slate-700"
               >
                 <EyeIcon off={showPassword} className="h-4 w-4" />
+              </button>
+            </div>
+            <div className="flex justify-end m-2">
+              <button
+                type="button"
+                onClick={() => setOpenForgotpass(true)}
+                className="text-xs font-medium text-[#61a05e] hover:underline"
+              >
+                Quên mật khẩu?
               </button>
             </div>
           </div>

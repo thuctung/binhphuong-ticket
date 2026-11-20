@@ -43,6 +43,8 @@ import {
 
 import BankTransferQR from "../affi/topup/components/qrToBank";
 import { KEY_MODIFY_DATA } from "../affi/stats/contants";
+import { paymentMomo } from "./apis";
+import { getTicketForCustomer } from "./helper";
 
 const initOrderData = {
   dateUse: "",
@@ -166,6 +168,7 @@ export default function CartController() {
 
   const handleBuyTicket = async () => {
     const paymentCode = getCodeTopup(TYPE_TRANSFER.CUSTOMER);
+
     const in_system = currentSite?.in_system || false;
     const thirdPartyNum = generateThirdPartyCode(in_system);
     const { email, phone, fullname } = customer;
@@ -195,6 +198,7 @@ export default function CartController() {
       return itemSubmit;
     });
     setProductSelected(products);
+
     const paramCreateOrder: CustomerOrderType = {
       email,
       phone,
@@ -211,6 +215,7 @@ export default function CartController() {
       }
     }
     // SUCCESS OF SUN WORLD
+    const orderCode = dataOrderSunWorld.orderCode || thirdPartyNum;
     const dataSubmit: ClientOrderItem = {
       userEmail: email,
       totalAmount: totalPayment,
@@ -220,50 +225,48 @@ export default function CartController() {
       thirdPartyNum,
       listTicketSubmit: products,
       siteCode: site_code,
+      paymentType: payment!,
       paymentCode,
-      orderCode: dataOrderSunWorld.orderCode || thirdPartyNum, // in system use thirdPartyNum for ordercde
+      orderCode, // in system use thirdPartyNum for ordercde
     };
     const orderID = await customerCreateOrderTicket(dataSubmit);
+
     if (orderID) {
-      const qrLink = getBankInfo(totalPayment, paymentCode);
-      setQRPayment({
-        qr: qrLink,
-        code: paymentCode,
-        amount: totalPayment,
-      });
-      setOpenQR(true);
-      setCurrentOrderData({
-        orderCode: dataOrderSunWorld.orderCode,
-        products,
-        orderId: orderID,
-        dateUse: formData.date_use,
-        siteCode,
-        formData,
-        thirdPartyNum,
-        in_system,
-        paymentCode,
-        siteName: site_name,
-      });
+      if (payment === "momo") {
+        sessionStorage.setItem("PRODUCT_SELECTED", JSON.stringify(productSelected));
+        handlePayMomo(orderCode, totalPayment);
+      } else {
+        const qrLink = getBankInfo(totalPayment, paymentCode);
+        setQRPayment({
+          qr: qrLink,
+          code: paymentCode,
+          amount: totalPayment,
+        });
+        setOpenQR(true);
+        setCurrentOrderData({
+          orderCode: dataOrderSunWorld.orderCode,
+          products,
+          orderId: orderID,
+          dateUse: formData.date_use,
+          siteCode,
+          formData,
+          thirdPartyNum,
+          in_system,
+          paymentCode,
+          siteName: site_name,
+        });
+      }
       // CANCLE ORDER TIMEOUT :
       timeCancelOrderRef.current = setTimeout(() => cancleOrderTimeout(orderID), 10 * 60 * 1000); // 10m
     }
   };
 
-  const confirmBookingSunworld = async () => {
-    const { orderCode, orderId, dateUse } = currentOrderData;
-    const paramGetTicket: PayloadGetTicketSunType = {
-      orderCode,
-      productSelected,
-      orderId,
-      dateUse,
-      customerEmail: customer.email,
-    };
-
-    const ticketCustomer: TicketResultQRType[] = await getTicketSunWorld(paramGetTicket);
-    if (ticketCustomer?.length) {
-      await downloadTicketPDF(ticketCustomer, []);
-      setCurrentOrderData(initOrderData);
-      route.push(`/order-success/${currentOrderData.thirdPartyNum}`);
+  const handlePayMomo = async (orderCode: string, totalPayment: number) => {
+    const { payUrl } = await paymentMomo(orderCode, totalPayment);
+    if (payUrl) {
+      window.location.href = payUrl;
+    } else {
+      toast.error("Không tạo được thanh toán");
     }
   };
 
@@ -278,7 +281,9 @@ export default function CartController() {
       // sendMailTicketInSystem();
       return;
     } else {
-      confirmBookingSunworld();
+      await getTicketForCustomer(currentOrderData, productSelected, customer.email, route, () =>
+        setCurrentOrderData(initOrderData)
+      );
     }
     clearCart();
   };

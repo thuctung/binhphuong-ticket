@@ -4,6 +4,7 @@ import { QrCode, CreditCard, ShieldCheck } from "lucide-react";
 import { CreatedOrder, PaymentMethodId } from "../types";
 import { formatVND } from "@/lib/money";
 import { useTranslation } from "@/lib/i18n/client";
+import Image from "next/image";
 
 // Thay bằng tài khoản nhận tiền của bạn (hoặc đặt trong .env)
 const BANK = {
@@ -21,6 +22,12 @@ const METHODS: { id: PaymentMethodId; name: string; desc: string; icon: React.Re
     name: "cart.qr_payment",
     desc: "cart.supported_payment_apps",
     icon: <QrCode className="h-5 w-5" />,
+  },
+  {
+    id: "momo",
+    name: "cart.momo_payment",
+    desc: "",
+    icon: <Image src="/icons/momo.webp" alt="momo" width={40} height={40} />,
   },
   {
     id: "card",

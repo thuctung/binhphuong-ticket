@@ -19,6 +19,7 @@
   "invalid_or_expired_coupon": "优惠码无效或已过期。",
   "payment_method": "支付方式",
   "qr_payment": "扫描二维码支付",
+  "momo_payment": "MoMo 钱包",
   "supported_payment_apps": "银行应用、MoMo、ZaloPay",
   "qr_payment_instruction": "点击“支付”即可获取附有转账信息的二维码。您可以使用银行应用、MoMo 或 ZaloPay 扫描二维码。",
   "payment": "支付",
