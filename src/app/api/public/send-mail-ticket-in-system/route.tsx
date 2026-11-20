@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   const { email, listTicket, phone, dateUse, orderCode, paymentCode, siteName, fullName } = body;
   const adminMail = env.SEND_MAIL_ADMIN;
   await resendMail.emails.send({
-    from: "Moon Prince System<noreply@htmtravel.com>",
+    from: "Moon Prince System<noreply@dulichhoangnguyet.com>",
     to: [email, adminMail],
     subject: `Đặt vé ${siteName} Ngày: ${dateUse}`,
     html: `

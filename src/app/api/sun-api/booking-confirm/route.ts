@@ -38,7 +38,7 @@ export async function POST(req: Request) {
           productSelected
         );
         const siteName = get(ticketBuild, [0, "siteName"]) || "";
-        const { customerTickets } = getTicketFOCAndCutomer(ticketBuild);
+        const { customerTickets, focTickets } = getTicketFOCAndCutomer(ticketBuild);
 
         await Promise.allSettled([
           supabaseAdmin.from(DB_TABLE_NAME.TICKETS).insert(ticketBuild).select(),
@@ -51,7 +51,10 @@ export async function POST(req: Request) {
             is_send_foc: false,
           }),
         ]);
-        return NextResponse.json({ data: customerTickets, messages: "" }, { status: 200 });
+        return NextResponse.json(
+          { data: { customerTickets, focTickets, dataSunworld }, messages: "" },
+          { status: 200 }
+        );
       } else {
         // LỖI TỪ DATABASE LƯU ORDER
         const errorMessage = error instanceof Error ? error.message : JSON.stringify(error);
