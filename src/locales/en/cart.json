@@ -19,6 +19,7 @@
   "invalid_or_expired_coupon": "This code is invalid or has expired.",
   "payment_method": "Payment Method",
   "qr_payment": "Scan QR Code",
+  "momo_payment": "Momo Wallet",
   "supported_payment_apps": "Banking apps, MoMo, ZaloPay",
   "qr_payment_instruction": "Click Pay to receive a QR code with the transfer details. You can scan it using a banking app, MoMo, or ZaloPay.",
   "payment": "Pay",

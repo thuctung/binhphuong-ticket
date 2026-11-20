@@ -19,7 +19,7 @@ import { CUSTOMER, getStatusName, listAccStatus, statusClass } from "./constants
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { formatVND } from "@/helpers/money";
 import { Button } from "@/components/ui/button";
-import { ACC_STATUS, TYPE_TRANSFER } from "@/commons/constant";
+import { STATUS_COMMON_TYPE, TYPE_TRANSFER } from "@/commons/constant";
 import { getListAgent } from "../agent-mgt/api";
 import EditUserLevelDialog from "./components/edit-level";
 import AddMoneyDialog from "./components/add-moeny";
@@ -173,23 +173,26 @@ export default function AffiliateMgt() {
       align: "center",
       render: (row) => (
         <div className="flex flex-wrap gap-2">
-          {row.status === ACC_STATUS.PENDING ? (
-            <Button size="sm" onClick={() => handleUpdateStatus(ACC_STATUS.APPROVED, row.user_id)}>
+          {row.status === STATUS_COMMON_TYPE.PENDING ? (
+            <Button
+              size="sm"
+              onClick={() => handleUpdateStatus(STATUS_COMMON_TYPE.APPROVED, row.user_id)}
+            >
               Chấp nhận
             </Button>
           ) : null}
-          {row.status === ACC_STATUS.APPROVED ? (
+          {row.status === STATUS_COMMON_TYPE.APPROVED ? (
             <Button
               size="sm"
               variant="destructive"
-              onClick={() => handleUpdateStatus(ACC_STATUS.SUSPENDED, row.user_id)}
+              onClick={() => handleUpdateStatus(STATUS_COMMON_TYPE.SUSPENDED, row.user_id)}
             >
               Dừng làm aff
             </Button>
           ) : null}
-          {row.status === ACC_STATUS.SUSPENDED ? (
+          {row.status === STATUS_COMMON_TYPE.SUSPENDED ? (
             <Button
-              onClick={() => handleUpdateStatus(ACC_STATUS.APPROVED, row.user_id)}
+              onClick={() => handleUpdateStatus(STATUS_COMMON_TYPE.APPROVED, row.user_id)}
               size="sm"
               variant="secondary"
             >

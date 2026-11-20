@@ -79,3 +79,9 @@ export type InputProps = {
   className?: string;
   placeholder: string;
 };
+
+export type UpdatePaymentStatusType = {
+  message: string;
+  orderCode: string;
+  status: string;
+};

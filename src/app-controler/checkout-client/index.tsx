@@ -23,7 +23,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import {
   DB_TABLE_NAME,
   ERROR_MESSAGE,
-  PAYMENT_STATUS,
+  STATUS_COMMON_TYPE,
   SITE_CODES,
   TYPE_TRANSFER,
 } from "@/commons/constant";
@@ -154,6 +154,7 @@ export default function CheckoutControlerPage() {
         listTicketSubmit: products,
         siteCode,
         paymentCode,
+        paymentType: "qr",
         orderCode: dataOrderSunWorld.orderCode || thirdPartyNum, // in system user thirdPartyNum for ordercde
       };
       const orderID = await customerCreateOrderTicket(dataSubmit);
@@ -214,7 +215,7 @@ export default function CheckoutControlerPage() {
     const data = await senTicket(payload);
     const payloadUpdate = {
       orderId: orderId,
-      status_payment: PAYMENT_STATUS.SUCCESS,
+      status_payment: STATUS_COMMON_TYPE.SUCCESS,
       status: KEY_MODIFY_DATA.ERROR,
       description: "Lỗi đặt vé từ khách lẻ",
     };
@@ -239,7 +240,7 @@ export default function CheckoutControlerPage() {
       customerEmail,
     };
 
-    const ticketCustomer: TicketResultQRType[] = await getTicketSunWorld(paramGetTicket);
+    const ticketCustomer: TicketResultQRType[] = await getTicketSunWorld(paramGetTicket, true);
     if (ticketCustomer?.length) {
       downloadTicketPDF(ticketCustomer, []);
       setProductSelected([]);

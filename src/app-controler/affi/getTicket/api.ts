@@ -34,14 +34,6 @@ export const createOrderTicket = async (params: ParamCreateTicketAgentType) => {
 
 export const getTicketFromSunGroup = async (payload: CreateOrderSunGroupPayload) => {
   try {
-    // const data: any = await sunWorldApiClient.post(`/v2/order/create`, {
-    //   thirdPartyNumber: payload.thirdPartyNumber,
-    //   products: payload.products,
-    //   email: payload.email,
-    //   phone: payload.phone,
-    //   fullname: payload.fullname,
-    // });
-    // return undefined;
     setGlobalLoading(true);
     const { data: resData }: any = await api.post(SUN_V2_CREATE_ORDER, payload);
     const { data, messages } = resData;

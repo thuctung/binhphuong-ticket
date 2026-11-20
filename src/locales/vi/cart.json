@@ -19,6 +19,7 @@
   "invalid_or_expired_coupon": "Mã không hợp lệ hoặc đã hết hạn.",
   "payment_method": "Phương thức thanh toán",
   "qr_payment": "Quét mã QR",
+  "momo_payment": "Ví Momo",
   "supported_payment_apps": "App ngân hàng, MoMo, ZaloPay",
   "qr_payment_instruction": "Bấm Thanh toán để nhận mã QR kèm nội dung chuyển khoản. Quét được bằng app ngân hàng, MoMo hoặc ZaloPay.",
   "payment": "Thanh toán",

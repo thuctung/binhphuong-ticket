@@ -24,7 +24,7 @@ import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
 import { downloadTicketPDF, generateThirdPartyCode } from "@/helpers/ticket";
 import { toast } from "react-toastify";
-import { ACC_STATUS, SITE_CODES } from "@/commons/constant";
+import { STATUS_COMMON_TYPE, SITE_CODES } from "@/commons/constant";
 import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
 import GetTicketForm from "@/components/GetTicketForm";
 import {
@@ -59,7 +59,7 @@ export default function GetTicketPageControler() {
       result = false;
     } else if (profile && products.length) {
       const status = await getStatusProfile(profile.user_id);
-      if (status !== ACC_STATUS.APPROVED) {
+      if (status !== STATUS_COMMON_TYPE.APPROVED) {
         result = false;
         setToastMessage("Bạn đã bị khóa tài khoản, vui lòng liên hệ quản trị viên để được hỗ trợ");
       }

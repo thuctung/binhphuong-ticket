@@ -10,7 +10,6 @@ export async function POST(request: Request) {
     .eq("third_party_number", thirdPartyCode)
     .eq("status", "success");
   if (error) {
-    console.log("error", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
   return NextResponse.json({ data: data || [] }, { status: 200 });
