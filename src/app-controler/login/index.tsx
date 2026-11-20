@@ -149,7 +149,7 @@ export default function Login() {
 
           {/* Submit */}
           <button
-            disabled={isLogin}
+            disabled={isLogin || loading}
             type="submit"
             className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-[#6cae69] to-[#559652] text-sm font-semibold text-white shadow-[0_4px_12px_-2px_rgba(97,160,94,0.5)] transition-all hover:brightness-105 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#61a05e]/30 disabled:cursor-not-allowed disabled:opacity-70"
           >

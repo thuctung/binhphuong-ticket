@@ -7,7 +7,7 @@ const resendMail = new Resend(process.env.SEND_MAIL_KEY);
 export const sendMailTicketBaNa = async (payloadSendMailBaNa: SendMailBaNaType) => {
   const { mail, siteName, orderCode, fileAttch } = payloadSendMailBaNa;
   return await resendMail.emails.send({
-    from: "Moon Prince System<noreply@htmtravel.com>",
+    from: "Moon Prince System<noreply@dulichhoangnguyet.com>",
     to: mail,
     subject: `Đặt vé ${siteName} ${orderCode}`,
     html: `
