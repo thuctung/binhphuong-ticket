@@ -6,17 +6,20 @@ import { OrderType } from "@/types";
 import { updatePaymentStatus } from "@/app-controler/process-payment-momo/apis";
 
 import { claimOrder, getOrderItem } from "./apis";
-import { getTicketForCustomer } from "../cart/helper";
+import { getTicketForCustomer, PRODUCT_SELECTED_LOCALE } from "../cart/helper";
+import { useTranslation } from "@/lib/i18n/client";
+import { STATUS_COMMON_TYPE } from "@/commons/constant";
 
 type Props = { orderCode: string; amount: number; transId: string; payType: string };
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-export default function ProcessPaymentMomo({ orderCode, amount, transId, payType }: Props) {
+export default function ProcessPaymentMomo({ orderCode, amount }: Props) {
+  const { t } = useTranslation();
   const router = useRouter();
   const started = useRef<string | null>(null);
 
-  const [text, setText] = useState("Đang xác nhận thanh toán...");
+  const [text, setText] = useState(t("momoPayment.confirmingPayment"));
 
   useEffect(() => {
     // Chống chạy lại khi component re-render
@@ -27,7 +30,7 @@ export default function ProcessPaymentMomo({ orderCode, amount, transId, payType
 
     const fail = async (reason: string) => {
       if (cancelled) return;
-      await updatePaymentStatus({ orderCode, message: reason, status: "ERROR" });
+      await updatePaymentStatus({ orderCode, message: reason, status: STATUS_COMMON_TYPE.ERROR });
       router.replace(`/order-failed?reason=${encodeURIComponent(reason)}`);
     };
 
@@ -38,7 +41,7 @@ export default function ProcessPaymentMomo({ orderCode, amount, transId, payType
 
     const run = async () => {
       try {
-        setText("Đang kiểm tra đơn hàng...");
+        setText(t("momoPayment.checkingOrder"));
 
         // 1. Lấy thông tin đơn hàng
         let order = await getOrderItem(orderCode);
@@ -53,7 +56,10 @@ export default function ProcessPaymentMomo({ orderCode, amount, transId, payType
         }
 
         // 3. Đơn hàng đã hoàn thành
-        if (order.status_payment === "SUCCESS" && order.status === "SUCCESS") {
+        if (
+          order.status_payment === STATUS_COMMON_TYPE.SUCCESS &&
+          order.status === STATUS_COMMON_TYPE.SUCCESS
+        ) {
           return success(order);
         }
 
@@ -61,11 +67,11 @@ export default function ProcessPaymentMomo({ orderCode, amount, transId, payType
         await updatePaymentStatus({
           orderCode,
           message: "Thanh toán thành công",
-          status: "SUCCESS",
+          status: STATUS_COMMON_TYPE.SUCCESS,
         });
 
         // 5. Claim đơn hàng - chỉ một request được quyền tạo vé
-        setText("Đơn hàng đang được xử lý...");
+        setText(t("momoPayment.orderProcessing"));
 
         const { claimed } = await claimOrder(orderCode);
 
@@ -84,11 +90,17 @@ export default function ProcessPaymentMomo({ orderCode, amount, transId, payType
               return fail("not_found");
             }
 
-            if (order.status_payment === "SUCCESS" && order.status === "SUCCESS") {
+            if (
+              order.status_payment === STATUS_COMMON_TYPE.SUCCESS &&
+              order.status === STATUS_COMMON_TYPE.SUCCESS
+            ) {
               return success(order);
             }
 
-            if (order.status_payment === "FAILED" || order.status_payment === "ERROR") {
+            if (
+              order.status_payment === STATUS_COMMON_TYPE.FAILED ||
+              order.status_payment === STATUS_COMMON_TYPE.ERROR
+            ) {
               return fail("payment_failed");
             }
           }
@@ -97,9 +109,9 @@ export default function ProcessPaymentMomo({ orderCode, amount, transId, payType
         }
 
         // 7. Đã claim thành công -> tiến hành tạo vé
-        setText("Đang tạo vé...");
+        setText(t("momoPayment.creatingTicket"));
 
-        const productSelected = localStorage.getItem("PRODUCT_SELECTED");
+        const productSelected = localStorage.getItem(PRODUCT_SELECTED_LOCALE);
 
         if (!productSelected) {
           return fail("product_not_found");
@@ -129,7 +141,7 @@ export default function ProcessPaymentMomo({ orderCode, amount, transId, payType
           route: router,
           showLoading: false,
           callback: () => {
-            localStorage.removeItem("PRODUCT_SELECTED");
+            localStorage.removeItem(PRODUCT_SELECTED_LOCALE);
             return success(order);
           },
         });
@@ -164,7 +176,7 @@ export default function ProcessPaymentMomo({ orderCode, amount, transId, payType
       </svg>
       <div>
         <p className="text-lg font-bold text-slate-900">{text}</p>
-        <p className="mt-1 text-sm text-slate-500">Vui lòng không đóng hoặc tải lại trang.</p>
+        <p className="mt-1 text-sm text-slate-500">{t("momoPayment.doNotClosePage")}</p>
       </div>
     </main>
   );

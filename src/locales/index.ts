@@ -10,6 +10,7 @@ import viSuport from "./vi/support.json";
 import viPayment from "./vi/payment.json";
 import viCondition from "./vi/conditions.json";
 import viRefund from "./vi/refund.json";
+import vimomoPayment from "./vi/momo-payment.json";
 
 import enCommon from "./en/common.json";
 import enHomepage from "./en/homepage.json";
@@ -23,6 +24,7 @@ import enSuport from "./en/support.json";
 import enPayment from "./en/payment.json";
 import enCondition from "./en/conditions.json";
 import enRefund from "./en/refund.json";
+import enmomoPayment from "./en/momo-payment.json";
 
 import zhCommon from "./zh/common.json";
 import zhHomepage from "./zh/homepage.json";
@@ -36,6 +38,7 @@ import zhSuport from "./zh/support.json";
 import zhPayment from "./zh/payment.json";
 import zhCondition from "./zh/conditions.json";
 import zhRefund from "./zh/refund.json";
+import zhmomoPayment from "./zh/momo-payment.json";
 
 import koCommon from "./ko/common.json";
 import koHomepage from "./ko/homepage.json";
@@ -49,6 +52,7 @@ import koSuport from "./ko/support.json";
 import koPayment from "./ko/payment.json";
 import koCondition from "./ko/conditions.json";
 import koRefund from "./ko/refund.json";
+import komomoPayment from "./ko/momo-payment.json";
 
 export const resources = {
   vi: {
@@ -65,6 +69,7 @@ export const resources = {
       support: viSuport,
       condition: viCondition,
       refund: viRefund,
+      momoPayment: vimomoPayment,
     },
   },
   en: {
@@ -81,6 +86,7 @@ export const resources = {
       price: enPrice,
       condition: enCondition,
       refund: enRefund,
+      momoPayment: enmomoPayment,
     },
   },
   zh: {
@@ -97,6 +103,7 @@ export const resources = {
       price: zhPrice,
       condition: zhCondition,
       refund: zhRefund,
+      momoPayment: zhmomoPayment,
     },
   },
   ko: {
@@ -113,6 +120,7 @@ export const resources = {
       payment: koPayment,
       condition: koCondition,
       refund: koRefund,
+      momoPayment: komomoPayment,
     },
   },
 };
