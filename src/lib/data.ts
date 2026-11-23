@@ -37,7 +37,7 @@ export const tours = [
     price: 2750000,
     old: 3200000,
     tone: "from-emerald-700 to-lime-300",
-    img: "/sapa.jpg",
+    img: "/sapa.webp",
   },
 ];
 
