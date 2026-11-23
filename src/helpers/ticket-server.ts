@@ -22,8 +22,8 @@ export const downloadTicketPDFServer = async (
   tickets: TicketResultQRType[],
   focTicket: TicketResultQRType[]
 ) => {
-  const PAGE_W = 250;
-  const PAGE_H = 630;
+  const PAGE_W = 270;
+  const PAGE_H = 700;
   const pdf = new jsPDF({
     unit: "px",
     format: [PAGE_W, PAGE_H],
@@ -81,11 +81,10 @@ export const downloadTicketPDFServer = async (
 
     // ===== TITLE BAR (đỏ) — hỗ trợ xuống dòng =====
     pdf.setFont("Roboto", "bold");
-    pdf.setFontSize(13);
+    pdf.setFontSize(14);
     const titleLines = pdf.splitTextToSize(t.productName, PAGE_W - 40);
     const lineHeight = 13;
     const titleBarPadding = 8;
-    const titleBarH = titleLines.length * lineHeight + titleBarPadding * 2 - 4;
 
     pdf.setTextColor(0, 0, 0);
     titleLines.forEach((line: string, idx: number) => {
@@ -96,13 +95,13 @@ export const downloadTicketPDFServer = async (
 
     const leftX = 18;
     // ===== QR BOX =====
-    y += 20;
+    y += 17;
     const qr = await QRCodePDF.toDataURL(isFOCTicket ? t.verifyCode : t.ticketNumber);
-    pdf.addImage(qr, "PNG", leftX - 9, y, 120, 120);
+    pdf.addImage(qr, "PNG", leftX - 9, y, 140, 140);
 
-    pdf.setFontSize(10);
+    pdf.setFontSize(11);
     pdf.setFont("Roboto", "bold");
-    const leftTextQR = 120;
+    const leftTextQR = 140;
     let yTextQR = y + 20;
     //  ===== SITE =====
     pdf.setTextColor(...GREEN_LABEL);
@@ -111,32 +110,32 @@ export const downloadTicketPDFServer = async (
     pdf.text(get(SITE_SUB_GROUP, t.siteCode), leftTextQR + 17, yTextQR);
 
     if (!isFOCTicket) {
-      yTextQR += 16;
+      yTextQR += 14;
       // ===== PERSON TYPE =====
       pdf.setTextColor(...GREEN_LABEL);
       pdf.text("Đối tượng:", leftTextQR, yTextQR);
       pdf.setTextColor(...TEXT_DARK);
-      pdf.text(getPerSonTypeName(t.personType), leftTextQR + 37, yTextQR);
+      pdf.text(getPerSonTypeName(t.personType), leftTextQR + 39, yTextQR);
     }
 
     // ===== RESTAURANT =====
     if (t.restaurantName) {
-      yTextQR += 16;
+      yTextQR += 14;
       // ===== RESTAURANT =====
       pdf.setTextColor(...GREEN_LABEL);
       pdf.text("Khu vực:", leftTextQR, yTextQR);
       pdf.setTextColor(...TEXT_DARK);
-      pdf.text(t.restaurantName, leftTextQR + 31, yTextQR);
+      pdf.text(t.restaurantName, leftTextQR + 33, yTextQR);
     }
     // ===== PRICE =====
-    yTextQR += 16;
+    yTextQR += 14;
     pdf.setTextColor(...GREEN_LABEL);
     pdf.text("Giá/Price:", leftTextQR, yTextQR);
     pdf.setTextColor(...TEXT_DARK);
-    pdf.text(isFOCTicket ? "0 ₫" : formatVND(t.publicPrice), leftTextQR + 36, yTextQR);
+    pdf.text(isFOCTicket ? "0 ₫" : formatVND(t.publicPrice), leftTextQR + 37, yTextQR);
 
     // ===== DATE USE =====
-    yTextQR += 16;
+    yTextQR += 14;
     pdf.setTextColor(...GREEN_LABEL);
     pdf.text("Ngày sử dụng/ Use date:", leftTextQR, yTextQR);
     yTextQR += 10;
@@ -148,13 +147,39 @@ export const downloadTicketPDFServer = async (
       yTextQR
     );
 
-    y += 120;
+    // ===== FLOOR =====
+    if (t.floorName) {
+      yTextQR += 14;
+      pdf.setTextColor(...GREEN_LABEL);
+      pdf.text("Tầng/Floor:", leftTextQR, yTextQR);
+      pdf.setTextColor(...TEXT_DARK);
+      pdf.text(t.floorName, leftTextQR + 44, yTextQR);
+    }
+    // ===== ZONE =====
+    if (t.secName) {
+      yTextQR += 14;
+      pdf.setTextColor(...GREEN_LABEL);
+      pdf.text("Zone: ", leftTextQR, yTextQR);
+      pdf.setTextColor(...TEXT_DARK);
+      pdf.text(t.secName, leftTextQR + 23, yTextQR);
+    }
+
+    // ===== TABLE =====
+    if (t.secName) {
+      yTextQR += 14;
+      pdf.setTextColor(...GREEN_LABEL);
+      pdf.text("Bàn/Table:", leftTextQR, yTextQR);
+      pdf.setTextColor(...TEXT_DARK);
+      pdf.text(t.tableNum + "", leftTextQR + 42, yTextQR);
+    }
+
+    y += 145;
     pdf.setTextColor(...GREEN_LABEL);
     // ===== Media Code =====
     pdf.text("Media Code:", leftX, y);
     pdf.setTextColor(...TEXT_DARK);
     pdf.setFont("Roboto", "bold");
-    pdf.text(isFOCTicket ? t.verifyCode : t.ticketNumber, leftX + 45, y);
+    pdf.text(isFOCTicket ? t.verifyCode : t.ticketNumber, leftX + 48, y);
     // ===== PNJ CODE =====
     y += 15;
     pdf.setTextColor(...GREEN_LABEL);
@@ -166,7 +191,7 @@ export const downloadTicketPDFServer = async (
     pdf.setTextColor(...GREEN_LABEL);
     pdf.text("Mã Đơn:", leftX, y);
     pdf.setTextColor(...TEXT_DARK);
-    pdf.text(String(t.orderCode), leftX + 30, y);
+    pdf.text(String(t.orderCode), leftX + 33, y);
     // ===== SERIAL =====
     y += 15;
     pdf.setTextColor(...GREEN_LABEL);

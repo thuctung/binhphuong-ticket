@@ -94,7 +94,6 @@ export type TicketResultQRType = {
   ticketNumber: string;
   validDateFrom: string;
   validDateTo: string;
-  status: string;
   verifyCode: string;
   orderCode: string;
   orderId: string;
@@ -105,6 +104,13 @@ export type TicketResultQRType = {
   siteName: string;
   personType: string;
   time: string;
+
+  status: string;
+  floorName: string;
+  tableNum: string;
+  secName: string;
+  secNum: number;
+  reservationNo: string;
 };
 
 export type PromotionType = {
@@ -233,11 +239,16 @@ export type SubmitSelectTicket = {
 };
 
 export type TicketInItemType = {
-  status: string;
   ticketNumber: string;
   validDateFrom: string;
   validDateTo: string;
   verifyCode: string;
+  status: string;
+  floorName: string;
+  tableNum: string;
+  secName: string;
+  secNum: number;
+  reservationNo: string;
 };
 
 export type TicketItemReponseType = {

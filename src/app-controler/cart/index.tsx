@@ -43,7 +43,7 @@ import { ClientOrderItem, CustomerOrderType } from "../checkout-client/type";
 
 import BankTransferQR from "../affi/topup/components/qrToBank";
 import { paymentMomo } from "./apis";
-import { getTicketForCustomer } from "./helper";
+import { getTicketForCustomer, PRODUCT_SELECTED_LOCALE } from "./helper";
 
 const initOrderData = {
   dateUse: "",
@@ -232,6 +232,7 @@ export default function CartController() {
 
     if (orderID) {
       if (payment === "momo") {
+        localStorage.setItem(PRODUCT_SELECTED_LOCALE, JSON.stringify(products));
         handlePayMomo(orderCode);
       } else {
         const qrLink = getBankInfo(totalPayment, paymentCode);
