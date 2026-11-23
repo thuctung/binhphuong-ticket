@@ -53,9 +53,9 @@ export const customerCreateOrder = async (params: CustomerOrderType) => {
   }
 };
 
-export const getTicketSunWorld = async (payload: PayloadGetTicketSunType) => {
+export const getTicketSunWorld = async (payload: PayloadGetTicketSunType, showLoading: boolean) => {
   try {
-    setGlobalLoading(true);
+    if (showLoading) setGlobalLoading(true);
     const { data: resData }: any = await api.post(SUN_BOOKING_CONFIRM, payload);
     const { data, messages } = resData;
     if (messages) {
@@ -65,7 +65,7 @@ export const getTicketSunWorld = async (payload: PayloadGetTicketSunType) => {
   } catch {
     setToastMessage("Lỗi khi xuất vé, Liên hệ để được hỗ trợ");
   } finally {
-    setGlobalLoading(false);
+    if (showLoading) setGlobalLoading(false);
   }
 };
 

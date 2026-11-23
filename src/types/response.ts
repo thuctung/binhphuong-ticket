@@ -96,3 +96,27 @@ export type AdminReportResponseType = {
   status: string;
   site_code: string;
 };
+
+export type OrderItemType = {
+  date_use: string;
+  price: string;
+  product_code: string;
+  product_name: string;
+  quantity: string;
+};
+
+export type OrderType = {
+  id: string;
+  total_amount: string;
+  status: string;
+  created_at: string;
+  user_email: string;
+  phone: string;
+  payment_code: string;
+  order_code: string;
+  site_code: string;
+  third_party_number: string;
+  fullname: string;
+  status_payment: string;
+  order_items: OrderItemType[];
+};

@@ -45,6 +45,7 @@ import { CommonType, ProfileType } from "@/types";
 import { toast } from "react-toastify";
 import { is } from "zod/v4/locales";
 import { useCommonStore } from "@/stores/useCommonStore";
+import { ROLES, STATUS_COMMON_TYPE } from "@/commons/constant";
 
 function StatusBadge({ status }: { status: string }) {
   const s = STATUS_MAP[status as keyof typeof STATUS_MAP] ?? STATUS_MAP.cancelled;
@@ -310,7 +311,7 @@ export default function BookingDetailCard({
 
   return (
     <div className="w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-      {orderStatus === "success" && (
+      {orderStatus === STATUS_COMMON_TYPE.SUCCESS && (
         <div className="flex items-center justify-end gap-3 px-5 pt-5">
           <button
             onClick={handleDownloadFile}
@@ -338,7 +339,7 @@ export default function BookingDetailCard({
       </div>
 
       <div className="flex justify-end gap-[20px]  px-[10px] py-5">
-        {profile.role && profile.role === "admin" ? (
+        {profile.role && profile.role === ROLES.ADMIN ? (
           <>
             <ButtonCommon title="Xem phí hoàn vé" onClick={checkChargeRefund} />
             <ButtonCommon title="Hoàn vé" onClick={handleRefundTicket} />

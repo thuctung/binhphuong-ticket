@@ -5,10 +5,10 @@ import { CommonType } from "@/types";
 
 const { setGlobalLoading, setToastMessage }: CommonType | any = useCommonStore.getState();
 
-export const paymentMomo = async (orderCode: string) => {
+export const paymentMomo = async (orderCode: string, totalPayment: number) => {
   try {
     setGlobalLoading(true);
-    const { data }: any = await api.post(CREATE_PAYMENT_WITH_MOMO, { orderCode });
+    const { data }: any = await api.post(CREATE_PAYMENT_WITH_MOMO, { orderCode, totalPayment });
     return data;
   } catch (err: any) {
     setToastMessage(err.response?.data?.error || err.message || "Lỗi khi tải danh sách");

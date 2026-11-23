@@ -1,15 +1,16 @@
-import { TOPUPS_STATUS } from "@/commons/constant";
+import { STATUS_COMMON_TYPE } from "@/commons/constant";
 import { StatusType } from "@/types";
 
 export const getStatusTopupName = (status: string) => {
   switch (status) {
-    case TOPUPS_STATUS.APPROVED:
+    case STATUS_COMMON_TYPE.APPROVED:
+    case STATUS_COMMON_TYPE.COMPLETED:
       return "Thành công";
-    case TOPUPS_STATUS.PENDING:
+    case STATUS_COMMON_TYPE.PENDING:
       return "Đang xử lý";
-    case TOPUPS_STATUS.REJECTED:
+    case STATUS_COMMON_TYPE.REJECTED:
       return "Thất bại";
-    case TOPUPS_STATUS.ERROR:
+    case STATUS_COMMON_TYPE.ERROR:
       return "Lỗi";
     default:
       return "";
@@ -17,9 +18,9 @@ export const getStatusTopupName = (status: string) => {
 };
 
 export const listTopupMgtStatus: StatusType[] = [
-  { title: getStatusTopupName(TOPUPS_STATUS.APPROVED), value: TOPUPS_STATUS.APPROVED },
-  { title: getStatusTopupName(TOPUPS_STATUS.PENDING), value: TOPUPS_STATUS.PENDING },
-  { title: getStatusTopupName(TOPUPS_STATUS.REJECTED), value: TOPUPS_STATUS.REJECTED },
+  { title: getStatusTopupName(STATUS_COMMON_TYPE.APPROVED), value: STATUS_COMMON_TYPE.APPROVED },
+  { title: getStatusTopupName(STATUS_COMMON_TYPE.PENDING), value: STATUS_COMMON_TYPE.PENDING },
+  { title: getStatusTopupName(STATUS_COMMON_TYPE.REJECTED), value: STATUS_COMMON_TYPE.REJECTED },
 ];
 
 export const DrafDATA = {

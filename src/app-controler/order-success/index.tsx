@@ -1,38 +1,45 @@
-"use-client";
+"use client";
 
 import Link from "next/link";
-import { type Ticket } from "./api";
 import dayjs from "dayjs";
 import { BASIC_DATE_FORMAT, FULL_DATE_FORMAT } from "@/helpers/dateTime";
 import { formatVND } from "@/lib/money";
 import { OrderHistory } from "./type";
-import { getTranslation } from "@/lib/i18n";
 import { get } from "lodash";
+import { useEffect } from "react";
+import { useCartStore } from "@/stores/useCartStore";
+import { useTranslation } from "@/lib/i18n/client";
 
 type OrderSuccessControllerProps = {
   code: string;
   orders: OrderHistory[];
-  lng: string;
 };
 
 const getAmountAndQuantity = (orders: OrderHistory[]) => {
   let amount = 0,
     quantity = 0;
-  orders.forEach((order) => {
-    amount += order.total;
-    quantity += order.quantity;
-  }, 0);
+  if (orders) {
+    orders.forEach((order) => {
+      amount += order.total;
+      quantity += order.quantity;
+    }, 0);
+  }
+
   return [amount, quantity];
 };
 
-export default async function OrderSuccessController({
-  code,
-  lng,
-  orders,
-}: OrderSuccessControllerProps) {
-  const { t } = await getTranslation(lng);
+export default function OrderSuccessController({ code, orders }: OrderSuccessControllerProps) {
+  const { t } = useTranslation();
   const firstItem = get(orders, 0);
   const [totalAmount, totalTicket] = getAmountAndQuantity(orders);
+
+  const { clear: clearCart } = useCartStore((s) => s);
+
+  useEffect(() => {
+    if (orders && orders.length) {
+      clearCart();
+    }
+  }, [orders]);
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-stone-100 px-4 py-10 text-slate-900 sm:py-16">
@@ -55,7 +62,7 @@ export default async function OrderSuccessController({
 
       <div className="relative mx-auto max-w-3xl">
         <div className="mx-auto max-w-3xl">
-          {orders && orders.length ? (
+          {orders && orders?.length ? (
             <>
               <header className="text-center">
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">

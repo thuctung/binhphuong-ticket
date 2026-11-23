@@ -1,4 +1,4 @@
-import { ACC_STATUS } from "@/commons/constant";
+import { STATUS_COMMON_TYPE } from "@/commons/constant";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { useProfileStore } from "@/stores/useProfileStore";
 
@@ -22,7 +22,7 @@ export const sv_Login = async ({ email, password }: LoginParamType) => {
         setErrorMessage("profileError.message");
         return;
       }
-      if (profile.status !== ACC_STATUS.APPROVED) {
+      if (profile.status !== STATUS_COMMON_TYPE.APPROVED) {
         setErrorMessage("Tài khoản chưa được kích hoạt");
         return;
       }

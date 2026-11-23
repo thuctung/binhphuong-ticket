@@ -5,6 +5,12 @@ export type FormDataType = {
   date_use: string;
 };
 
+export type CustomerInfoType = {
+  fullname: string;
+  email: string;
+  phone: string;
+};
+
 export type TicketCategory = "adult" | "child" | "senior";
 
 export const CATEGORY_STYLES: Record<

@@ -13,7 +13,12 @@ import { CommonType, ProfileType, QRBankResponseType } from "@/types";
 import { formatVND } from "@/lib/money";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { getCodeTopup } from "@/helpers/genCode";
-import { DB_TABLE_NAME, ERROR_MESSAGE, TYPE_TRANSFER } from "@/commons/constant";
+import {
+  DB_TABLE_NAME,
+  ERROR_MESSAGE,
+  STATUS_COMMON_TYPE,
+  TYPE_TRANSFER,
+} from "@/commons/constant";
 import { downloadTicketPDF, generateThirdPartyCode } from "@/helpers/ticket";
 import { ProductSubmitType, TicketReponseType, TicketResultQRType } from "@/types/ticket";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
@@ -26,23 +31,17 @@ import { PaymentMethods } from "./components/PaymentMethods";
 import { RouteDecor } from "./components/RouteDecor";
 import { Coupon, PaymentMethodId, CreatedOrder } from "./types";
 import { CustomerForm } from "./components/CustomerForm";
-import { CustomerInfo, EMPTY_CUSTOMER, validateCustomer } from "./components/customer";
+import { validateCustomer } from "./components/customer";
 import { getSideItem } from "../admin/product-mgt/contants";
 import {
   cancleBooking,
   customerCreateOrder,
   customerCreateOrderTicket,
-  getTicketSunWorld,
   updateStatusOrder,
 } from "../checkout-client/api";
-import {
-  ClientOrderItem,
-  CustomerOrderType,
-  PayloadGetTicketSunType,
-} from "../checkout-client/type";
+import { ClientOrderItem, CustomerOrderType } from "../checkout-client/type";
 
 import BankTransferQR from "../affi/topup/components/qrToBank";
-import { KEY_MODIFY_DATA } from "../affi/stats/contants";
 import { paymentMomo } from "./apis";
 import { getTicketForCustomer } from "./helper";
 
@@ -65,8 +64,10 @@ export default function CartController() {
     siteCode,
     formData,
     siteList,
+    customerInfo,
     getSites,
     clear: clearCart,
+    setCustomerInfo,
   } = useCartStore((s) => s);
 
   const itemsCart = Array.from(items?.values?.() ?? []);
@@ -91,12 +92,10 @@ export default function CartController() {
   const [coupon, setCoupon] = useState<Coupon | null>(null);
   const [couponError, setCouponError] = useState("");
   const [payment, setPayment] = useState<PaymentMethodId | null>("qr");
-  const [customer, setCustomer] = useState<CustomerInfo>(EMPTY_CUSTOMER);
   const [submitted, setSubmitted] = useState(false);
   const route = useRouter();
   const [order, setOrder] = useState<CreatedOrder | null>(null); // chỉ dùng cho chuyển khoản QR
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
   const [currentOrderData, setCurrentOrderData] = useState<any>(initOrderData);
   const [productSelected, setProductSelected] = useState<ProductSubmitType[]>([]);
 
@@ -109,7 +108,7 @@ export default function CartController() {
   useEffect(() => {
     if (profile.email) {
       const { full_name, email, phone } = profile;
-      setCustomer({
+      setCustomerInfo({
         fullname: full_name || "",
         email: email,
         phone: phone || "",
@@ -136,7 +135,7 @@ export default function CartController() {
     setCouponError("");
   };
 
-  const customerErrors = useMemo(() => validateCustomer(customer), [customer]);
+  const customerErrors = useMemo(() => validateCustomer(customerInfo), [customerInfo]);
   const canCheckout = itemsCart.length > 0 && !!payment && !submitting;
 
   const backToBuyTicket = () => {
@@ -150,9 +149,9 @@ export default function CartController() {
   ) => {
     await updateStatusOrder({
       orderId: orderId,
-      status: KEY_MODIFY_DATA.CANCEL,
+      status: STATUS_COMMON_TYPE.CANCELED,
       description: desc,
-      status_payment: KEY_MODIFY_DATA.ERROR,
+      status_payment: STATUS_COMMON_TYPE.ERROR,
     });
     if (timeCancelOrderRef.current) {
       clearTimeout(timeCancelOrderRef.current);
@@ -171,7 +170,7 @@ export default function CartController() {
 
     const in_system = currentSite?.in_system || false;
     const thirdPartyNum = generateThirdPartyCode(in_system);
-    const { email, phone, fullname } = customer;
+    const { email, phone, fullname } = customerInfo;
     let passProcess = true;
     let dataOrderSunWorld: TicketReponseType | any = {};
     let site_code = formData.site_code || currentSite?.code || "";
@@ -261,7 +260,7 @@ export default function CartController() {
   };
 
   const handlePayMomo = async (orderCode: string) => {
-    const { payUrl } = await paymentMomo(orderCode);
+    const { payUrl } = await paymentMomo(orderCode, totalPayment);
     if (payUrl) {
       window.location.href = payUrl;
     } else {
@@ -280,11 +279,14 @@ export default function CartController() {
       // sendMailTicketInSystem();
       return;
     } else {
-      await getTicketForCustomer(currentOrderData, productSelected, customer.email, route, () =>
-        setCurrentOrderData(initOrderData)
-      );
+      await getTicketForCustomer({
+        currentOrderData,
+        productSelected,
+        email: customerInfo.email,
+        route,
+        callback: () => setCurrentOrderData(initOrderData),
+      });
     }
-    clearCart();
   };
 
   const handleCheckout = () => {
@@ -327,11 +329,11 @@ export default function CartController() {
             filter: `payment_code=eq.${qrPaymant.code}`,
           },
           (payload) => {
-            if (payload.new.status_payment === KEY_MODIFY_DATA.SUCCESS) {
+            if (payload.new.status_payment === STATUS_COMMON_TYPE.SUCCESS) {
               toast.success(t("cart.payment_success"));
               clientSupbase.removeChannel(chanenSupbase.current);
               getTicketSuccess();
-            } else if (payload.new.status_payment === KEY_MODIFY_DATA.ERROR) {
+            } else if (payload.new.status_payment === STATUS_COMMON_TYPE.ERROR) {
               toast.error(t("cart.payment_failed"));
               handleDoneQR();
             }
@@ -395,12 +397,7 @@ export default function CartController() {
                 </button>
               </div>
             </section>
-            <CustomerForm
-              value={customer}
-              onChange={setCustomer}
-              errors={customerErrors}
-              showAllErrors={submitted}
-            />
+            <CustomerForm errors={customerErrors} showAllErrors={submitted} />
             <OrderSummary
               subtotal={subTotal}
               discount={0}
@@ -423,7 +420,6 @@ export default function CartController() {
               {buttonLabel}
             </button>
 
-            {error && <p className="text-center text-sm text-red-500">{error}</p>}
             {itemsCart.length > 0 && !payment && (
               <p className="text-center text-sm text-slate-500">
                 Chọn phương thức thanh toán để tiếp tục.

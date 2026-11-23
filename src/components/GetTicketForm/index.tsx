@@ -26,11 +26,11 @@ import {
 } from "./constants";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { CommonType, ProfileType } from "@/types";
-import { CUSTOMER } from "@/commons/constant";
 import { useSearchParams } from "next/navigation";
 import AffilateBooking from "./Affilate";
 import { useCommonStore } from "@/stores/useCommonStore";
 import { useCartStore } from "@/stores/useCartStore";
+import { ROLES } from "@/commons/constant";
 
 const initFormValues = {
   email: "",
@@ -191,7 +191,7 @@ export default function GetTicketForm({
       if (BOOKING_FORM_TYPE.AFFILATE === formType && profile?.agent_level) {
         level = profile?.agent_level;
       } else if (BOOKING_FORM_TYPE.CUSTOMER) {
-        level = CUSTOMER;
+        level = ROLES.CUSTOMER;
       }
       if (level) fetchPriceAgentLevelAndProducts(siteCode, level);
       setQuantities({});

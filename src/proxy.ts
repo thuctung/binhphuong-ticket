@@ -3,7 +3,7 @@ import { i18nRouter } from "next-i18n-router";
 
 import i18nConfig from "../i18nConfig";
 import { createSupabaseServerClient } from "./lib/supabase/server-ssr";
-import { DB_TABLE_NAME } from "./commons/constant";
+import { DB_TABLE_NAME, ROLES } from "./commons/constant";
 
 const isUnder = (path: string, base: string) => path === base || path.startsWith(`${base}/`);
 
@@ -45,11 +45,11 @@ export async function proxy(req: NextRequest) {
 
   const role = profile?.role;
 
-  if (role === "admin" && isAffiliatePath) {
+  if (role === ROLES.ADMIN && isAffiliatePath) {
     return NextResponse.redirect(new URL(`/${locale}/admin`, req.url));
   }
 
-  if (role === "affiliate" && isAdminPath) {
+  if (role === ROLES.AFFILIATE && isAdminPath) {
     return NextResponse.redirect(new URL(`/${locale}/affiliate`, req.url));
   }
 

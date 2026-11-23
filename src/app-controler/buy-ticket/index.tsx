@@ -13,7 +13,7 @@ import {
   SiteType,
 } from "@/types/ticket";
 import { ProfileType } from "@/types";
-import { CUSTOMER, SITE_CODES } from "@/commons/constant";
+import { ROLES, SITE_CODES } from "@/commons/constant";
 import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { useCartStore } from "@/stores/useCartStore";
@@ -77,7 +77,7 @@ export default function BuyTicketController() {
   // Dùng giá trị nguyên thủy làm deps cho effect, tránh chạy lại vì đổi reference
   const siteReady = !!currentSite;
   const inSystem = currentSite?.in_system;
-  const priceLevel = profile?.email ? "register" : CUSTOMER;
+  const priceLevel = profile?.email ? ROLES.REGISTER : ROLES.CUSTOMER;
 
   const [tickets, personTypes] = useMemo(() => {
     let listTicket: ProductBanaType[] = [];
@@ -88,7 +88,7 @@ export default function BuyTicketController() {
     });
     listTicket = listTicket.map((items) => ({
       ...items,
-      pinalPrice: getPriceAgentAndMultiple(items, CUSTOMER, mapAgentPrice, agentPriceDefault),
+      pinalPrice: getPriceAgentAndMultiple(items, ROLES.CUSTOMER, mapAgentPrice, agentPriceDefault),
     }));
     return [listTicket.sort((a, b) => (a.order ?? 1) - (b.order ?? 1)), listPersonType];
   }, [listProduct, mapAgentPrice, agentPriceDefault]);
@@ -213,7 +213,7 @@ export default function BuyTicketController() {
                   <div className="mt-4">
                     <TicketTabs
                       lisCategory={listCategory}
-                      formType={CUSTOMER}
+                      formType={ROLES.CUSTOMER}
                       active={filter}
                       onChange={setFilter}
                       listType={personTypes}

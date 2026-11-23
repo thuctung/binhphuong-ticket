@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     paymentType,
   }: ClientOrderItem = await request.json();
 
-  const { data, error } = await supabaseAdmin.rpc(DB_TABLE_NAME.FUC_CUSTOMER_BUY_TICKET, {
+  const { data, error } = await supabaseAdmin.rpc(DB_TABLE_NAME.FUNC_CUSTOMER_BUY_TICKET, {
     c_total_amount: totalAmount,
     c_user_email: userEmail,
     c_phone: phone,

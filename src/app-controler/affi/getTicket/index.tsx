@@ -24,7 +24,7 @@ import { BASIC_DATE_FORMAT, SERVER_DATE_FORMAT } from "@/helpers/dateTime";
 import dayjs from "dayjs";
 import { downloadTicketPDF, generateThirdPartyCode } from "@/helpers/ticket";
 import { toast } from "react-toastify";
-import { ACC_STATUS, SITE_CODES } from "@/commons/constant";
+import { STATUS_COMMON_TYPE, ROLES } from "@/commons/constant";
 import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
 import GetTicketForm from "@/components/GetTicketForm";
 import {
@@ -32,7 +32,6 @@ import {
   PayloadUdateOrderBalanceType,
   SendTicketInSystemMailType,
 } from "./type";
-import { KEY_MODIFY_DATA } from "../stats/contants";
 import { useEffect } from "react";
 import { getListSite } from "@/app-controler/checkout-client/api";
 import { splitByQuantity } from "./helper";
@@ -59,7 +58,7 @@ export default function GetTicketPageControler() {
       result = false;
     } else if (profile && products.length) {
       const status = await getStatusProfile(profile.user_id);
-      if (status !== ACC_STATUS.APPROVED) {
+      if (status !== STATUS_COMMON_TYPE.APPROVED) {
         result = false;
         setToastMessage("Bạn đã bị khóa tài khoản, vui lòng liên hệ quản trị viên để được hỗ trợ");
       }
@@ -119,7 +118,7 @@ export default function GetTicketPageControler() {
         user_id: profile.user_id,
         order_id,
         description: "",
-        status: KEY_MODIFY_DATA.SUCCESS,
+        status: STATUS_COMMON_TYPE.SUCCESS,
         orderCode: thirdPartyNumber,
         amount: totalMoney,
       };
@@ -190,7 +189,7 @@ export default function GetTicketPageControler() {
   return (
     <div className="space-y-4">
       <CardContent className="space-y-6">
-        {profile.role !== "admin" && (
+        {profile.role !== ROLES.ADMIN && (
           <>
             <div className="flex items-center justify-end">
               <div className="text-sm text-muted-foreground mr-2">Số dư: </div>

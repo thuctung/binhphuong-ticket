@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { ACC_STATUS, ROLES } from "@/commons/constant";
+import { STATUS_COMMON_TYPE, ROLES } from "@/commons/constant";
 import { ProfileStoteType, useProfileStore } from "@/stores/useProfileStore";
 import ForgotPassword from "@/components/site/ForgotPassword";
 import { sv_Login } from "./api";
@@ -35,7 +35,7 @@ export default function Login() {
     if (user) {
       if (user.role === ROLES.ADMIN) {
         router.push("/admin");
-      } else if (user.status === ACC_STATUS.APPROVED) {
+      } else if (user.status === STATUS_COMMON_TYPE.APPROVED) {
         router.push("/affiliate");
       }
     } else {

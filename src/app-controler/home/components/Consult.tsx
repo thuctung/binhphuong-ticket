@@ -5,6 +5,7 @@ import { places } from "@/lib/data";
 import { getTranslation } from "@/lib/i18n";
 import { useTranslation } from "@/lib/i18n/client";
 import { toast } from "react-toastify";
+import { STATUS_COMMON_TYPE } from "@/commons/constant";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -38,7 +39,7 @@ export default function Consult() {
     //   const json = await res.json();
     //   if (!res.ok) throw new Error(json.error || "Có lỗi xảy ra");
     //   form.reset();
-    //   setStatus("success");
+    //   setStatus(STATUS_COMMON_TYPE.SUCCESS);
     // } catch (err) {
     //   setError(err instanceof Error ? err.message : "Có lỗi xảy ra");
     //   setStatus("error");
@@ -158,7 +159,7 @@ export default function Consult() {
           </button>
 
           <div aria-live="polite" className="mt-4 text-sm">
-            {status === "success" && (
+            {status === STATUS_COMMON_TYPE.SUCCESS && (
               <p className="rounded-xl bg-green-50 px-4 py-3 text-green-700">
                 {t("homepage.tours.message")}
               </p>

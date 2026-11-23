@@ -5,8 +5,7 @@ import { rebuildDataTicket } from "@/helpers/ticket";
 import { PayloadGetTicketSunType } from "@/app-controler/checkout-client/type";
 import { getTicketFOCAndCutomer } from "@/app-controler/checkout-client/contants";
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { DB_TABLE_NAME } from "@/commons/constant";
-import { KEY_MODIFY_DATA } from "@/app-controler/affi/stats/contants";
+import { DB_TABLE_NAME, STATUS_COMMON_TYPE } from "@/commons/constant";
 import { get } from "lodash";
 import { updateOrderError } from "@/helpers/update-status-order";
 
@@ -47,7 +46,7 @@ export async function POST(req: Request) {
             order_id: orderId,
             site_name: siteName,
             order_code: result.orderCode,
-            status: KEY_MODIFY_DATA.PENDING,
+            status: STATUS_COMMON_TYPE.PENDING,
             is_send_foc: false,
           }),
         ]);

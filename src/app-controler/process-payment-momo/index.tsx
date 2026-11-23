@@ -2,7 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getTicketSunWorld } from "../checkout-client/api";
+import { OrderType } from "@/types";
+import { updatePaymentStatus } from "@/app-controler/process-payment-momo/apis";
+
+import { claimOrder, getOrderItem } from "./apis";
+import { getTicketForCustomer } from "../cart/helper";
 
 type Props = { orderCode: string; amount: number; transId: string; payType: string };
 
@@ -10,96 +14,135 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export default function ProcessPaymentMomo({ orderCode, amount, transId, payType }: Props) {
   const router = useRouter();
-  const started = useRef(false);
+  const started = useRef<string | null>(null);
+
   const [text, setText] = useState("Đang xác nhận thanh toán...");
 
   useEffect(() => {
-    if (started.current) return; // chặn chạy 2 lần (React StrictMode)
-    started.current = true;
+    // Chống chạy lại khi component re-render
+    if (started.current === orderCode) return;
+    started.current = orderCode;
 
-    const fail = (reason: string) => router.replace(`/order-failed?reason=${reason}`);
+    let cancelled = false;
 
-    (async () => {
+    const fail = async (reason: string) => {
+      if (cancelled) return;
+      await updatePaymentStatus({ orderCode, message: reason, status: "ERROR" });
+      router.replace(`/order-failed?reason=${encodeURIComponent(reason)}`);
+    };
+
+    const success = (order: OrderType) => {
+      if (cancelled) return;
+      router.replace(`/order-success/${order.third_party_number}`);
+    };
+
+    const run = async () => {
       try {
-        // let order = await getOrderByCode(orderCode);
-        let order = {
-          idx: 0,
-          id: "06ca164e-219f-42e7-b81d-b731c06541b0",
-          user_id: null,
-          total_amount: "550000",
-          status: "pending",
-          created_at: "2026-11-20 10:44:50.067348+00",
-          description: null,
-          payment_method: "customer",
-          user_email: "sdfsdfsdf@gmail.com",
-          phone: "0987654342",
-          payment_code: "CMT1U749458CG75",
-          paid_at: null,
-          buy_by: null,
-          order_code: "0010160322",
-          reference_code: null,
-          site_code: "BNC",
-          third_party_number: "N2WZ4UG8VZ0X6H",
-          fullname: "sdfsfsd",
-          status_payment: "pending",
-          payment_type: null,
-          momo_payment_id: "Thanh toan ve 0010160322",
-        };
-        if (!order) return fail("not_found");
-        if (Number(order.total_amount) !== amount) return fail("amount_mismatch");
+        setText("Đang kiểm tra đơn hàng...");
 
-        // 2. Đã xử lý trước đó (F5, IPN...) → không tạo vé lần nữa
-        if (order.status_payment === "SUCCESS" && order.status === "SUCCESS") {
-          return router.replace(`/order-success/${order.third_party_number}`);
+        // 1. Lấy thông tin đơn hàng
+        let order = await getOrderItem(orderCode);
+
+        if (!order) {
+          return fail("not_found");
         }
 
-        // 3. Giành quyền xử lý, tránh gọi Sun World 2 lần cho cùng 1 đơn
-        // const { claimed } = await claimOrder(orderCode);
-        let claimed = false;
+        // 2. Kiểm tra số tiền
+        if (Number(order.total_amount) !== Number(amount)) {
+          return fail("amount_mismatch");
+        }
+
+        // 3. Đơn hàng đã hoàn thành
+        if (order.status_payment === "SUCCESS" && order.status === "SUCCESS") {
+          return success(order);
+        }
+
+        // 4. Update thanh toán thành công
+        await updatePaymentStatus({
+          orderCode,
+          message: "Thanh toán thành công",
+          status: "SUCCESS",
+        });
+
+        // 5. Claim đơn hàng - chỉ một request được quyền tạo vé
+        setText("Đơn hàng đang được xử lý...");
+
+        const { claimed } = await claimOrder(orderCode);
+
+        if (cancelled) return;
+
+        // 6. Nếu không claim được, có request khác đang xử lý
         if (!claimed) {
-          setText("Đơn hàng đang được xử lý...");
           for (let i = 0; i < 15; i++) {
             await sleep(2000);
-            // order = await getOrderByCode(orderCode);
-            // if (order?.ticketStatus === "SUCCESS") {
-            //   return router.replace(`/order-success/${order.thirdPartyNum}`);
-            // }
+
+            if (cancelled) return;
+
+            order = await getOrderItem(orderCode);
+
+            if (!order) {
+              return fail("not_found");
+            }
+
+            if (order.status_payment === "SUCCESS" && order.status === "SUCCESS") {
+              return success(order);
+            }
+
+            if (order.status_payment === "FAILED" || order.status_payment === "ERROR") {
+              return fail("payment_failed");
+            }
           }
+
           return fail("processing");
         }
 
-        // 4. Lấy vé từ Sun World (giữ nguyên logic của confirmBookingSunworld)
+        // 7. Đã claim thành công -> tiến hành tạo vé
         setText("Đang tạo vé...");
-        // const tickets = await getTicketSunWorld({
-        //   orderCode,
-        //   productSelected: order.productSelected,
-        //   orderId: order.orderId,
-        //   dateUse: order.dateUse,
-        //   customerEmail: order.customerEmail,
-        // });
-        // const ticketOk = Boolean(tickets?.length);
 
-        // 5. Cập nhật DB: payment SUCCESS (tiền đã nhận) + ticket SUCCESS/FAILED
-        // await completeOrder({ orderCode, transId, payType, amount, ticketOk });
-        let ticketOk = false;
-        if (!ticketOk) return fail("ticket"); // đã thu tiền nhưng chưa có vé → cần hỗ trợ
+        const productSelected = localStorage.getItem("PRODUCT_SELECTED");
 
-        // 6. Tải PDF (lỗi tải không được chặn việc chuyển trang)
-        setText("Đang hoàn tất...");
-        try {
-          //   await downloadTicketPDF(tickets, []);
-        } catch (e) {
-          console.error("downloadTicketPDF", e);
+        if (!productSelected) {
+          return fail("product_not_found");
         }
 
-        // setCurrentOrderData(initOrderData);
-        // router.replace(`/order-success/${order.thirdPartyNum}`);
-      } catch (err) {
-        console.error("[payment/result]", err);
+        const products = JSON.parse(productSelected);
+
+        if (!Array.isArray(products) || products.length === 0) {
+          return fail("product_invalid");
+        }
+
+        const currentOrderData = {
+          orderCode: order.order_code,
+          orderId: order.id,
+          dateUse: order.order_items?.[0]?.date_use,
+        };
+
+        if (!currentOrderData.dateUse) {
+          return fail("invalid_order_data");
+        }
+
+        // 8. Gọi API tạo vé
+        await getTicketForCustomer({
+          currentOrderData,
+          productSelected: products,
+          email: order.user_email,
+          route: router,
+          showLoading: false,
+          callback: () => {
+            localStorage.removeItem("PRODUCT_SELECTED");
+            return success(order);
+          },
+        });
+        return fail("ticket_processing");
+      } catch (error) {
         fail("error");
       }
-    })();
-  }, [orderCode, amount, transId, payType, router]);
+    };
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [orderCode, amount, router]);
 
   return (
     <main className="flex min-h-[70vh] flex-col items-center justify-center gap-4 p-4 text-center">

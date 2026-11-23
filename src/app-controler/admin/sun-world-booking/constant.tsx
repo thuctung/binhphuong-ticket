@@ -1,4 +1,4 @@
-import { AGENT, CUSTOMER } from "@/commons/constant";
+import { ROLES } from "@/commons/constant";
 import { BASIC_DATE_FORMAT } from "@/helpers/dateTime";
 import { AdminSearchReport } from "@/types";
 import dayjs from "dayjs";
@@ -15,13 +15,10 @@ export const intForm: AdminSearchReport = {
 };
 
 export const BuyMethod = [
-  { name: "Đại lý", code: AGENT },
-  { name: "Khách lẻ", code: CUSTOMER },
+  { name: "Đại lý", code: ROLES.AFFILIATE },
+  { name: "Khách lẻ", code: ROLES.CUSTOMER },
 ];
 
-import { TYPE_TRANSACTION } from "@/commons/constant";
-
-import { StatusType } from "@/types";
 export const KEY_STATUS_TICKET = {
   ["Used"]: "Used",
   ["Unused"]: "Unused",

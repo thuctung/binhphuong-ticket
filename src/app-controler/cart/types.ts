@@ -1,3 +1,6 @@
+import { ProductSubmitType } from "@/types/ticket";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
 export type Coupon = {
   code: string;
   type: "percent" | "fixed";
@@ -11,4 +14,13 @@ export type PaymentMethodId = "qr" | "card" | "momo";
 export type CreatedOrder = {
   orderCode: string; // mã thanh toán duy nhất: dùng làm nội dung chuyển khoản / mã tham chiếu cổng thanh toán
   amount: number;
+};
+
+export type GetTicketCustomerType = {
+  currentOrderData: any;
+  productSelected: ProductSubmitType[];
+  email: string;
+  route: AppRouterInstance;
+  showLoading?: boolean;
+  callback?: Function;
 };
