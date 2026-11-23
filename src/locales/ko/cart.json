@@ -19,6 +19,7 @@
   "invalid_or_expired_coupon": "유효하지 않거나 만료된 코드입니다.",
   "payment_method": "결제 방법",
   "qr_payment": "QR 코드 스캔",
+  "momo_payment": "모모 월렛",
   "supported_payment_apps": "은행 앱, MoMo, ZaloPay",
   "qr_payment_instruction": "결제 버튼을 누르면 송금 정보가 포함된 QR 코드가 표시됩니다. 은행 앱, MoMo 또는 ZaloPay로 스캔할 수 있습니다.",
   "payment": "결제하기",

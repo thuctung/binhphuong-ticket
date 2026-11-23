@@ -42,13 +42,12 @@ export default function TicketTabs({ active, lisCategory, onChange, listType, fo
       } else if (item !== BEST_SELLER) {
         listTab.push({
           key: item,
-          label: get(getCategotyIem, lng, item),
+          label: get(getCategotyIem, lng, getCategotyIem?.name || item),
           icon: ICONS[item as keyof typeof ICONS] || Ticket,
         });
       }
     }
   });
-
   return (
     <div className="flex flex-wrap gap-2.5">
       {listTab.map(({ key, label, icon: Icon }) => {

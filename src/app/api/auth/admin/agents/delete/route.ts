@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { AgentType } from "@/types";
-import { DB_TABLE_NAME, LIMIT_TABLE } from "@/commons/constant";
+import { DB_TABLE_NAME, LIMIT_TABLE, STATUS_COMMON_TYPE } from "@/commons/constant";
 
 export async function POST(request: Request) {
   const body: AgentType = await request.json();
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
       .eq("id", id)
       .maybeSingle();
     if (error) return NextResponse.json({ error: error.message }, { status: 200 });
-    return NextResponse.json({ message: "success" });
+    return NextResponse.json({ message: STATUS_COMMON_TYPE.SUCCESS });
   }
   return NextResponse.json({ error: "Fail to delete" }, { status: 500 });
 }

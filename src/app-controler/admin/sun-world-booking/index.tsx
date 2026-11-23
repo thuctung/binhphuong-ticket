@@ -12,6 +12,7 @@ import { formatVND } from "@/lib/money";
 import RefundHistory from "./components/refund-history";
 import { useProfileStore } from "@/stores/useProfileStore";
 import { ProfileType } from "@/types";
+import { ROLES } from "@/commons/constant";
 
 type TabProps = { listSideSun: TicketSiteType[]; onFetchMoney: Function };
 
@@ -33,12 +34,12 @@ export default function SunworldBookingController() {
 
   const [listSideSun, setListSideSun] = useState<TicketSiteType[]>([]);
 
-  const TAB_MODE  = useMemo(() => {
-    if(profile.role ==="admin"){
-      return TABS
+  const TAB_MODE = useMemo(() => {
+    if (profile.role === ROLES.ADMIN) {
+      return TABS;
     }
-    return TABS.filter(item => item.id !=="refund")
-  },[profile.role])
+    return TABS.filter((item) => item.id !== "refund");
+  }, [profile.role]);
 
   const ActiveTab = TABS.find((t) => t.id === active)!.Component;
 
@@ -68,7 +69,7 @@ export default function SunworldBookingController() {
     <main className="min-h-screen  text-slate-900">
       <div className="mx-auto ">
         <h1 className="text-xl font-semibold">Tra cứu booking Sunworld</h1>
-        {profile.role && profile.role === "admin" ? (
+        {profile.role && profile.role === ROLES.ADMIN ? (
           <section className="rounded-2xl border mt-3 border-slate-200 bg-white p-6 shadow-sm">
             <div className="flex">
               <div className="mb-5 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">

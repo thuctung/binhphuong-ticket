@@ -144,3 +144,11 @@ export const SUN_GET_CHARGE_REFUND = "/api/sun-api/check-charge-refund";
 export const SUN_REFUND_TICKET = "/api/sun-api/refund-ticket";
 
 export const SUN_CHECK_USEGE_TICKET = "/api/sun-api/check-useged-ticket";
+
+// mOMO
+
+export const CREATE_PAYMENT_WITH_MOMO = "/api/momo/create";
+
+export const ORDER_ITEM_AFTER_PAYMENT = "/api/public/get-order-detail";
+export const CUSTOMER_CLAIM_ORDER = "/api/public/claim-order";
+export const UPDATE_PAYMENT_STATUS = "/api/public/update-payment-status";

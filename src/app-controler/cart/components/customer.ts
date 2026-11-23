@@ -1,7 +1,6 @@
-export type CustomerInfo = { fullname: string; email: string; phone: string };
-export type CustomerErrors = Partial<Record<keyof CustomerInfo, string>>;
+import { CustomerInfoType } from "@/app-controler/buy-ticket/type";
 
-export const EMPTY_CUSTOMER: CustomerInfo = { fullname: "", email: "", phone: "" };
+export type CustomerErrors = Partial<Record<keyof CustomerInfoType, string>>;
 
 // Số di động Việt Nam: 0xxxxxxxxx, 84xxxxxxxxx hoặc +84xxxxxxxxx (đầu số 3,5,7,8,9)
 const VN_PHONE_RE = /^(0|\+?84)(3|5|7|8|9)\d{8}$/;
@@ -10,7 +9,7 @@ const VN_PHONE_RE = /^(0|\+?84)(3|5|7|8|9)\d{8}$/;
 const INTL_PHONE_RE = /^\+[1-9]\d{7,14}$/;
 
 // Dùng chung cho client (hiện lỗi) và server (chặn dữ liệu sai)
-export function validateCustomer(c: Partial<CustomerInfo> | null | undefined): CustomerErrors {
+export function validateCustomer(c: Partial<CustomerInfoType> | null | undefined): CustomerErrors {
   const errors: CustomerErrors = {};
   const name = (c?.fullname ?? "").trim();
   const email = (c?.email ?? "").trim();

@@ -1,17 +1,29 @@
 // stores/useCartStore.ts
 import { toDate } from "@/app-controler/buy-ticket/contants";
-import { FormDataType } from "@/app-controler/buy-ticket/type";
+import { CustomerInfoType, FormDataType } from "@/app-controler/buy-ticket/type";
 import { getSiteByFormType } from "@/components/GetTicketForm/api";
 import { BOOKING_FORM_TYPE } from "@/components/GetTicketForm/constants";
 import { ProductInCartType, SiteType } from "@/types/ticket";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
+const initCustomerInfo = {
+  fullname: "",
+  email: "",
+  phone: "",
+};
+const initformData = {
+  site_code: "",
+  date_use: toDate,
+};
+
 type CartState = {
   items: Map<string, ProductInCartType>;
   siteList: SiteType[];
   siteCode: string;
   formData: FormDataType;
+  customerInfo: CustomerInfoType;
+  setCustomerInfo: (customerInfo: CustomerInfoType) => void;
   setSiteCode: (code: string) => void;
   setSiteList: (list: SiteType[]) => void;
   setFormData: (formData: FormDataType) => void;
@@ -27,10 +39,8 @@ const initState = {
   items: new Map<string, ProductInCartType>(),
   siteList: [] as SiteType[],
   siteCode: "",
-  formData: {
-    site_code: "",
-    date_use: toDate,
-  } as FormDataType,
+  customerInfo: initCustomerInfo,
+  formData: initformData as FormDataType,
 };
 
 // Serialize / deserialize Map để lưu được vào JSON
@@ -44,11 +54,10 @@ export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       ...initState,
-
       setSiteCode: (code) => set({ siteCode: code }),
       setSiteList: (list) => set({ siteList: list }),
       setFormData: (formData) => set({ formData }),
-
+      setCustomerInfo: (customerInfo) => set({ customerInfo }),
       getSites: async (force = false) => {
         const { siteList } = get();
         if (siteList.length && !force) return siteList;
@@ -84,7 +93,8 @@ export const useCartStore = create<CartState>()(
           return { items: newItems };
         }),
 
-      clear: () => set({ items: new Map() }),
+      clear: () =>
+        set({ items: new Map(), customerInfo: initCustomerInfo, formData: initformData }),
     }),
     {
       name: "cart-storage",

@@ -8,11 +8,9 @@ export const getTypeName = (status: string) => {
   switch (status) {
     case TYPE_TRANSACTION.ADD:
       return "Nạp tiền";
-    case TYPE_TRANSACTION.TICKET_BUY:
+    case TYPE_TRANSACTION.BUY_TICKET:
       return "Rút vé";
-    case TYPE_TRANSACTION.TICKET_BUY:
-      return "Rút vé";
-    case "REFUND":
+    case TYPE_TRANSACTION.REFUND:
       return "Hoàn tiền";
     default:
       return "";
@@ -21,11 +19,13 @@ export const getTypeName = (status: string) => {
 
 export const TYPE_LIST: StatusType[] = [
   { title: getTypeName(TYPE_TRANSACTION.ADD), value: TYPE_TRANSACTION.ADD },
-  { title: getTypeName(TYPE_TRANSACTION.TICKET_BUY), value: TYPE_TRANSACTION.TICKET_BUY },
+  { title: getTypeName(TYPE_TRANSACTION.BUY_TICKET), value: TYPE_TRANSACTION.BUY_TICKET },
+  { title: getTypeName(TYPE_TRANSACTION.REFUND), value: TYPE_TRANSACTION.REFUND },
 ];
 const statusClass: Record<string, string> = {
-  [TYPE_TRANSACTION.TICKET_BUY]: "text-red-600 bg-red-100",
+  [TYPE_TRANSACTION.BUY_TICKET]: "text-red-600 bg-red-100",
   [TYPE_TRANSACTION.ADD]: "text-green-600 bg-green-100 ",
+  [TYPE_TRANSACTION.REFUND]: "text-blue-600 bg-blue-100 ",
 };
 
 export const columnTransaction: TableColumn<TractionResponseType>[] = [

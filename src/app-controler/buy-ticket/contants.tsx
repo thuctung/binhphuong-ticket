@@ -33,17 +33,9 @@ export const BADGE_STYLES: Record<string, string> = {
 };
 
 export const getImageProduct = (product: ProductBanaType) => {
-  switch (product.site_code) {
-    case "BNC": {
-      if (product.restaurantName) {
-        return "/ba-na/buffet.png";
-      }
-      return "/ba-na/ve-thuong.png";
-    }
-    default:
-      if (product.restaurantName) {
-        return "/ba-na/buffet.png";
-      }
-      return "/ba-na/ve-thuong.png";
+  const { site_code } = product;
+  if (product.restaurantName) {
+    return `/${site_code}/buffet.jpg`;
   }
+  return `/${site_code}/cap.jpg`;
 };

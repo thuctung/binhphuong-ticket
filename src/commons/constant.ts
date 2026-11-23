@@ -1,39 +1,34 @@
 import { MenuMgtType } from "@/types";
-import {
-  Compass,
-  Sparkles,
-  Ticket,
-  Award,
-  HelpCircle,
-  Store,
-  ChevronRight,
-  X,
-  Plane,
-} from "lucide-react";
-
-export const ACC_STATUS = {
-  PENDING: "pending",
-  APPROVED: "approved",
-  SUSPENDED: "suspended",
-};
+import { Ticket, Award, HelpCircle, Store } from "lucide-react";
 
 export const TYPE_TRANSACTION = {
-  ADD: "add",
+  ADD: "ADD",
   PAID: "PAID",
-  TICKET_BUY: "ticket_buy",
+  BUY_TICKET: "BUY_TICKET",
+  REFUND: "REFUND",
 };
 
 export const ROLES = {
-  CUSTOMER: "customer",
-  AFFILIATE: "affiliate",
-  ADMIN: "admin",
+  CUSTOMER: "CUSTOMER",
+  AFFILIATE: "AFFILATE",
+  ADMIN: "ADMIN",
+  REGISTER: "REGISTER",
 };
 
-export const TOPUPS_STATUS = {
-  PENDING: "pending",
-  APPROVED: "completed",
-  REJECTED: "rejected",
-  ERROR: "error",
+export const STATUS_COMMON_TYPE = {
+  PENDING: "PENDING",
+  COMPLETED: "COMPLETED",
+  FAILED: "FAILED",
+  SUCCESS: "SUCCESS",
+  ERROR: "ERROR",
+  REJECTED: "REJECTED",
+  APPROVED: "APPROVED",
+  SUSPENDED: "SUSPENDED",
+  SENT: "SENT",
+  PAID: "PAID",
+  CANCELED: "CANCELED",
+  ACTIVE: "ACTIVE",
+  ONHOLD: "ONHOLD",
 };
 
 export const LIMIT_TABLE = 10;
@@ -116,8 +111,9 @@ export const DB_TABLE_NAME = {
   PROFILES: "profiles",
   VIEW_PROFILE_TOPUP: "topups_with_profiles",
   VIEW_ADMIN_REPORT: "admin_order_report",
-  FUC_UPADTE_STAUS_BALANCE: "approve_topup",
-  FUC_CUSTOMER_BUY_TICKET: "customer_buy_ticket",
+  FUNC_UPADTE_STAUS_BALANCE: "approve_topup",
+  FUNC_CUSTOMER_BUY_TICKET: "customer_buy_ticket",
+  FUNC_CUSTOMER_CLAIM_TICKET: "claim_customer_order",
   TICKET_TYPES: "ticket_types",
   TICKET_TICKET_VARIANT: "ticket_variants",
   VIEW_TICET_VARIANTS_AND_CATEGORY: "ticket_variants_and_category",
@@ -177,20 +173,6 @@ export const SUN_SCOPE_TOKEN =
   "https://sunworldb2cdev.onmicrosoft.com/0a7097c9-158e-45b8-b4db-8db40aa6bd32/.default";
 
 export const SUN_PROXY_GET_DATA = "https://proxy-dev.its-solution.vn/swg/svcotasap/stg";
-
-export const PAYMENT_STATUS = {
-  PENDING: "pending",
-  COMPLETED: "completed",
-  FAILED: "failed",
-  SUCCESS: "success",
-};
-
-export const AGENT_CODE = {
-  CUSTOMER: "customer",
-  LEVEL_1: "level_1",
-  LEVEL_2: "level_2",
-  STAFF: "staff",
-};
 
 export const TYPE_TRANSFER = {
   CUSTOMER: "CMT",
@@ -257,12 +239,9 @@ export const SITE_SUB_GROUP = {
 
 export const LOCAL_SUN_TOKEN = "sun_access_token";
 
-export const CUSTOMER = "customer";
-export const AGENT = "agent";
-
 export const PersonType = {
-  [CUSTOMER]: "Khách lẻ",
-  [AGENT]: "Đại lý",
+  [ROLES.CUSTOMER]: "Khách lẻ",
+  [ROLES.AFFILIATE]: "Đại lý",
 };
 
 export const END_DATE_GMT7 = "T23:59:59+07:00";

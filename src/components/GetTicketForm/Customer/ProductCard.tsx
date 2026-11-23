@@ -7,8 +7,8 @@ import PinIcon from "./components/PinIcon";
 import { useState } from "react";
 import CartIcon from "./components/CartIcon";
 import { getPriceAgentAndMultiple } from "../constants";
-import { CUSTOMER } from "@/commons/constant";
 import { useCartStore } from "@/stores/useCartStore";
+import { ROLES } from "@/commons/constant";
 
 type Props = {
   quantities: number;
@@ -85,7 +85,12 @@ export default function ProductCard({
 
               <p className="font-display text-xl font-bold text-[#e5252a]">
                 {formatVND(
-                  getPriceAgentAndMultiple(product, CUSTOMER, mapAgentPrice, agentPriceDefault)
+                  getPriceAgentAndMultiple(
+                    product,
+                    ROLES.CUSTOMER,
+                    mapAgentPrice,
+                    agentPriceDefault
+                  )
                 )}
               </p>
             </div>

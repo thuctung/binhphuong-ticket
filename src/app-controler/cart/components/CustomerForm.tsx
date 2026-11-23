@@ -1,25 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { CustomerErrors, CustomerInfo } from "./customer";
+import { CustomerErrors } from "./customer";
 import { useTranslation } from "@/lib/i18n/client";
+import { useCartStore } from "@/stores/useCartStore";
+import { CustomerInfoType } from "@/app-controler/buy-ticket/type";
 
 type Props = {
-  value: CustomerInfo;
-  onChange: (next: CustomerInfo) => void;
   errors: CustomerErrors;
-  showAllErrors: boolean; // true sau khi khách bấm Thanh toán mà còn thiếu thông tin
+  showAllErrors: boolean;
 };
 
 const inputBase =
   "w-full rounded-xl border bg-white px-3 py-2.5 text-sm outline-none transition focus:ring-2";
 
-export function CustomerForm({ value, onChange, errors, showAllErrors }: Props) {
+export function CustomerForm({ errors, showAllErrors }: Props) {
   const { t } = useTranslation();
-  const [touched, setTouched] = useState<Partial<Record<keyof CustomerInfo, boolean>>>({});
+  const [touched, setTouched] = useState<Partial<Record<keyof CustomerInfoType, boolean>>>({});
+
+  const { customerInfo, setCustomerInfo } = useCartStore((s) => s);
 
   const fields: {
-    key: keyof CustomerInfo;
+    key: keyof CustomerInfoType;
     label: string;
     placeholder: string;
     type: string;
@@ -74,8 +76,8 @@ export function CustomerForm({ value, onChange, errors, showAllErrors }: Props) 
                 inputMode={f.inputMode}
                 autoComplete={f.autoComplete}
                 placeholder={f.placeholder}
-                value={value[f.key]}
-                onChange={(e) => onChange({ ...value, [f.key]: e.target.value })}
+                value={customerInfo[f.key]}
+                onChange={(e) => setCustomerInfo({ ...customerInfo, [f.key]: e.target.value })}
                 onBlur={() => setTouched((t) => ({ ...t, [f.key]: true }))}
                 aria-invalid={!!error}
                 aria-describedby={error ? `${id}-error` : undefined}

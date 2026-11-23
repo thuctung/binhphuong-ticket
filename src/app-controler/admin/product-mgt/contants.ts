@@ -1,3 +1,4 @@
+import { ROLES } from "@/commons/constant";
 import { formatVND } from "@/lib/money";
 import { SiteType } from "@/types/ticket";
 import { randomBytes } from "crypto";
@@ -36,7 +37,7 @@ export const LIST_OPTION_DISCOUNT = [
 ];
 
 const getTextByAgentCode = (agentCode: string) => {
-  if (agentCode === "customer" || agentCode === "register") {
+  if (agentCode === ROLES.CUSTOMER || agentCode === ROLES.REGISTER) {
     return " vào giá công bố";
   }
   return " vào giá gốc";
@@ -68,7 +69,7 @@ export const getNoteTextDiscount = (agentCode: string, value: number, typeDiscou
 };
 
 export const getNoteTextDiscountDefault = (agentCode: string, value: number) => {
-  if (agentCode === "customer" || agentCode === "register") {
+  if (agentCode === ROLES.CUSTOMER || agentCode === ROLES.REGISTER) {
     return `Giảm ${value}% vào giá công bố`;
   }
   return `Thêm ${formatVND(value)} vào  giá gốc`;

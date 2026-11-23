@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { getSideItem } from "@/app-controler/admin/product-mgt/contants";
 import RefundAgentDialog from "./components/add-moeny";
 import { toast } from "react-toastify";
+import { ROLES } from "@/commons/constant";
 
 const initParam = { site_code: "", email: "", from: df_From, to: df_To, third_party_number: "" };
 const initSearch = {
@@ -98,7 +99,11 @@ export default function RefundHistory({ listSideSun }: { listSideSun: SiteType[]
       const { data } = await getProfileByEmail(currentData.email_order);
       if (data) {
         const { role, agent_level, user_id } = data;
-        if (role !== "affiliate" || agent_level === "register" || agent_level === "customer") {
+        if (
+          role !== ROLES.AFFILIATE ||
+          agent_level === ROLES.REGISTER ||
+          agent_level === ROLES.CUSTOMER
+        ) {
           toast.error("Đối tượng không phải là đại lý");
           return;
         }
