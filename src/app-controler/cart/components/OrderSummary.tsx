@@ -36,8 +36,7 @@ export function OrderSummary({
   return (
     <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5">
       <h2 className="text-base font-bold text-slate-900">{t("cart.order_summary")}</h2>
-
-      {/* Coupon */}
+      {/* 
       <div>
         <label htmlFor="coupon" className="mb-1.5 block text-sm font-medium text-slate-700">
           {t("cart.discount_code")}
@@ -86,21 +85,21 @@ export function OrderSummary({
           </div>
         )}
         {couponError && <p className="mt-1.5 text-sm text-red-500">{couponError}</p>}
-      </div>
+      </div> */}
 
       {/* Totals */}
       <dl className="space-y-2 border-t border-slate-100 pt-4 text-sm">
-        <div className="flex justify-between text-slate-600">
+        {/* <div className="flex justify-between text-slate-600">
           <dt> {t("cart.subtotal")}</dt>
           <dd className="tabular-nums">{formatVND(subtotal)}</dd>
-        </div>
-        <div className="flex justify-between text-slate-600">
+        </div> */}
+        {/* <div className="flex justify-between text-slate-600">
           <dt> {t("cart.discount")}</dt>
           <dd className={`tabular-nums ${discount > 0 ? "text-[#1c5b41]" : ""}`}>
             {discount > 0 ? `- ${formatVND(discount)}` : formatVND(0)}
           </dd>
-        </div>
-        <div className="flex items-baseline justify-between border-t border-slate-100 pt-3">
+        </div> */}
+        <div className="flex items-baseline justify-between  border-slate-100 pt-3">
           <dt className="font-bold text-slate-900">{t("cart.total")}</dt>
           <dd className="text-xl font-extrabold text-[#fe9614] tabular-nums">{formatVND(total)}</dd>
         </div>
