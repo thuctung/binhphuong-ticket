@@ -1,4 +1,5 @@
 import { getTranslation } from "@/lib/i18n";
+import Image from "next/image";
 import Link from "next/link";
 
 const policies1 = [
@@ -55,7 +56,6 @@ export default async function Footer({ lng }: { lng: string }) {
             <p className="mt-4 max-w-sm text-sm leading-7 text-emerald-50/70">
               {t("homepage.footer.description")}
             </p>
-
             <div className="mt-6 h-1 w-14 rounded-full bg-gradient-to-r from-amber-300 to-amber-100" />
           </div>
 
@@ -101,7 +101,19 @@ export default async function Footer({ lng }: { lng: string }) {
             </ul>
           </div>
         </div>
-
+        <div className="flex w-full justify-end">
+          <Link
+            href="https://online.gov.vn/nen-tang/490fbd81-8ed8-4a84-a79b-e00d977f7294"
+            target="_blank"
+          >
+            <Image
+              alt="Logo_XacNhan_Platform"
+              src="/Logo_XacNhan_Platform.png"
+              width={155}
+              height={175}
+            />
+          </Link>
+        </div>
         <div className="mt-10 border-t border-white/15 pt-6 md:mt-12">
           <div className="flex flex-col items-center justify-between gap-3 text-center text-xs text-emerald-50/55 sm:flex-row sm:text-left">
             <p>{t("homepage.footer.copyright")}</p>
