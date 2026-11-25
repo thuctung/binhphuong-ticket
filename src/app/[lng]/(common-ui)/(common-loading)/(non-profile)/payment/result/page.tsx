@@ -19,12 +19,5 @@ export default async function PaymentResultPage({
     redirect(`/${lng}/order-failed?reason=${sp.resultCode}`);
   }
   const orderCode = sp.orderId.slice(0, sp.orderId.lastIndexOf("_"));
-  return (
-    <ProcessPaymentMomo
-      orderCode={orderCode}
-      amount={Number(sp.amount)}
-      transId={sp.transId!}
-      payType={sp.payType ?? ""}
-    />
-  );
+  return <ProcessPaymentMomo orderCode={orderCode} amount={Number(sp.amount)} />;
 }

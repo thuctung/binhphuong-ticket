@@ -31,6 +31,7 @@ export const getTicketForCustomer = async ({
     }
     route.push(`/order-success/${currentOrderData.thirdPartyNum}`);
   }
+  return false;
 };
 
 export const PRODUCT_SELECTED_LOCALE = "PRODUCT_SELECTED_LOCALE";

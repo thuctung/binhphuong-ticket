@@ -10,7 +10,7 @@ import { getTicketForCustomer, PRODUCT_SELECTED_LOCALE } from "../cart/helper";
 import { useTranslation } from "@/lib/i18n/client";
 import { STATUS_COMMON_TYPE } from "@/commons/constant";
 
-type Props = { orderCode: string; amount: number; transId: string; payType: string };
+type Props = { orderCode: string; amount: number };
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -51,6 +51,7 @@ export default function ProcessPaymentMomo({ orderCode, amount }: Props) {
         }
 
         // 2. Kiểm tra số tiền
+        debugger;
         if (Number(order.total_amount) !== Number(amount)) {
           return fail("amount_mismatch");
         }
@@ -134,7 +135,7 @@ export default function ProcessPaymentMomo({ orderCode, amount }: Props) {
         }
 
         // 8. Gọi API tạo vé
-        await getTicketForCustomer({
+        const dataGetTicket = await getTicketForCustomer({
           currentOrderData,
           productSelected: products,
           email: order.user_email,
@@ -145,8 +146,11 @@ export default function ProcessPaymentMomo({ orderCode, amount }: Props) {
             return success(order);
           },
         });
-        return fail("ticket_processing");
+        if (!dataGetTicket) {
+          return fail("ticket_processing");
+        }
       } catch (error) {
+        console.log("error", error);
         fail("error");
       }
     };

@@ -32,7 +32,7 @@ export function OrderSummary({
     if (!code.trim()) return;
     onApplyCoupon(code.trim());
   };
-
+  console.log("total", total);
   return (
     <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5">
       <h2 className="text-base font-bold text-slate-900">{t("cart.order_summary")}</h2>

@@ -31,6 +31,7 @@ const getAmountAndQuantity = (orders: OrderHistory[]) => {
 export default function OrderSuccessController({ code, orders }: OrderSuccessControllerProps) {
   const { t } = useTranslation();
   const firstItem = get(orders, 0);
+  console.log("orders", orders);
   const [totalAmount, totalTicket] = getAmountAndQuantity(orders);
 
   const { clear: clearCart } = useCartStore((s) => s);
@@ -123,7 +124,9 @@ export default function OrderSuccessController({ code, orders }: OrderSuccessCon
                 </ul>
                 <div className="mt-5 flex items-center justify-between rounded-xl bg-white px-5 py-4 ring-1 ring-slate-200">
                   <span className="text-slate-600">{t("cart.total_payment")} </span>
-                  <span className="text-xl font-semibold">{formatVND(totalAmount)}</span>
+                  <span className="text-xl font-semibold">
+                    {formatVND(firstItem?.total_amount || totalAmount)}
+                  </span>
                 </div>
               </section>
 
