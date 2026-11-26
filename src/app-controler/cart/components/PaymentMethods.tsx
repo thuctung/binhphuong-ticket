@@ -13,24 +13,33 @@ const BANK = {
   name: process.env.NEXT_PUBLIC_BANK_NAME ?? "CONG TY ABC",
 };
 
-const METHODS: { id: PaymentMethodId; name: string; desc: string; icon: React.ReactNode }[] = [
+const METHODS: {
+  id: PaymentMethodId;
+  name: string;
+  desc: string;
+  icon: React.ReactNode;
+  disable: boolean;
+}[] = [
   {
     id: "qr",
     name: "cart.qr_payment",
     desc: "cart.supported_payment_apps",
     icon: <QrCode className="h-5 w-5" />,
+    disable: false,
   },
   {
     id: "momo",
     name: "cart.momo_payment",
     desc: "cart.transaction_fee_1",
     icon: <Image src="/icons/momo.webp" alt="momo" width={40} height={40} />,
+    disable: true,
   },
   {
     id: "card",
     name: "cart.credit_debit_card",
     desc: "cart.transaction_fee_2_5",
     icon: <Image src="/icons/credit.jpg" alt="momo" width={40} height={40} />,
+    disable: true,
   },
 ];
 
@@ -71,6 +80,7 @@ export function PaymentMethods({ value, onChange, order }: Props) {
                   name="payment"
                   value={m.id}
                   checked={selected}
+                  disabled={m.disable}
                   onChange={() => onChange(m.id)}
                   className="sr-only"
                 />
@@ -83,7 +93,9 @@ export function PaymentMethods({ value, onChange, order }: Props) {
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block text-sm font-semibold text-slate-900">{t(m.name)}</span>
-                  <span className="block truncate text-xs text-slate-500">{t(m.desc)}</span>
+                  <span className="block truncate text-xs text-slate-500">
+                    {m.disable ? t("cart.coming_soon") : t(m.desc)}
+                  </span>
                 </span>
                 <span
                   aria-hidden
