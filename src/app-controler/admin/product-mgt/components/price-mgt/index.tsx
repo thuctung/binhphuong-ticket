@@ -4,13 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 
 import { CategorySubmitType, ProductBanaType, SiteType } from "@/types/ticket";
-import { AgentType, SearchTableType } from "@/types";
+import { AgentType, CommonType, SearchTableType } from "@/types";
 import {
   AgentPriceAndTypeSubmit,
   AgentPriceDefaultSubmit,
   SearchProductType,
 } from "@/app-controler/admin/product-mgt/type";
 import {
+  deleteProduct,
   getListAgentPrice,
   getListAgentPriceDefault,
   getListCategory,
@@ -26,6 +27,8 @@ import SearchBar from "./components/SearchBar";
 import AgentPriceModal from "./components/AgentPriceModal";
 import DefaultPriceModal from "./components/DefaultPriceSite";
 import ProductForm from "./components/ProductForm";
+import { ScrollLockWrapper } from "@/components/ui/scroll-lock-wrapper";
+import { useCommonStore } from "@/stores/useCommonStore";
 
 type PriceManagementProps = {
   listSite: SiteType[];
@@ -35,6 +38,8 @@ const intForm: SearchProductType = {
   site_code: "",
 };
 export default function PriceManagement({ listSite }: PriceManagementProps) {
+  const { showConfirm }: CommonType | any = useCommonStore.getState();
+
   const [totalPages, setTotalPage] = useState(0);
   const [params, setParams] = useState<SearchTableType<SearchProductType>>({
     searchValue: { ...intForm },
@@ -153,6 +158,18 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
     }
   };
 
+  const handleDeleteProduct = (id: string) => {
+    showConfirm({
+      message: "Bạn có chắc muốn xóa!",
+      okFunc: async () => {
+        const data = await deleteProduct(id);
+        if (data) {
+          fetchListProduct(params);
+        }
+      },
+    });
+  };
+
   const columnProduct: TableColumn<ProductBanaType>[] = [
     {
       key: "name",
@@ -185,6 +202,17 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
         getSideItem(row.site_code, listSite)?.in_system ? (
           <Button size="sm" onClick={() => handleEditProduct(row)}>
             Sửa vé
+          </Button>
+        ) : null,
+    },
+    {
+      key: "delete_product",
+      title: "",
+      align: "center",
+      render: (row) =>
+        getSideItem(row.site_code, listSite)?.in_system ? (
+          <Button size="sm" variant="destructive" onClick={() => handleDeleteProduct(row.id!)}>
+            Xóa
           </Button>
         ) : null,
     },
@@ -238,35 +266,41 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
       />
 
       {dialogType === PRODUCT_DIALOG.AGENT_PRICE && productItem ? (
-        <AgentPriceModal
-          listSite={listSite}
-          listAgent={listAgent}
-          prices={listPrice}
-          product={productItem}
-          onClose={handleCloseDailog}
-        />
+        <ScrollLockWrapper open={dialogType === PRODUCT_DIALOG.AGENT_PRICE}>
+          <AgentPriceModal
+            listSite={listSite}
+            listAgent={listAgent}
+            prices={listPrice}
+            product={productItem}
+            onClose={handleCloseDailog}
+          />
+        </ScrollLockWrapper>
       ) : null}
 
       {dialogType === PRODUCT_DIALOG.DEFAULT_PRICE ? (
-        <DefaultPriceModal
-          listSite={listSite}
-          listAgent={listAgent}
-          prices={listPriceDefault}
-          onClose={handleCloseDailog}
-          siteCode={currentSite?.code}
-        />
+        <ScrollLockWrapper open={dialogType === PRODUCT_DIALOG.DEFAULT_PRICE}>
+          <DefaultPriceModal
+            listSite={listSite}
+            listAgent={listAgent}
+            prices={listPriceDefault}
+            onClose={handleCloseDailog}
+            siteCode={currentSite?.code}
+          />
+        </ScrollLockWrapper>
       ) : null}
 
       {dialogType === PRODUCT_DIALOG.PRODUC_DETAIL ? (
-        <ProductForm
-          listSite={listSite}
-          listAgent={listAgent}
-          prices={listPrice}
-          product={productItem}
-          listCategory={listCategory}
-          siteCode={currentSite?.code}
-          onClose={handleCloseDailog}
-        />
+        <ScrollLockWrapper open={dialogType === PRODUCT_DIALOG.PRODUC_DETAIL}>
+          <ProductForm
+            listSite={listSite}
+            listAgent={listAgent}
+            prices={listPrice}
+            product={productItem}
+            listCategory={listCategory}
+            siteCode={currentSite?.code}
+            onClose={handleCloseDailog}
+          />
+        </ScrollLockWrapper>
       ) : null}
     </main>
   );

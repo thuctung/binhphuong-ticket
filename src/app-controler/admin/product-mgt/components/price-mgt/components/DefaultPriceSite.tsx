@@ -70,12 +70,12 @@ export default function DefaultPriceModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl"
+        className="w-full max-w-xl rounded-lg bg-white p-6 shadow-xl"
       >
-        <h2 id="modal-title" className="text-lg font-semibold text-slate-900">
+        <h2 id="modal-title" className="text-lg font-semibold text-slate-900 pb-4">
           Công viên: {siteCode ? getSideItem(siteCode, listSite)?.name : null}
         </h2>
-        <div className="max-h-[335px] overflow-y-auto md:max-h-[500px]">
+        <div className="max-h-[calc(85vh-90px)] overflow-y-auto">
           {listAgent.map((item) => (
             <div key={item.code} className="rounded-md border border-slate-300 my-4 p-3">
               <label className="text-sm font-medium text-slate-700">{item.name}</label>

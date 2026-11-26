@@ -69,7 +69,6 @@ export const getNoteTextDiscount = (agentCode: string, value: number, typeDiscou
 };
 
 export const getNoteTextDiscountDefault = (agentCode: string, value: number) => {
-  console.log("agentCode", agentCode);
   if (agentCode === ROLES.CUSTOMER || agentCode === ROLES.REGISTER) {
     return `Giảm ${value}% vào giá công bố`;
   }

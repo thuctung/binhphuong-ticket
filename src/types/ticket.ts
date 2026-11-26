@@ -184,7 +184,7 @@ export type ResultListProductType = { personType: string; ticket: ProductBanaTyp
 export interface ProductBanaType {
   closeTime: string;
   code: string;
-  id?: number;
+  id?: string;
   name: string;
   personType: string;
   pricePolicy?: PricePolicyType;

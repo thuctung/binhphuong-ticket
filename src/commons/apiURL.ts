@@ -33,6 +33,8 @@ export const DELETE_AGENT = "/api/auth/admin/agents/delete";
 
 export const GET_AGENT_PRICE = "/api/auth/admin/products/get-agent-price";
 
+export const DELETE_PRODUCT = "/api/auth/admin/products/delete-product";
+
 export const CREATE_AGENT_PRICE = "/api/auth/admin/price/create";
 
 export const UPDATE_AGENT_PRICE = "/api/auth/admin/price/update";
@@ -90,8 +92,6 @@ export const GET_PROD = "/api/auth/admin/sites/update-site";
 export const GET_PRODUCT_PARAMS = "/api/auth/admin/ticket-price/get-products";
 
 export const UPDATE_PRODUCT = "/api/auth/admin/products/update";
-
-export const DELETE_PRODUCT = "/api/auth/admin/ticket-price/delete-product";
 
 export const UPDATE_PRODUCT_PRICES = "/api/auth/admin/products/sync-product/update-price";
 

@@ -16,6 +16,7 @@ import { AgentPriceAndTypeSubmit } from "@/app-controler/admin/product-mgt/type"
 import { toast } from "react-toastify";
 import { updateProduct } from "../../../api";
 import { inputCls } from "@/components/ui/const-class";
+import { validateProduct } from "../../../help";
 
 type Props = {
   listSite: SiteType[];
@@ -52,11 +53,20 @@ export default function ProductForm({
   };
   const [formData, setFormData] = useState<ProductBanaType>(product || intitValue);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<any>({});
 
-  const onChangeValue = (key: string, value: string | boolean) =>
+  const onChangeValue = (key: string, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
+    setError({});
+  };
 
   const handleSave = async () => {
+    const validation = validateProduct(formData);
+    if (!validation.isValid) {
+      setError(validation.errors);
+      return;
+    }
+
     const payload: ProductType | any = { ...formData };
     delete payload.closeTime;
     const data = await updateProduct(payload);
@@ -75,13 +85,13 @@ export default function ProductForm({
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        className="w-full max-w-lg rounded-lg bg-white p-6 shadow-xl"
+        className="w-full max-w-[1128px] rounded-lg bg-white p-6 shadow-xl"
       >
         <h2 id="modal-title" className="text-lg font-semibold text-slate-900">
           {formData.id ? "Cập nhật vé" : "Thêm vé"}
         </h2>
 
-        <div className="mt-4 max-h-[335px] overflow-y-auto pr-1 md:max-h-[500px]">
+        <div className="mt-4 max-h-[calc(85vh-90px)] overflow-y-auto pr-1 md:max-h-[500px]">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {/* Mã vé */}
             <div>
@@ -111,6 +121,7 @@ export default function ProductForm({
                 onChange={(e) => onChangeValue("name", e.target.value)}
                 className={inputCls}
               />
+              {error.name && <p className="text-sm text-red-500">{error.name}</p>}
             </div>
 
             {/* Loại vé */}
@@ -131,6 +142,7 @@ export default function ProductForm({
                   </option>
                 ))}
               </select>
+              {error.personType && <p className="text-sm text-red-500">{error.personType}</p>}
             </div>
 
             {/* Công viên */}
@@ -151,6 +163,7 @@ export default function ProductForm({
                   </option>
                 ))}
               </select>
+              {error.site_code && <p className="text-sm text-red-500">{error.site_code}</p>}
             </div>
 
             {/* Giá công bố */}
@@ -170,6 +183,7 @@ export default function ProductForm({
               <span className="float-right text-[12px] text-[#1a780d]">
                 {formatVND(formData.publicPrice ?? 0)}
               </span>
+              {error.publicPrice && <p className="text-sm text-red-500">{error.publicPrice}</p>}
             </div>
 
             {/* Giá đại lý */}
@@ -189,6 +203,7 @@ export default function ProductForm({
               <span className="float-right text-[12px] text-[#1a780d]">
                 {formatVND(formData.unitPrice ?? 0)}
               </span>
+              {error.unitPrice && <p className="text-sm text-red-500">{error.unitPrice}</p>}
             </div>
 
             {/* Order */}

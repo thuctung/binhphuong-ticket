@@ -1,5 +1,6 @@
 import api from "@/axios";
 import {
+  DELETE_PRODUCT,
   GET_AGENT_PRICE,
   GET_CATEGORY,
   GET_PRICE_AGENT_DEFAULT,
@@ -158,6 +159,18 @@ export const updateProduct = async (params: ProductType) => {
   try {
     setGlobalLoading(true);
     const { data } = await api.post(UPDATE_PRODUCT, params);
+    return data;
+  } catch (error: any) {
+    setToastMessage(error.message || "Có lỗi xảy ra");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
+
+export const deleteProduct = async (id: string) => {
+  try {
+    setGlobalLoading(true);
+    const { data } = await api.post(DELETE_PRODUCT, { id });
     return data;
   } catch (error: any) {
     setToastMessage(error.message || "Có lỗi xảy ra");
