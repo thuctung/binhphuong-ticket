@@ -147,6 +147,8 @@ export const DB_TABLE_NAME = {
   EMAIL_QUEUE: "email_queue",
   TICKETS: "tickets",
   AGENT_PRICE_DEFAULT: "dafault_agent_price",
+  FUNC_ONEPAY_FINALIZE_PAYMENT: "onepay_finalize_payment",
+  ONEPAY_TRANSACTIONS: "onepay_transactions",
 };
 
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";

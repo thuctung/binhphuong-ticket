@@ -13,9 +13,6 @@ const BANK = {
   name: process.env.NEXT_PUBLIC_BANK_NAME ?? "CONG TY ABC",
 };
 
-// Thẻ chỉ bật khi đã tích hợp cổng thanh toán thẻ (đặt NEXT_PUBLIC_ENABLE_CARD=true trong .env)
-const CARD_ENABLED = process.env.NEXT_PUBLIC_ENABLE_CARD === "true";
-
 const METHODS: { id: PaymentMethodId; name: string; desc: string; icon: React.ReactNode }[] = [
   {
     id: "qr",
@@ -26,14 +23,14 @@ const METHODS: { id: PaymentMethodId; name: string; desc: string; icon: React.Re
   {
     id: "momo",
     name: "cart.momo_payment",
-    desc: "",
+    desc: "cart.transaction_fee_1",
     icon: <Image src="/icons/momo.webp" alt="momo" width={40} height={40} />,
   },
   {
     id: "card",
     name: "cart.credit_debit_card",
-    desc: "Visa, Mastercard, JCB",
-    icon: <CreditCard className="h-5 w-5" />,
+    desc: "cart.transaction_fee_2_5",
+    icon: <Image src="/icons/credit.jpg" alt="momo" width={40} height={40} />,
   },
 ];
 
@@ -59,17 +56,14 @@ export function PaymentMethods({ value, onChange, order }: Props) {
 
       <div className="space-y-2">
         {METHODS.map((m) => {
-          const disabled = m.id === "card" && !CARD_ENABLED;
-          const selected = value === m.id && !disabled;
+          const selected = value === m.id;
           return (
             <div key={m.id}>
               <label
-                className={`flex items-center gap-3 rounded-xl border p-3 transition-colors ${disabled ? "" : "cursor-pointer"} ${
-                  disabled
-                    ? "cursor-not-allowed border-slate-200 opacity-50"
-                    : selected
-                      ? "border-[#1c5b41] bg-[#1c5b41]/5"
-                      : "border-slate-200 hover:border-slate-300"
+                className={`flex items-center gap-3 rounded-xl border p-3 transition-colors cursor-pointer ${
+                  selected
+                    ? "border-[#1c5b41] bg-[#1c5b41]/5"
+                    : "border-slate-200 hover:border-slate-300"
                 }`}
               >
                 <input
@@ -77,7 +71,6 @@ export function PaymentMethods({ value, onChange, order }: Props) {
                   name="payment"
                   value={m.id}
                   checked={selected}
-                  disabled={disabled}
                   onChange={() => onChange(m.id)}
                   className="sr-only"
                 />
@@ -90,9 +83,7 @@ export function PaymentMethods({ value, onChange, order }: Props) {
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block text-sm font-semibold text-slate-900">{t(m.name)}</span>
-                  <span className="block truncate text-xs text-slate-500">
-                    {disabled ? t("cart.coming_soon") : t(m.desc)}
-                  </span>
+                  <span className="block truncate text-xs text-slate-500">{t(m.desc)}</span>
                 </span>
                 <span
                   aria-hidden

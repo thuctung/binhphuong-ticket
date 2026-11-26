@@ -42,7 +42,7 @@ import {
 import { ClientOrderItem, CustomerOrderType } from "../checkout-client/type";
 
 import BankTransferQR from "../affi/topup/components/qrToBank";
-import { paymentMomo } from "./apis";
+import { paymentMomo, paymentOnePay } from "./apis";
 import { getTicketForCustomer, PRODUCT_SELECTED_LOCALE } from "./helper";
 
 const initOrderData = {
@@ -116,9 +116,34 @@ export default function CartController() {
     }
   }, [profile.email]);
 
-  const totalPayment = useMemo(() => {
+  const totalAfterDiscount = useMemo(() => {
+    if (coupon) {
+      if (coupon.type === "fixed") {
+        return subTotal - coupon.value;
+      } else {
+        return subTotal - subTotal * coupon.value;
+      }
+    }
     return subTotal;
   }, [subTotal, coupon]);
+
+  const totalPayment = useMemo(() => {
+    let total = totalAfterDiscount;
+    switch (payment) {
+      case "momo": {
+        total += total * 0.01;
+        break;
+      }
+      case "card": {
+        total += total * 0.025;
+        break;
+      }
+      default: {
+        total = totalAfterDiscount;
+      }
+    }
+    return total;
+  }, [totalAfterDiscount, payment]);
 
   const applyCoupon = (code: string) => {
     const found = false;
@@ -231,29 +256,38 @@ export default function CartController() {
     const orderID = await customerCreateOrderTicket(dataSubmit);
 
     if (orderID) {
-      if (payment === "momo") {
-        localStorage.setItem(PRODUCT_SELECTED_LOCALE, JSON.stringify(products));
-        handlePayMomo(orderCode);
-      } else {
-        const qrLink = getBankInfo(totalPayment, paymentCode);
-        setQRPayment({
-          qr: qrLink,
-          code: paymentCode,
-          amount: totalPayment,
-        });
-        setOpenQR(true);
-        setCurrentOrderData({
-          orderCode: dataOrderSunWorld.orderCode,
-          products,
-          orderId: orderID,
-          dateUse: formData.date_use,
-          siteCode,
-          formData,
-          thirdPartyNum,
-          in_system,
-          paymentCode,
-          siteName: site_name,
-        });
+      switch (payment) {
+        case "momo": {
+          localStorage.setItem(PRODUCT_SELECTED_LOCALE, JSON.stringify(products));
+          handlePayMomo(orderCode);
+          break;
+        }
+        case "card": {
+          localStorage.setItem(PRODUCT_SELECTED_LOCALE, JSON.stringify(products));
+          handlePayOnePay(orderCode, paymentCode);
+          break;
+        }
+        default: {
+          const qrLink = getBankInfo(totalPayment, paymentCode);
+          setQRPayment({
+            qr: qrLink,
+            code: paymentCode,
+            amount: totalPayment,
+          });
+          setOpenQR(true);
+          setCurrentOrderData({
+            orderCode: dataOrderSunWorld.orderCode,
+            products,
+            orderId: orderID,
+            dateUse: formData.date_use,
+            siteCode,
+            formData,
+            thirdPartyNum,
+            in_system,
+            paymentCode,
+            siteName: site_name,
+          });
+        }
       }
       // CANCLE ORDER TIMEOUT :
       timeCancelOrderRef.current = setTimeout(() => cancleOrderTimeout(orderID), 10 * 60 * 1000); // 10m
@@ -264,6 +298,15 @@ export default function CartController() {
     const { payUrl } = await paymentMomo(orderCode, totalPayment);
     if (payUrl) {
       window.location.href = payUrl;
+    } else {
+      toast.error("Không tạo được thanh toán");
+    }
+  };
+
+  const handlePayOnePay = async (orderCode: string, paymentCode: string) => {
+    const { payment_url } = await paymentOnePay(orderCode, paymentCode);
+    if (payment_url) {
+      window.location.href = payment_url;
     } else {
       toast.error("Không tạo được thanh toán");
     }
@@ -402,7 +445,7 @@ export default function CartController() {
             <OrderSummary
               subtotal={subTotal}
               discount={0}
-              total={totalPayment}
+              total={totalAfterDiscount}
               appliedCoupon={coupon}
               couponError={couponError}
               onApplyCoupon={applyCoupon}
