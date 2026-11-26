@@ -150,7 +150,6 @@ export default function ProcessPaymentMomo({ orderCode, amount }: Props) {
           return fail("ticket_processing");
         }
       } catch (error) {
-        console.log("error", error);
         fail("error");
       }
     };

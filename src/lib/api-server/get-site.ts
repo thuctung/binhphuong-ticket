@@ -4,7 +4,12 @@ import { DB_TABLE_NAME } from "@/commons/constant";
 export const getSitesHomePage = async () => {
   const { data, error } = await supabaseAdmin
     .from(DB_TABLE_NAME.SITES)
-    .select(`*,location:location(code,name,en,zh,ko)`)
+    .select(
+      `*,location:location(code,name,en,zh,ko),
+    link_image_site (
+      url
+    )`
+    )
     .eq("status", true)
     .order("order", { ascending: true });
 

@@ -4,22 +4,29 @@ import { useEffect, useState } from "react";
 import { SearchSite } from "./components/search-site";
 import { CustomTable, TableColumn } from "@/components/ui/customs/table";
 import { SearchSiteType, SiteType } from "./type";
-import { getAllSiteMgt, rebuildSerVer, updateSite } from "./api";
+import { getAllSiteMgt, getCompanyAndLoaction, rebuildSerVer, updateSite } from "./api";
 import FormSite from "./components/form-site";
 import { isEmpty } from "lodash";
 import { ButtonCommon } from "@/components/ui/customs/buttonCommon";
 import { toast } from "react-toastify";
 import { useCommonStore } from "@/stores/useCommonStore";
-import { CommonType } from "@/types";
+import { CommonType, CompanyType, LocationType } from "@/types";
 
 const EMPTY_FORM: SiteType = {
   id: "",
   code: "",
   name: "",
-  status: false,
+  status: true,
   in_system: false,
-  status_affilate: false,
-  order: 100,
+  status_affilate: true,
+  order: 1,
+  pre_price: 100000,
+  en: "",
+  ko: "",
+  zh: "",
+  company_code: "",
+  location_code: "",
+  link_image_site: [],
 };
 
 const initValue = {
@@ -29,11 +36,14 @@ const initValue = {
 };
 
 export default function SitesPageController() {
-  const [modalMode, setModalMode] = useState<"create" | "edit">("create");
   const { showConfirm }: CommonType | any = useCommonStore.getState();
+  const [openForm, setOpenForm] = useState(false);
 
   const [listSite, setListSite] = useState<SiteType[]>([]);
-  const [form, setForm] = useState<SiteType | null>(null);
+  const [form, setForm] = useState<SiteType>(EMPTY_FORM);
+
+  const [companys, setCompany] = useState<CompanyType[]>([]);
+  const [locations, setLoaction] = useState<LocationType[]>([]);
 
   const [params, setParams] = useState<SearchSiteType>(initValue);
 
@@ -90,7 +100,7 @@ export default function SitesPageController() {
       render: (row) => (
         <div className="flex justify-end gap-2">
           <button
-            onClick={() => openEditModal(row)}
+            onClick={() => handleOpenForm(row)}
             className="rounded-md border border-slate-700 px-2.5 py-1.5 text-xs font-medium text-blue-500 transition hover:border-emerald-500 hover:text-emerald-400"
           >
             Sửa
@@ -106,16 +116,12 @@ export default function SitesPageController() {
     },
   ];
 
-  const openCreateModal = () => {
-    setModalMode("create");
-    setForm(EMPTY_FORM);
-  };
-
-  const openEditModal = (site: SiteType) => {
-    if (site && site.id) {
-      setModalMode("edit");
+  const handleOpenForm = async (site: SiteType) => {
+    await fetchCompanyLocation();
+    if (site) {
       setForm(site);
     }
+    setOpenForm(true);
   };
 
   const getListSite = async () => {
@@ -135,7 +141,8 @@ export default function SitesPageController() {
   };
 
   const handleSubmitForm = async (value: SiteType) => {
-    const data = await updateSite(value);
+    const { link_image_site, ...payload } = value;
+    const data = await updateSite(payload);
     if (data) {
       handleCloseModal();
       onReset();
@@ -143,7 +150,7 @@ export default function SitesPageController() {
   };
 
   const handleCloseModal = () => {
-    setForm(null);
+    setOpenForm(false);
   };
 
   const handleBuilServer = () => {
@@ -151,6 +158,14 @@ export default function SitesPageController() {
       message: `Quá trình ước tính tầm 5 phút. Xác nhận build`,
       okFunc: rebuildServer,
     });
+  };
+
+  const fetchCompanyLocation = async () => {
+    if (!locations.length || !companys.length) {
+      const { companysData, loactionsData }: any = await getCompanyAndLoaction();
+      setLoaction(loactionsData);
+      setCompany(companysData);
+    }
   };
 
   const rebuildServer = async () => {
@@ -170,7 +185,7 @@ export default function SitesPageController() {
         {/* Header */}
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <button
-            onClick={openCreateModal}
+            onClick={() => handleOpenForm(EMPTY_FORM)}
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-500 px-4 py-2.5 text-sm font-medium text-slate-950 transition hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-slate-950"
           >
             <PlusIcon />
@@ -190,14 +205,15 @@ export default function SitesPageController() {
         />
       </div>
 
-      {!isEmpty(form) && (
+      {openForm ? (
         <FormSite
           currentSite={form}
           onClose={handleCloseModal}
-          onSubmit={handleSubmitForm}
-          mode={modalMode}
+          onSave={handleSubmitForm}
+          locations={locations}
+          companys={companys}
         />
-      )}
+      ) : null}
     </div>
   );
 }

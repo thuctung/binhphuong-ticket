@@ -16,7 +16,6 @@ export async function POST() {
       deployment: data,
     });
   } catch (error) {
-    console.log("error", error);
     return NextResponse.json({ success: false, message: "Có lỗi xảy ra" }, { status: 500 });
   }
 }
