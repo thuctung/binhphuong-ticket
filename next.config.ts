@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "commons.wikimedia.org",
       },
+      {
+        protocol: "https",
+        hostname: process.env.NEXT_PUBLIC_SUPABASE_DOMAIN_STORAGE!,
+      },
     ],
   },
 };

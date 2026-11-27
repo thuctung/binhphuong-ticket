@@ -53,7 +53,7 @@ export default async function Locations({ lng, sites }: { lng: string; sites: Si
             >
               <div className="relative h-44 overflow-hidden rounded-t-2xl">
                 <LazyImage
-                  src={getBgImg(p.code)}
+                  src={get(p, ["link_image_site", 0, "url"]) || getBgImg(p.code)}
                   alt={t(`homepage.tickets.items.${index}.location`)}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"

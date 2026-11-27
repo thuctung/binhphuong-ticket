@@ -19,8 +19,6 @@ export async function POST(req: Request) {
     const { result, messages, success } = dataSunworld;
 
     debugger;
-    console.log("dataSunworld", dataSunworld);
-    console.log("body", body);
     if (success) {
       const { data: dataSaveOrder, error } = await supabaseAdmin.rpc(
         DB_TABLE_NAME.FUNC_COMPLETE_ORDER_CUSTOMER,
@@ -31,8 +29,6 @@ export async function POST(req: Request) {
           p_reference_code: result.referenceCode,
         }
       );
-      console.log("dataSaveOrder", dataSaveOrder);
-      console.log("error", error);
 
       if (dataSaveOrder) {
         const ticketBuild: TicketResultQRType[] | any = rebuildDataTicket(
@@ -43,7 +39,6 @@ export async function POST(req: Request) {
         );
         const siteName = get(ticketBuild, [0, "siteName"]) || "";
         const { customerTickets, focTickets } = getTicketFOCAndCutomer(ticketBuild);
-        console.log("ticketBuild", ticketBuild);
 
         await Promise.allSettled([
           supabaseAdmin.from(DB_TABLE_NAME.TICKETS).insert(ticketBuild).select(),

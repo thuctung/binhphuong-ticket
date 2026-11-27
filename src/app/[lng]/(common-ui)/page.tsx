@@ -6,8 +6,8 @@ import { languages } from "@/lib/i18n/settings";
 import { buildAlternates } from "@/lib/seo";
 import { Metadata } from "next";
 
-export const dynamic = "force-static";
-export const dynamicParams = false;
+// export const dynamic = "force-static";
+// export const dynamicParams = false;
 
 export function generateStaticParams() {
   return languages.map((lng) => ({ lng }));

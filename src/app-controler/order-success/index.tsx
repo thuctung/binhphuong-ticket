@@ -31,7 +31,6 @@ const getAmountAndQuantity = (orders: OrderHistory[]) => {
 export default function OrderSuccessController({ code, orders }: OrderSuccessControllerProps) {
   const { t } = useTranslation();
   const firstItem = get(orders, 0);
-  console.log("orders", orders);
   const [totalAmount, totalTicket] = getAmountAndQuantity(orders);
 
   const { clear: clearCart } = useCartStore((s) => s);

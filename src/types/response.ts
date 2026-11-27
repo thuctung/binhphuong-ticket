@@ -120,3 +120,17 @@ export type OrderType = {
   status_payment: string;
   order_items: OrderItemType[];
 };
+
+export type CompanyType = {
+  company_code: string;
+  company_name: string;
+  id: string;
+};
+
+export type LocationType = {
+  code: string;
+  en: string;
+  ko: string;
+  zh: string;
+  name: string;
+};

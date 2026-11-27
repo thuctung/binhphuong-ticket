@@ -149,6 +149,10 @@ export const DB_TABLE_NAME = {
   AGENT_PRICE_DEFAULT: "dafault_agent_price",
   FUNC_ONEPAY_FINALIZE_PAYMENT: "onepay_finalize_payment",
   ONEPAY_TRANSACTIONS: "onepay_transactions",
+  LOCATION: "location",
+  COMPANYS: "companys",
+  LINK_IMAGE_SITE: "link_image_site",
+  STORAGE_IMAGE: "images",
 };
 
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
