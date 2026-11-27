@@ -158,7 +158,7 @@ export default function PriceManagement({ listSite }: PriceManagementProps) {
     }
   };
 
-  const handleDeleteProduct = (id: string) => {
+  const handleDeleteProduct = (id: any) => {
     showConfirm({
       message: "Bạn có chắc muốn xóa!",
       okFunc: async () => {
